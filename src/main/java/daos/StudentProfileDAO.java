@@ -7,10 +7,12 @@
 package daos;
 
 import pojos.StudentProfile;
+
 import org.bson.Document;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.ObjectMapper;
 
-
+@JsonIgnoreProperties
 public class StudentProfileDAO {
 
 	

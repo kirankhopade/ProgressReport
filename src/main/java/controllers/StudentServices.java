@@ -257,6 +257,7 @@ public class StudentServices {
 	
 	public @ResponseBody ArrayList <String> showSubjectWiseReport(HttpServletRequest request){
 		
+		System.out.println("reached***");
 		ArrayList <String> list =null;
 				
 		if(request.getParameter("type").equals("exam"))
@@ -264,6 +265,11 @@ public class StudentServices {
 		if(request.getParameter("type").equals("subject"))
 			list = (new ProgressReportDAO(studentprofile)).getSubjectList();
 
+		if(list==null){
+			System.out.println("Its empty subject list");
+		}else{
+			System.out.println("Not empty");
+		}
 		System.out.println(list.toString());
 		return list;
 	}

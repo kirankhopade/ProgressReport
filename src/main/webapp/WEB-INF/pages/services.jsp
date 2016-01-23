@@ -112,6 +112,7 @@
         // show Select Subjec dropdown list and hide Select Exam dropdown if it is visible
 
    	    function showsubjectwisereportDiv() {
+            alert("at showsubjectwisereport");
             document.getElementById('examwisereport').style.display = "none";
             document.getElementById('subjectwisereport').style.display = "block";
             madeAjaxCallForSelect("${contextPath}/studentservices/getSelectDropDownList","#sel2","subject");
@@ -155,13 +156,15 @@
 
         function madeAjaxCallForSelect(reqURL,selectid,listType){
         		$.ajax({
+                    //alert("temp");
         			type: "get",
         			url: reqURL,
         			cache: false,				
         			data:{type:listType} ,
         				success: function(response){
         			     //	$('#result').html("");
-        		
+        		              alert(reqURL);
+                              alert(response);
         			     //	$('#result').html("First Name:- " + response);
         				                                    				
         				    for(i=0; i<response.length; i++){

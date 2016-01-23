@@ -162,13 +162,14 @@ public class ProgressReportDAO {
 			List<Subject> subjects = studentProfile.getExaminations().get(i).getSubjects();
 			
 			for(int j=0;j<subjects.size();j++){
+				if(subjects.get(j).getSubjectName()!=null)
 				subjectList.add(subjects.get(j).getSubjectName());
 			}
 		}
 		
-		TreeSet<String> sorteSubjectList = new TreeSet<String>(subjectList);
+		TreeSet<String> sortedSubjectList = new TreeSet<String>(subjectList);
 		
-		return new ArrayList<String>(sorteSubjectList);
+		return new ArrayList<String>(sortedSubjectList);
 	}
 }
 

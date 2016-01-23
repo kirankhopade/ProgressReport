@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import pojos.LoginCredentials;
+
 @Controller
 
 public class PageController {
@@ -37,6 +39,9 @@ public class PageController {
 	@RequestMapping(value = "/getIndex", method = RequestMethod.GET)
 	public ModelAndView getIndexPage(HttpSession session, Model model) {
 
+		LoginCredentials logincredential = (LoginCredentials) session.getAttribute("loggedInUser");
+		if(logincredential!=null){
+		
 		if(session.getAttribute("logintype").equals("facultysignin"))
 			model.addAttribute("facultysignin", "Faculty Signed In");
 		else
@@ -44,7 +49,11 @@ public class PageController {
 		ModelAndView modelnView = new ModelAndView("index");
 	
 		return modelnView;
-
+		}
+		else{
+			ModelAndView model1 = new ModelAndView("index");
+			return model1;
+		}
 	}
 
 }
