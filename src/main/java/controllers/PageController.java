@@ -26,7 +26,7 @@ public class PageController {
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView getDefaulltPage() {
-  System.out.println("reached");
+  //System.out.println("reached");
 		ModelAndView model = new ModelAndView("index");
 	
 		return model;
@@ -54,6 +54,14 @@ public class PageController {
 			ModelAndView model1 = new ModelAndView("index");
 			return model1;
 		}
+	}
+	
+	@RequestMapping(value="/getForgotPasswordPage", method=RequestMethod.GET)
+	public ModelAndView getForgotPasswordPage(HttpSession session, Model model){
+		ModelAndView modelview = new ModelAndView("reset-credentials");
+		
+		return modelview;
+
 	}
 
 }

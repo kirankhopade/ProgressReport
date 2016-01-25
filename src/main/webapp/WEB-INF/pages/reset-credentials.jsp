@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Contact Us | Get Me Progress Report</title>
+    <title>Reset Credentials | Get Me Progress Report</title>
     
     <!-- core CSS -->
 
@@ -35,24 +35,13 @@
          <div class="top-bar">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-10 col-xs-4">
-                      <c:if test="${not empty error}">
-    				 		<div class="alert alert-danger fade in">
-    							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-   									<h4><strong> Alert!!!  </strong>  ${error}</h4>
-					  		</div>
-					  	</c:if>
-					  	 <c:if test="${not empty success}">
-					  	<div class="alert alert-success fade in">
-    							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-   									<h4><strong> Alert!!!  </strong>  ${success}</h4>
-					  		</div>
-					  		</c:if>
-                     </div>
-                    <div class="col-sm-2 col-xs-8">
+                    <div class="col-sm-6 col-xs-4">
+                      <!--   <div class="top-number"><p><i class="fa fa-phone-square"></i>  +0123 456 70 90</p></div> -->
+                    </div>
+                    <div class="col-sm-6 col-xs-8">
                        <div class="social">
                             <ul class="social-share">
-                                <div class="top-number"><p><i class="glyphicon glyphicon-user"></i>  <b>Login</b></p></div>
+                                <!-- <div class="top-number"><p><i class="glyphicon glyphicon-user"></i>  <b>Login</b></p></div> -->
                             </ul>
                        </div>
                     </div>
@@ -74,11 +63,11 @@
                 </div>
                 
                 <div class="collapse navbar-collapse navbar-right">
-                    <ul class="nav navbar-nav">
+                   <!--  <ul class="nav navbar-nav">
                         <li><a href="${contextPath}/getIndex">Home</a></li>
-                        <!-- <li><a href="${contextPath}/studentservices/getStudentProfile">Student Profile</a></li>
+                         <li><a href="${contextPath}/studentservices/getStudentProfile">Student Profile</a></li>
                         <li><a href="${contextPath}/studentservices/getProgressReport">Progress Report</a></li>
-                         -->
+                         
                          <c:if test="${not empty parentsignin}">
                             <li ><a href="${contextPath}/studentservices/getStudentProfile">Student Profile</a></li>
                             <li><a href="${contextPath}/studentservices/getProgressReport">Progress Report</a></li>
@@ -92,7 +81,7 @@
                         <li><a href="${contextPath}/studentservices/getNotifications">Notifications</a></li>
                         <li class="active"><a href="${contextPath}/studentservices/getContactUs">Contact Us</a></li>                     
                     </ul>
-                </div>
+ -->                </div>
             </div><!--/.container-->
         </nav><!--/nav-->
         
@@ -102,33 +91,52 @@
 
     <section id="contact-info">
         <div class="center">        
-                <h2>Drop Your Message</h2>
+                <h2>Reset your Passwod</h2>
                 
             </div>
                   <div class="container wow fadeInDown">
             
             <div class="row contact-wrap"> 
                 <div class="status alert alert-success" style="display: none"></div>
-                <form  method="post" action="${contextPath}/studentservices/sendmail">
-                    <div class="col-sm-5 col-sm-offset-1">
+                <form  method="post" action="${contextPath}/userfacility/retrievePassword">
+                    
                         <div class="form-group">
-                            <label>Name *</label>
-                            <input type="text" name="name" class="form-control" required="required">
-                        </div>
-                        <div class="form-group">
+                            <div class="row"> 
+                                <div class="col-sm-3 col-xs-3">
+                                </div>
+                                <div class="col-sm-2 col-xs-2">
+                                    <label>CustomerID *</label>
+                                </div>
+                                
+                                <div class="col-sm-3 col-xs-3">
+                                     <input type="text" name="customerid" class="form-control" required="required">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-sm-5 col-xs-5">
+                                </div>
+                                
+                                <div class="col-sm-4 col-xs-4">
+                                    <div class="form-group">
+                                    <button type="submit" name="submit" class="btn btn-primary btn-lg" required="required">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                       <!--  <div class="form-group">
                             <label>Email *</label>
                             <input type="email" name="email" class="form-control" required="required">
                         </div>
                         <div class="form-group">
                             <label>Phone</label>
                             <input type="number" name = "number" class="form-control">
-                        </div>
+                        </div> -->
                        <!--  <div class="form-group">
                             <label>Company Name</label>
                             <input type="text" name="companyname" class="form-control">
                         </div>    -->                     
                     </div>
-                    <div class="col-sm-5">
+                    <!-- <div class="col-sm-3 col-xs-3">
                         <div class="form-group">
                             <label>Subject *</label>
                             <input type="text" name="subject" class="form-control" required="required">
@@ -137,10 +145,8 @@
                             <label>Message *</label>
                             <textarea name="message" id="message" required="required" class="form-control" rows="8"></textarea>
                         </div>                        
-                        <div class="form-group">
-                            <button type="submit" name="submit" class="btn btn-primary btn-lg" required="required">Submit Message</button>
-                        </div>
-                    </div>
+                        
+                    </div> -->
                 </form> 
             </div><!--/.row-->
         </div>

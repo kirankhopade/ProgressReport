@@ -74,24 +74,29 @@ public class StudentServices {
 		LoginDAO dao=new LoginDAO(logindata); //contains student_id and password entered by user
 		
 		/* Validate Entered Student_ID and Password and return status*/
-		if(dao.validateCredentials()){
-			
-		    session.setAttribute("logintype", request.getParameter("optradio"));
-			session.setAttribute("loggedInUser", logindata);
-			model.addAttribute("success", "Login Successful!!!!"); // set success message to display on successful login
-			if(session.getAttribute("logintype").equals("facultysignin"))
-				model.addAttribute("facultysignin", "Faculty Signed In");
-			else
-				model.addAttribute("parentsignin", "Parent/Student Signed In");
-			studentRecord= dao.getStudentRecord(); // get student document from database
-			studentprofile = (new StudentProfileDAO(studentRecord)).getStudentProfile(); // parse studentDocument and stores in studentprofile object
+		if(request.getParameter("optradio")!=null){
+				if(dao.validateCredentials()){
+					
+				    session.setAttribute("logintype", request.getParameter("optradio"));
+					session.setAttribute("loggedInUser", logindata);
+					model.addAttribute("success", "Login Successful!!!!"); // set success message to display on successful login
+					if(session.getAttribute("logintype").equals("facultysignin"))
+						model.addAttribute("facultysignin", "Faculty Signed In");
+					else
+						model.addAttribute("parentsignin", "Parent/Student Signed In");
+					studentRecord= dao.getStudentRecord(); // get student document from database
+					studentprofile = (new StudentProfileDAO(studentRecord)).getStudentProfile(); // parse studentDocument and stores in studentprofile object
+				}
+				else{
+					model.addAttribute("error", "Login Failed!!!!"); // set login failed message to display on wrong login credentials
+				}
+					
+					
+		}else{
+			model.addAttribute("error", "Please Select Login Type!!!!"); // set login failed message to display on wrong login credentials
 		}
-		else{
-			model.addAttribute("error", "Login Failed!!!!"); // set login failed message to display on wrong login credentials
-		}
-			
-			modelnview.setViewName("index"); // redirect the index page to client
-			return modelnview;
+		modelnview.setViewName("index"); // redirect the index page to client
+		return modelnview;
 	}
 	
 	
@@ -390,18 +395,36 @@ public class StudentServices {
 	
 	
 	 @RequestMapping(value="/sendmail" , method = RequestMethod.POST)
-	    public String doSendEmail(HttpServletRequest request) {
+	    public ModelAndView getMessageDetails(HttpServletRequest request,Model model,String fergotPwdLink) {
 	        // takes input from e-mail form
-	    	
+			
+			ModelAndView modelnview = new ModelAndView();
 	    	String name = request.getParameter("name");
-	        String snederAddress = request.getParameter("email");
+	        String snederEmailID = request.getParameter("email");
 	        String phoneNumber = request.getParameter("number");
 	        
 	        String subject = request.getParameter("subject");
 	        //String message = request.getParameter("message");
 	         
 	       // Recipient's email ID needs to be mentioned.
-	        String to = snederAddress+",kkhopade007@gmail.com";
+	        
+	        boolean flag = sendMail(snederEmailID,name,"contactUsMessage");
+	        if(flag==true){
+	        	//return "Result";
+	        	model.addAttribute("success", "Your message has been received succesfully.");
+	        }
+	        else{
+	        	model.addAttribute("error", "There is some technical problem with the mailbox, please contact us on aur tollfree number: XXXXXX");
+	        }
+	        
+	        modelnview.setViewName("contact-us");
+	        return modelnview;
+	        	
+	    }
+	 
+	 public static boolean sendMail(String receiverEmailID, String nameField,String emailType){
+		 
+		 String to = receiverEmailID+",kkhopade007@gmail.com";
 
 	        // Sender's email ID needs to be mentioned
 	        String from = "kkhopade007@gmail.com";
@@ -441,7 +464,11 @@ public class StudentServices {
 	  	   message.setSubject("Info: Received your message");
 	  	
 	  	   // Now set the actual message
-	  	   message.setText("Hello "+name+", \r\n Thank you for your message. We will act on it and let you know our actions on your message. \r\n Team,\r\n P.R. Solutions");
+	  	   if(emailType.equals("contactUsMessage")){
+	  	   message.setText("Hello "+nameField+", \r\n Thank you for your message. We will act on it and let you know our actions on your message. \r\n Team,\r\n P.R. Solutions");
+	  	   }else{
+	  		 message.setText("Hello "+nameField+", \r\n We have received password reset request. Please click on below link to reset your password. \n\r <<PasswordResetLink>> \r\n Team,\r\n P.R. Solutions");
+	  	   }
 
 	  	   // Send message
 	  	   Transport.send(message);
@@ -449,12 +476,12 @@ public class StudentServices {
 	  	   System.out.println("Sent message successfully....");
 
 	        } catch (MessagingException e) {
-	           throw new RuntimeException(e);
+	           //throw new RuntimeException(e);
+	        	System.out.println(e);
+	        	return false;
 	        }
-	        
-	        
-	        return "Result";
-	    }
+	    	return true;
+	 }
 	
-	
+
 }

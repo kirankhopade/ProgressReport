@@ -34,12 +34,12 @@ public class LoginDAO {
 	
 			this.logindata=logindata;
 			try{
-				//mongoClient = new MongoClient("localhost", 27017);
-				//mongoClient = new MongoClient("mongodb://admin:admin@ds039125.mongolab.com:39125/progressreport");
+				/*mongoClient = new MongoClient("localhost", 27017);
+				db = mongoClient.getDatabase("progressreport");*/
+				
 				String textUri = "mongodb://admin:admin@ds039125.mongolab.com:39125/progressreport";
 	 			MongoClientURI uri = new MongoClientURI(textUri);
-	 			MongoClient m = new MongoClient(uri);
-				//db = mongoClient.getDatabase("progressreport");
+	 			MongoClient m = new MongoClient(uri);			
 	 			db = m.getDatabase(uri.getDatabase());
 		
 			}catch(Exception e){
@@ -86,6 +86,22 @@ public class LoginDAO {
 	   	  }
 			
 			return null;
+		}
+		
+		
+		public String retrievEmailID(){
+			
+			try{   
+				
+				MongoCollection<Document> collection = db.getCollection("studenprofile");
+				 credentials = collection.find(eq("_id",logindata.getStudent_id())).first();
+				return credentials.getString("parentEmail");
+			}catch(Exception e){
+	   	     System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+	   	  }
+			
+			return null;
+			
 		}
 		
 	

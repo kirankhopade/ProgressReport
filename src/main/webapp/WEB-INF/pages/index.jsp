@@ -110,7 +110,7 @@
 			                                                    <div class="row">
 			                                                        <div class="col-sm-12">
 			                                                          <div class="form-group">
-			                                                            <input type="text" class="form-control" id="recipient-name"  name="student_id" placeholder="Student ID" >
+			                                                            <input type="text" class="form-control" id="recipient-name"  name="student_id" placeholder="Student ID" required="required">
 			                                                          </div>
 			                                                        </div>
 			                                                    </div>
@@ -126,14 +126,14 @@
 			                                                   <div class="row">
 			                                                    	<div class="col-sm-12">
 			                                                          <div class="form-group">
-			                                                            <input  type="password" class="form-control" id="exampleInputPassword3" name="password" placeholder="Password">
+			                                                            <input  type="password" class="form-control" id="exampleInputPassword3" name="password" placeholder="Password" required="required">
 			                                                         </div>
 			                                                        </div>
 			                                                    </div>
                                                                 <div class="row">
                                                                     <div class="col-sm-4">
                                                                         <label class="radio-inline">
-                                                                         <input type="radio" name="optradio" value="studentsignin">Student Sign In
+                                                                         <input type="radio" name="optradio" value="studentsignin" required>Student Sign In
                                                                         </label>
                                                                     </div>
                                                                     <div class="col-sm-4">
@@ -153,7 +153,8 @@
 				                                                      </div>                                                    
 			                                                   			 <div class="form-group">
 			                                         	                 	  <div class="col-sm-8">
-			                                            	               		<button  type="submit" class="btn btn-success btn-block">User Sign In</button>                                                           
+			                                         	                 	  
+			                                            	               		<button  type="submit" class="btn btn-success btn-block">User Sign In</button>                                                         
 			                                                	          	  </div>
 			                                                            </div>
 			                                                      </div>
@@ -169,7 +170,9 @@
 			                                                         </div>
 			                                                         <div class="col-sm-4"> 
 			                                                             <div class="form-group"> 
-			                                                           		 <button  type="submit" class="btn btn-primary">Forgot Password ??</button> 
+			                                                       			
+			                                                           		 <a href="${contextPath}/getForgotPasswordPage" class="btn btn-primary" role="button">Forgot Password ??</a>
+			                                                           		
 			                                                          	 </div> 
 			                                                         </div> 
 			                                                      </div>
