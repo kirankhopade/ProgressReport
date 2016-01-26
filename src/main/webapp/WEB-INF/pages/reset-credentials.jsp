@@ -28,6 +28,24 @@
     <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
 </head><!--/head-->
 
+
+<script type="text/javascript">
+function confirmPassword() {
+    var pass1 = document.getElementById("newpassword").value;
+    var pass2 = document.getElementById("confirmpassword").value;
+    var ok = true;
+    if (pass1 != pass2) {
+        //alert("Passwords Do not match");
+        document.getElementById("newpassword").style.borderColor = "#E34234";
+        document.getElementById("confirmpassword").style.borderColor = "#E34234";
+        ok = false;
+    }
+    else {
+        //alert("Passwords Match!!!");
+    }
+    return ok;
+}
+</script>
 <body>
 
     
@@ -98,6 +116,8 @@
             
             <div class="row contact-wrap"> 
                 <div class="status alert alert-success" style="display: none"></div>
+
+                <c:if test="${not empty customerID}">
                 <form  method="post" action="${contextPath}/userfacility/retrievePassword">
                     
                         <div class="form-group">
@@ -123,31 +143,64 @@
                                     </div>
                                 </div>
                             </div>
-                       <!--  <div class="form-group">
-                            <label>Email *</label>
-                            <input type="email" name="email" class="form-control" required="required">
-                        </div>
-                        <div class="form-group">
-                            <label>Phone</label>
-                            <input type="number" name = "number" class="form-control">
-                        </div> -->
-                       <!--  <div class="form-group">
-                            <label>Company Name</label>
-                            <input type="text" name="companyname" class="form-control">
-                        </div>    -->                     
+                                          
                     </div>
-                    <!-- <div class="col-sm-3 col-xs-3">
-                        <div class="form-group">
-                            <label>Subject *</label>
-                            <input type="text" name="subject" class="form-control" required="required">
-                        </div>
-                        <div class="form-group">
-                            <label>Message *</label>
-                            <textarea name="message" id="message" required="required" class="form-control" rows="8"></textarea>
-                        </div>                        
-                        
-                    </div> -->
+                    
                 </form> 
+                </c:if>
+
+<c:if test="${not empty resetPassword}">
+                <form  method="post" onsubmit="return confirmPassword()" action="${contextPath}/userfacility/updatePassword">
+                    
+                        <div class="form-group">
+                            <div class="row">
+                             <div class="form-group"> 
+                                <div class="col-sm-3 col-xs-3">
+                                </div>
+                                <div class="col-sm-2 col-xs-2">
+                                    <label>Enter New Password *</label>
+                                </div>
+                                
+                                <div class="col-sm-3 col-xs-3">
+                                     <input type="password" name="newpassword" id="newpassword" class="form-control" required="required">
+                                </div>
+                            </div>
+                            </div>
+                            <div class="row"> 
+                                 <div class="form-group">
+                                        <div class="col-sm-3 col-xs-3">
+                                        </div>
+                                        <div class="col-sm-2 col-xs-2">
+                                            <label>Confirm Password *</label>
+                                        </div>
+                                        
+                                        <div class="col-sm-3 col-xs-3">
+                                            <div class="form-group">
+                                             <input type="password" name="confirmpassword" id="confirmpassword" class="form-control" required="required">
+                                         </div>
+                                        </div>
+                                </div>
+                            </div>
+                           
+                            
+                            <div class="row">
+                                <div class="col-sm-5 col-xs-5">
+                                </div>
+                                
+                                <div class="col-sm-4 col-xs-4">
+                                    <div class="form-group">
+                                    <button type="submit" name="submit" class="btn btn-primary btn-lg" required="required">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                                         
+                    </div>
+                    
+                </form> 
+                </c:if>
+
+
+
             </div><!--/.row-->
         </div>
          

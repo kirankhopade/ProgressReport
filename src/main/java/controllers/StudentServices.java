@@ -28,12 +28,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
+
+import HelperClasses.HelpingFunctions;
 import daos.LoginDAO;
 import daos.ProgressReportDAO;
 import daos.StudentProfileDAO;
 import pojos.ExamWiseReport;
 import pojos.LoginCredentials;
 import pojos.StudentProfile;
+
 
 
 
@@ -71,11 +74,11 @@ public class StudentServices {
 		ModelAndView modelnview = new ModelAndView();
 		
 		/* LoginDAO to perform CRUD operations on LoginCredentials object data */
-		LoginDAO dao=new LoginDAO(logindata); //contains student_id and password entered by user
+		LoginDAO loginDAO=new LoginDAO(logindata); //contains student_id and password entered by user
 		
 		/* Validate Entered Student_ID and Password and return status*/
 		if(request.getParameter("optradio")!=null){
-				if(dao.validateCredentials()){
+				if(loginDAO.validateCredentials()){
 					
 				    session.setAttribute("logintype", request.getParameter("optradio"));
 					session.setAttribute("loggedInUser", logindata);
@@ -84,7 +87,13 @@ public class StudentServices {
 						model.addAttribute("facultysignin", "Faculty Signed In");
 					else
 						model.addAttribute("parentsignin", "Parent/Student Signed In");
-					studentRecord= dao.getStudentRecord(); // get student document from database
+					studentRecord= loginDAO.getStudentRecord(); // get student document from database
+					
+					if(loginDAO.getLoginType().equals("resetPassword")){
+						model.addAttribute("resetPassword","Enter New Password");
+						modelnview.setViewName("reset-credentials");
+						return modelnview;
+					}
 					studentprofile = (new StudentProfileDAO(studentRecord)).getStudentProfile(); // parse studentDocument and stores in studentprofile object
 				}
 				else{
@@ -408,7 +417,7 @@ public class StudentServices {
 	         
 	       // Recipient's email ID needs to be mentioned.
 	        
-	        boolean flag = sendMail(snederEmailID,name,"contactUsMessage");
+	        boolean flag = HelpingFunctions.sendMail(snederEmailID,name,"contactUsMessage");
 	        if(flag==true){
 	        	//return "Result";
 	        	model.addAttribute("success", "Your message has been received succesfully.");
@@ -422,66 +431,6 @@ public class StudentServices {
 	        	
 	    }
 	 
-	 public static boolean sendMail(String receiverEmailID, String nameField,String emailType){
-		 
-		 String to = receiverEmailID+",kkhopade007@gmail.com";
-
-	        // Sender's email ID needs to be mentioned
-	        String from = "kkhopade007@gmail.com";
-	        final String username = "kkhopade007@gmail.com";//change accordingly
-	        final String password = "gskkr@96@kuli";//change accordingly
-
-	      
-	        Properties props = new Properties();
-	       
-	        props.put("mail.smtp.host", "smtp.gmail.com");
-	        props.put("mail.smtp.socketFactory.port", "465");
-	        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-	        props.put("mail.smtp.auth", "true");
-	        props.put("mail.smtp.port", "465");
-	        
-	        System.out.println("mailtest");
-	        // Get the Session object.
-	        Session session = Session.getInstance(props,
-	           new javax.mail.Authenticator() {
-	              protected PasswordAuthentication getPasswordAuthentication() {
-	                 return new PasswordAuthentication(username, password);
-	  	   }
-	           });
-
-	        try {
-	  	   // Create a default MimeMessage object.
-	  	   Message message = new MimeMessage(session);
-	  	
-	  	   // Set From: header field of the header.
-	  	   message.setFrom(new InternetAddress(from));
-	  	
-	  	   // Set To: header field of the header.
-	  	   message.setRecipients(Message.RecipientType.TO,
-	                 InternetAddress.parse(to));
-	  	
-	  	   // Set Subject: header field
-	  	   message.setSubject("Info: Received your message");
-	  	
-	  	   // Now set the actual message
-	  	   if(emailType.equals("contactUsMessage")){
-	  	   message.setText("Hello "+nameField+", \r\n Thank you for your message. We will act on it and let you know our actions on your message. \r\n Team,\r\n P.R. Solutions");
-	  	   }else{
-	  		 message.setText("Hello "+nameField+", \r\n We have received password reset request. Please click on below link to reset your password. \n\r <<PasswordResetLink>> \r\n Team,\r\n P.R. Solutions");
-	  	   }
-
-	  	   // Send message
-	  	   Transport.send(message);
-
-	  	   System.out.println("Sent message successfully....");
-
-	        } catch (MessagingException e) {
-	           //throw new RuntimeException(e);
-	        	System.out.println(e);
-	        	return false;
-	        }
-	    	return true;
-	 }
-	
+	 	
 
 }

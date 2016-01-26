@@ -58,6 +58,7 @@ public class PageController {
 	
 	@RequestMapping(value="/getForgotPasswordPage", method=RequestMethod.GET)
 	public ModelAndView getForgotPasswordPage(HttpSession session, Model model){
+		model.addAttribute("customerID", "Enter Customer ID");
 		ModelAndView modelview = new ModelAndView("reset-credentials");
 		
 		return modelview;
