@@ -30,6 +30,7 @@
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+ 
 
     <script>
     
@@ -51,7 +52,10 @@
         // Set chart options
         var options = {'title':'Progress Report for '+selectedvalue+' throughout academic year',
                        'width':800,
-                       'height':600};
+                       'height':600,
+                      vAxis: {title: 'Marks',titleTextStyle:{color: 'green'}},
+                       hAxis: {title: 'Examination',titleTextStyle:{color: 'green'}}
+                     };
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
@@ -65,9 +69,10 @@
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Subject');
             data.addColumn('number', 'Marks');
+            data.addColumn({type: 'number', role: 'annotation'});
             
             for(var i=0;i<jsonData.length-2;i++){
-               data.addRow([jsonData[i].subjectName , jsonData[i].marks]);
+               data.addRow([jsonData[i].subjectName , jsonData[i].marks,jsonData[i].marks]);
               }
            var obtainedtotal=jsonData[jsonData.length-2].marks;
         //  alert(obtainedtotal);
@@ -75,11 +80,23 @@
 
         // Set chart options
         var options = {'title':'Progress Report for '+selectedvalue +'.   Total Obtained Marks : '+obtainedtotal+'/'+total+' ('+(obtainedtotal/total)*100+')%',
-                       'width':1000,
-                       'height':600};
+                       'width':1500,
+                       'height':600,
+                     vAxis: {title: 'Marks',titleTextStyle:{color: 'green'}},
+                       hAxis: {title: 'Subject',titleTextStyle:{color: 'green'}}
+                     };
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+         google.visualization.events.addListener(chart, 'ready', AddNamespaceHandler); 
+
+       /* google.visualization.events.addListener(chart, 'ready', function () {
+              var content = '<img src="' + chart.getImageURI() + '">';
+              $('#graphImages').append(content);
+            });*/
+/*
+         console.log(chart_div.innerHTML);*/
+
         chart.draw(data, options);
       }
 
@@ -177,8 +194,51 @@
         			}
         		});
         	} // EOF madeAjaxCallForSelect()
-        
+
+
+function AddNamespaceHandler(){
+  var svg = jQuery('#chart_div svg');
+  svg.attr("xmlns", "http://www.w3.org/2000/svg");
+  svg.css('overflow','visible');
+}
+ 
+
+
+        /*var click="return xepOnline.Formatter.Format('myModal', {render:'download', srctype:'svg'})";
+jQuery('#buttons').append('<button onclick="'+ click +'">PDF</button>');*/
     </script>
+    <style type="text/css">
+    .modal-dialog {
+  width: 90%;
+ /*  height: 800%; */
+  padding: 50;
+}
+
+.modal-content {
+  /* height: 100%; */
+  border-radius: 3;
+}
+
+/*button {
+    color:#fff;
+    background-image: linear-gradient(to bottom,#337ab7 0,#265a88 100%);
+    background-repeat: repeat-x;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight:bold;
+    line-height: 1.5;
+    border-radius: 3px;
+    cursor: pointer;
+    border-color: #265a88;
+    text-shadow: 0 -1px 0 rgba(0,0,0,.2);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.15),0 1px 1px rgba(0,0,0,.075);
+}
+button:hover{
+    background-image: linear-gradient(to top,#337ab7 0,#265a88 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.25),0 1px 1px rgba(0,0,0,.175);
+}*/
+    </style>
+   
 </head><!--/head-->
 
 <body>
@@ -280,7 +340,7 @@
                           </select>
                       </div>
                       
-                      <button type="button" name="submit" class="btn btn-primary btn-lg" required="required" onClick="getGraph('exam','sel1');">Get Me Report
+                      <button type="button" name="submit" class="btn btn-primary btn-lg"  data-toggle="modal" data-target="#myModal" onClick="getGraph('exam','sel1');">Get Me Report
                       </button>
                 </form>
               
@@ -312,12 +372,37 @@
     <section>
         <div class="container" >
                 <!--Div that will hold the pie chart-->
-                   <div id="chart_div" class="center wow fadeInDown"></div>
-               
-        </div>
+              
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                                              <div class="modal-dialog" role="document">
+                                                   <div class="modal-content">
+                                                      <div class="modal-header">
+                                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                           <h4 class="modal-title" id="exampleModalLabel">Your Progress Report is here...</h4>
+                                                           
+                                                      </div>
+                                                      
+                                                         <div class="modal-body"> 
+                                                         <div id="chart_div" class="center wow fadeInDown"></div>
+                                                </div>
+                                                        <div class="modal-footer">
+                                                          <button type="button" class="btn btn-danger" onClick="return xepOnline.Formatter.Format('chart_div', {render:'download', srctype:'svg'})">Save as PDF</button>
+        
+      </div>                                                          
+                                                 </div>
+                                            </div>
+                                    </div>
+                              </div>
+    </div>
+
+
+
+
+
     </section>
 
-
+<div id='graph-images' ></div>
 
     <section id="bottom">
         <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
@@ -409,6 +494,7 @@
     <script src="<c:url value="/resources/js/jquery.isotope.min.js" />"></script>
     <script src="<c:url value="/resources/js/main.js" />"></script>
     <script src="<c:url value="/resources/js/wow.min.js" />"></script>
+    <script src="<c:url value="/resources/js/xepOnline.jqPlugin.js" />"></script>
   
 
 </body>
