@@ -29,10 +29,10 @@
     <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
  
 
-    <script>
+   <script>
     
          // Load the Visualization API and the piechart package.
               google.load('visualization', '1.0', {'packages':['corechart']});
@@ -43,9 +43,10 @@
             var data = new google.visualization.DataTable();
             data.addColumn('string', 'Examination');
             data.addColumn('number', 'Marks');
+            data.addColumn({type: 'number', role: 'annotation'});
             
             for(var i=0;i<jsonData.length;i++){
-               data.addRow([jsonData[i].subjectName , jsonData[i].marks]);
+               data.addRow([jsonData[i].subjectName , jsonData[i].marks , jsonData[i].marks]);
               }
           
 
@@ -59,7 +60,9 @@
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+        google.visualization.events.addListener(chart, 'ready', AddNamespaceHandler);
         chart.draw(data, options);
+
       }   
          // Function to draw a graph for selected exam
            
@@ -74,9 +77,9 @@
             for(var i=0;i<jsonData.length-2;i++){
                data.addRow([jsonData[i].subjectName , jsonData[i].marks,jsonData[i].marks]);
               }
+           
            var obtainedtotal=jsonData[jsonData.length-2].marks;
-        //  alert(obtainedtotal);
-          var total = jsonData[jsonData.length-1].marks
+           var total = jsonData[jsonData.length-1].marks
 
         // Set chart options
         var options = {'title':'Progress Report for '+selectedvalue +'.   Total Obtained Marks : '+obtainedtotal+'/'+total+' ('+(obtainedtotal/total)*100+')%',
@@ -89,13 +92,6 @@
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
          google.visualization.events.addListener(chart, 'ready', AddNamespaceHandler); 
-
-       /* google.visualization.events.addListener(chart, 'ready', function () {
-              var content = '<img src="' + chart.getImageURI() + '">';
-              $('#graphImages').append(content);
-            });*/
-/*
-         console.log(chart_div.innerHTML);*/
 
         chart.draw(data, options);
       }
@@ -180,8 +176,8 @@
         			data:{type:listType} ,
         				success: function(response){
         			     //	$('#result').html("");
-        		              alert(reqURL);
-                              alert(response);
+        		             // alert(reqURL);
+                           //   alert(response);
         			     //	$('#result').html("First Name:- " + response);
         				                                    				
         				    for(i=0; i<response.length; i++){
@@ -202,10 +198,7 @@ function AddNamespaceHandler(){
   svg.css('overflow','visible');
 }
  
-
-
-        /*var click="return xepOnline.Formatter.Format('myModal', {render:'download', srctype:'svg'})";
-jQuery('#buttons').append('<button onclick="'+ click +'">PDF</button>');*/
+       
     </script>
     <style type="text/css">
     .modal-dialog {
@@ -219,24 +212,7 @@ jQuery('#buttons').append('<button onclick="'+ click +'">PDF</button>');*/
   border-radius: 3;
 }
 
-/*button {
-    color:#fff;
-    background-image: linear-gradient(to bottom,#337ab7 0,#265a88 100%);
-    background-repeat: repeat-x;
-    padding: 5px 10px;
-    font-size: 12px;
-    font-weight:bold;
-    line-height: 1.5;
-    border-radius: 3px;
-    cursor: pointer;
-    border-color: #265a88;
-    text-shadow: 0 -1px 0 rgba(0,0,0,.2);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.15),0 1px 1px rgba(0,0,0,.075);
-}
-button:hover{
-    background-image: linear-gradient(to top,#337ab7 0,#265a88 100%);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.25),0 1px 1px rgba(0,0,0,.175);
-}*/
+
     </style>
    
 </head><!--/head-->
@@ -363,46 +339,35 @@ button:hover{
                           </select>
                       </div>
                       
-                      <button type="button" name="submit" class="btn btn-primary btn-lg" required="required" onClick="getGraph('subject','sel2');">Get Me Report
-                      </button>
+                           <button type="button" name="submit" class="btn btn-primary btn-lg"  data-toggle="modal" data-target="#myModal" onClick="getGraph('subject','sel2');">Get Me Report
+                           </button>
                 </form>
        
     </section>
 
-    <section>
+    <section id="display-grpah">
         <div class="container" >
                 <!--Div that will hold the pie chart-->
-              
-
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-                                              <div class="modal-dialog" role="document">
-                                                   <div class="modal-content">
-                                                      <div class="modal-header">
-                                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                           <h4 class="modal-title" id="exampleModalLabel">Your Progress Report is here...</h4>
-                                                           
-                                                      </div>
-                                                      
-                                                         <div class="modal-body"> 
-                                                         <div id="chart_div" class="center wow fadeInDown"></div>
-                                                </div>
-                                                        <div class="modal-footer">
-                                                          <button type="button" class="btn btn-danger" onClick="return xepOnline.Formatter.Format('chart_div', {render:'download', srctype:'svg'})">Save as PDF</button>
-        
-      </div>                                                          
-                                                 </div>
-                                            </div>
-                                    </div>
-                              </div>
-    </div>
-
-
-
-
-
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Your Progress Report is here...</h4>
+                    </div>
+                    <div class="modal-body"> 
+                      <div id="chart_div" class="center wow fadeInDown"></div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" onClick="return xepOnline.Formatter.Format('chart_div', {render:'download', srctype:'svg'})">Save as PDF</button>
+                    </div>                                                          
+                  </div>
+                </div>
+            </div>
+          </div>
     </section>
 
-<div id='graph-images' ></div>
+
 
     <section id="bottom">
         <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">

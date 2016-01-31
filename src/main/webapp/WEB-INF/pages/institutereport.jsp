@@ -32,6 +32,10 @@
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
     <script>
+
+    var imgUri1;
+      var imgUri2;
+      var imgUri3;
     
          // Load the Visualization API and the piechart package.
               google.load('visualization', '1.0', {'packages':['corechart']});
@@ -44,9 +48,10 @@
             var columnData = new google.visualization.DataTable();
             columnData.addColumn('string', 'Class');
             columnData.addColumn('number', 'Average Marks');
+            columnData.addColumn({type: 'number', role: 'annotation'});
                        
             for(var i=0;i<jsonData.recordList.length;i++){
-               columnData.addRow([jsonData.recordList[i].std_class+'-'+jsonData.recordList[i].division , (jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100]);
+               columnData.addRow([jsonData.recordList[i].std_class+'-'+jsonData.recordList[i].division , Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100),Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100)]);
             
               }
           
@@ -55,7 +60,7 @@
            pieData1.addColumn('number', 'Passing Result');
 
           for(var i=0;i<jsonData.recordList.length;i++){
-                 pieData1.addRow([jsonData.recordList[i].std_class+'-'+jsonData.recordList[i].division+' '+(jsonData.recordList[i].studentspassed/jsonData.recordList[i].studentsappeared)*100+'%' ,jsonData.recordList[i].studentspassed]);
+                 pieData1.addRow([jsonData.recordList[i].std_class+'-'+jsonData.recordList[i].division+' '+((jsonData.recordList[i].studentspassed/jsonData.recordList[i].studentsappeared)*100).toFixed(2)+'%' ,jsonData.recordList[i].studentspassed]);
               
                 }
 
@@ -66,7 +71,7 @@
            pieData2.addColumn('number', 'Failing Result');
 
           for(var i=0;i<jsonData.recordList.length;i++){
-                 pieData2.addRow([jsonData.recordList[i].std_class+'-'+jsonData.recordList[i].division+' '+(jsonData.recordList[i].studentfailed/jsonData.recordList[i].studentsappeared)*100+'%' ,jsonData.recordList[i].studentfailed]);
+                 pieData2.addRow([jsonData.recordList[i].std_class+'-'+jsonData.recordList[i].division+' '+((jsonData.recordList[i].studentfailed/jsonData.recordList[i].studentsappeared)*100).toFixed(2)+'%' ,jsonData.recordList[i].studentfailed]);
               
                 }
 
@@ -76,7 +81,7 @@
                           title: 'Passing result per class for '+jsonData.schoolname+','+jsonData.examination,
                           is3D: true,
                           pieSliceText: 'label',
-                          'width':1000,
+                          'width':900,
                           'height':800,
                              };
                
@@ -85,7 +90,7 @@
                           title: 'Failing result per class for '+jsonData.schoolname+','+jsonData.examination,
                           is3D: true,
                           pieSliceText: 'label',
-                          'width':1000,
+                          'width':900,
                           'height':800,
                              };
 
@@ -103,6 +108,18 @@
         var columnChart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
         var piechart1 = new google.visualization.PieChart(document.getElementById('piechart_div1'));
         var piechart2 = new google.visualization.PieChart(document.getElementById('piechart_div2'));
+
+        google.visualization.events.addListener(columnChart, 'ready', function () {
+         imgUri1 = columnChart.getImageURI();
+         });
+
+        google.visualization.events.addListener(piechart1, 'ready', function () {
+         imgUri2 = piechart1.getImageURI();
+         });
+
+        google.visualization.events.addListener(piechart2, 'ready', function () {
+         imgUri3 = piechart2.getImageURI();
+         });
         
         columnChart.draw(columnData, columnOptions);
         piechart1.draw(pieData1, pieOptions1);
@@ -118,9 +135,10 @@
             var columnData = new google.visualization.DataTable();
             columnData.addColumn('string', 'Examination');
             columnData.addColumn('number', 'Average Marks');
+            columnData.addColumn({type: 'number', role: 'annotation'});
                        
             for(var i=1;i<jsonData.recordList.length;i++){
-               columnData.addRow([jsonData.recordList[i].examname , (jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100]);
+               columnData.addRow([jsonData.recordList[i].examname , Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100), Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100)]);
             
               }
           
@@ -129,7 +147,7 @@
            pieData1.addColumn('number', 'Passing Result');
 
           for(var i=1;i<jsonData.recordList.length;i++){
-                 pieData1.addRow([jsonData.recordList[i].examname+' '+(jsonData.recordList[i].studentspassed/jsonData.recordList[i].studentsappeared)*100+'%' ,jsonData.recordList[i].studentspassed]);
+                 pieData1.addRow([jsonData.recordList[i].examname+' '+((jsonData.recordList[i].studentspassed/jsonData.recordList[i].studentsappeared)*100).toFixed(2)+'%' ,jsonData.recordList[i].studentspassed]);
               
                 }
 
@@ -140,7 +158,7 @@
            pieData2.addColumn('number', 'Failing Result');
 
           for(var i=1;i<jsonData.recordList.length;i++){
-                 pieData2.addRow([jsonData.recordList[i].examname+' '+(jsonData.recordList[i].studentfailed/jsonData.recordList[i].studentsappeared)*100+'%' ,jsonData.recordList[i].studentfailed]);
+                 pieData2.addRow([jsonData.recordList[i].examname+' '+((jsonData.recordList[i].studentfailed/jsonData.recordList[i].studentsappeared)*100).toFixed(2)+'%' ,jsonData.recordList[i].studentfailed]);
               
                 }
 
@@ -150,7 +168,7 @@
                           title: 'Passing result per examination for '+jsonData.schoolname,
                           is3D: true,
                           pieSliceText: 'label',
-                          'width':1000,
+                          'width':900,
                           'height':800,
                              };
                
@@ -159,7 +177,7 @@
                           title: 'Failing result per examination for '+jsonData.schoolname,
                           is3D: true,
                           pieSliceText: 'label',
-                          'width':1000,
+                          'width':900,
                           'height':800,
                              };
 
@@ -177,6 +195,18 @@
         var columnChart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
         var piechart1 = new google.visualization.PieChart(document.getElementById('piechart_div1'));
         var piechart2 = new google.visualization.PieChart(document.getElementById('piechart_div2'));
+
+        google.visualization.events.addListener(columnChart, 'ready', function () {
+         imgUri1 = columnChart.getImageURI();
+         });
+
+        google.visualization.events.addListener(piechart1, 'ready', function () {
+         imgUri2 = piechart1.getImageURI();
+         });
+
+        google.visualization.events.addListener(piechart2, 'ready', function () {
+         imgUri3 = piechart2.getImageURI();
+         });
         
         columnChart.draw(columnData, columnOptions);
         piechart1.draw(pieData1, pieOptions1);
@@ -196,9 +226,10 @@
             var columnData = new google.visualization.DataTable();
             columnData.addColumn('string', 'Examination');
             columnData.addColumn('number', 'Subject Average');
+            columnData.addColumn({type: 'number', role: 'annotation'});
                        
             for(var i=0;i<jsonData.recordList.length;i++){
-               columnData.addRow([jsonData.recordList[i].examname , (jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100]);
+               columnData.addRow([jsonData.recordList[i].examname , Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100),Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100)]);
             
               }
           
@@ -207,7 +238,7 @@
            pieData1.addColumn('number', 'Passing Result');
 
           for(var i=0;i<jsonData.recordList.length;i++){
-                 pieData1.addRow([jsonData.recordList[i].examname+' '+(jsonData.recordList[i].studentspassed/jsonData.recordList[i].studentsappeared)*100+'%' ,jsonData.recordList[i].studentspassed]);
+                 pieData1.addRow([jsonData.recordList[i].examname+' '+((jsonData.recordList[i].studentspassed/jsonData.recordList[i].studentsappeared)*100).toFixed(2)+'%' ,jsonData.recordList[i].studentspassed]);
               
                 }
 
@@ -218,7 +249,7 @@
            pieData2.addColumn('number', 'Failing Result');
 
           for(var i=0;i<jsonData.recordList.length;i++){
-                 pieData2.addRow([jsonData.recordList[i].examname+' '+(jsonData.recordList[i].studentfailed/jsonData.recordList[i].studentsappeared)*100+'%' ,jsonData.recordList[i].studentfailed]);
+                 pieData2.addRow([jsonData.recordList[i].examname+' '+((jsonData.recordList[i].studentfailed/jsonData.recordList[i].studentsappeared)*100).toFixed(2)+'%' ,jsonData.recordList[i].studentfailed]);
               
                 }
 
@@ -228,7 +259,7 @@
                           title: 'Passing result per Examination',
                           is3D: true,
                           pieSliceText: 'label',
-                          'width':1000,
+                          'width':900,
                           'height':800,
                              };
                
@@ -237,7 +268,7 @@
                           title: 'Failing result per Examination',
                           is3D: true,
                           pieSliceText: 'label',
-                          'width':1000,
+                          'width':900,
                           'height':800,
                              };
 
@@ -255,7 +286,19 @@
         var columnChart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
         var piechart1 = new google.visualization.PieChart(document.getElementById('piechart_div1'));
         var piechart2 = new google.visualization.PieChart(document.getElementById('piechart_div2'));
-        
+
+        google.visualization.events.addListener(columnChart, 'ready', function () {
+         imgUri1 = columnChart.getImageURI();
+         });
+
+        google.visualization.events.addListener(piechart1, 'ready', function () {
+         imgUri2 = piechart1.getImageURI();
+         });
+
+        google.visualization.events.addListener(piechart2, 'ready', function () {
+         imgUri3 = piechart2.getImageURI();
+         });
+
         columnChart.draw(columnData, columnOptions);
         piechart1.draw(pieData1, pieOptions1);
         piechart2.draw(pieData2, pieOptions2);
@@ -269,9 +312,10 @@
           var columnData = new google.visualization.DataTable();
             columnData.addColumn('string', 'Class');
             columnData.addColumn('number', 'Average Marks');
+            columnData.addColumn({type: 'number', role: 'annotation'});
                        
             for(var i=0;i<jsonData.recordList.length;i++){
-               columnData.addRow([jsonData.recordList[i].std_class+'-'+jsonData.recordList[i].division , (jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100]);
+               columnData.addRow([jsonData.recordList[i].std_class+'-'+jsonData.recordList[i].division , Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100),Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100)]);
             
               }
           
@@ -280,7 +324,7 @@
            pieData1.addColumn('number', 'Passing Result');
 
           for(var i=0;i<jsonData.recordList.length;i++){
-                 pieData1.addRow([jsonData.recordList[i].std_class+'-'+jsonData.recordList[i].division+' '+(jsonData.recordList[i].studentspassed/jsonData.recordList[i].studentsappeared)*100+'%' ,jsonData.recordList[i].studentspassed]);
+                 pieData1.addRow([jsonData.recordList[i].std_class+'-'+jsonData.recordList[i].division+' '+((jsonData.recordList[i].studentspassed/jsonData.recordList[i].studentsappeared)*100).toFixed(2)+'%' ,jsonData.recordList[i].studentspassed]);
               
                 }
 
@@ -291,7 +335,7 @@
            pieData2.addColumn('number', 'Failing Result');
 
           for(var i=0;i<jsonData.recordList.length;i++){
-                 pieData2.addRow([jsonData.recordList[i].std_class+'-'+jsonData.recordList[i].division+' '+(jsonData.recordList[i].studentfailed/jsonData.recordList[i].studentsappeared)*100+'%' ,jsonData.recordList[i].studentfailed]);
+                 pieData2.addRow([jsonData.recordList[i].std_class+'-'+jsonData.recordList[i].division+' '+((jsonData.recordList[i].studentfailed/jsonData.recordList[i].studentsappeared)*100).toFixed(2)+'%' ,jsonData.recordList[i].studentfailed]);
               
                 }
 
@@ -301,7 +345,7 @@
                           title: 'Passing result per class for '+jsonData.examination+','+jsonData.subject,
                           is3D: true,
                           pieSliceText: 'label',
-                          'width':1000,
+                          'width':900,
                           'height':800,
                              };
                
@@ -310,7 +354,7 @@
                           title: 'Failing result per class for '+jsonData.examination+','+jsonData.subject,
                           is3D: true,
                           pieSliceText: 'label',
-                          'width':1000,
+                          'width':900,
                           'height':800,
                              };
 
@@ -328,6 +372,18 @@
         var columnChart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
         var piechart1 = new google.visualization.PieChart(document.getElementById('piechart_div1'));
         var piechart2 = new google.visualization.PieChart(document.getElementById('piechart_div2'));
+
+        google.visualization.events.addListener(columnChart, 'ready', function () {
+         imgUri1 = columnChart.getImageURI();
+         });
+
+        google.visualization.events.addListener(piechart1, 'ready', function () {
+         imgUri2 = piechart1.getImageURI();
+         });
+
+        google.visualization.events.addListener(piechart2, 'ready', function () {
+         imgUri3 = piechart2.getImageURI();
+         });
         
         columnChart.draw(columnData, columnOptions);
         piechart1.draw(pieData1, pieOptions1);
@@ -488,7 +544,36 @@
             });
           } // EOF madeAjaxCallForSelect()
         */
+
+        function generatePDF(){
+
+var doc = new jsPDF('p', 'mm');
+doc.addImage( imgUri1, 'PNG', 0, 0, 210, 0); // img1 and img2 on first page
+doc.addImage( imgUri2, 'PNG', 0, 130, 210, 0); 
+doc.addPage();
+doc.addImage( imgUri3, 'PNG', 0, 0, 210, 0);
+doc.save("ProgressReport.pdf");
+}
     </script>
+    <style type="text/css">
+    .modal-dialog {
+  width: 90%;
+
+ /*  height: 800%; */
+  padding: 50;
+}
+
+.modal-content {
+  /* height: 100%; */
+  border-radius: 3;
+}
+
+.modal-body{
+    height: 750px;
+    overflow-y: auto;
+}
+</style>
+
 </head><!--/head-->
 
 <body>
@@ -639,9 +724,10 @@
 
                             </div>
                       </div>
-                      <button type="button" name="submit" class="btn btn-primary btn-lg" required="required" onClick="getGraph('ForAllExaminations','sel11','sel12','sel13');">Get Me Report
+                      <button type="button" name="submit" class="btn btn-primary btn-lg" required="required" data-toggle="modal" data-target="#myModal" onClick="getGraph('ForAllExaminations','sel11','sel12','sel13');">Get Me Report
                       </button>
-                </form>
+
+                  </form>
               
                  
            </div>
@@ -686,7 +772,7 @@
                             </div>
                       </div>
                       
-                      <button type="button" name="submit" class="btn btn-primary btn-lg" required="required" onClick="getGraph('ForSelectedExamination','sel21','sel22','sel23');">Get Me Report
+                      <button type="button" name="submit" class="btn btn-primary btn-lg" required="required" data-toggle="modal" data-target="#myModal" onClick="getGraph('ForSelectedExamination','sel21','sel22','sel23');">Get Me Report
                       </button>
                 </form>
             </div>
@@ -723,7 +809,7 @@
                             </div>
                       </div>
                       
-                      <button type="button" name="submit" class="btn btn-primary btn-lg" required="required" onClick="getGraph('ForSelectedSubject','sel31','sel32','sel33');">Get Me Report
+                      <button type="button" name="submit" class="btn btn-primary btn-lg" required="required" data-toggle="modal" data-target="#myModal" onClick="getGraph('ForSelectedSubject','sel31','sel32','sel33');">Get Me Report
                       </button>
                 </form>
             </div>
@@ -761,7 +847,7 @@
                             </div>
                       </div>
                       
-                      <button type="button" name="submit" class="btn btn-primary btn-lg" required="required" onClick="getGraph('ForSelectedExamAndSubject','sel41','sel42','sel43');">Get Me Report
+                      <button type="button" name="submit" class="btn btn-primary btn-lg" required="required" data-toggle="modal" data-target="#myModal" onClick="getGraph('ForSelectedExamAndSubject','sel41','sel42','sel43');">Get Me Report
                       </button>
                 </form>
             </div>
@@ -769,7 +855,7 @@
     </section>
 
     
-          <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+          <!-- <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                 <div id="chart_div" class="center wow fadeInDown" ></div>
           </div> 
  
@@ -782,7 +868,48 @@
                         <div id="piechart_div2" class="center wow fadeInDown" ></div>
                 </div>
           </div>
-  </div>
+  </div> -->
+
+
+  <section id="display-grpah">
+        <div class="container" >
+                <!--Div that will hold the pie chart-->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Your Progress Report is here...</h4>
+                    </div>
+                    <div class="modal-body"> 
+                     <!--  <div id="chart_div" class="center wow fadeInDown"></div> -->
+                        <div id = "temp">
+
+                           
+                          <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                              <div id="chart_div" class="center wow fadeInDown" ></div>
+                          </div> 
+ 
+                          <div class="container-fluid">
+                              <div class="row">
+                                <div class="col-xs-6">
+                                    <div id="piechart_div1" class="center wow fadeInDown" ></div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div id="piechart_div2" class="center wow fadeInDown" ></div>
+                                </div>
+                              </div>
+                          </div>
+                       </div>
+                      </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" onClick="generatePDF()">Save as PDF</button>
+                    </div>                                                          
+                  </div>
+                </div>
+            </div>
+          </div>
+    </section>
 
     <section id="bottom">
         <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
@@ -874,6 +1001,10 @@
     <script src="<c:url value="/resources/js/jquery.isotope.min.js" />"></script>
     <script src="<c:url value="/resources/js/main.js" />"></script>
     <script src="<c:url value="/resources/js/wow.min.js" />"></script>
+    <script src="<c:url value="/resources/js/jspdf.js" />"></script>
+    <script src="<c:url value="/resources/js/sprintf.js" />"></script>
+    <script src="<c:url value="/resources/js/base64.js" />"></script>
+    <script src="<c:url value="/resources/js/jspdf.debug.js" />"></script>
   
 
 </body>
