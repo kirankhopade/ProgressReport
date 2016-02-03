@@ -12,11 +12,11 @@
     <!-- core CSS -->
 
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
-	<link href="<c:url value="/resources/css/font-awesome.min.css" />" rel="stylesheet">
-	<link href="<c:url value="/resources/css/animate.min.css" />" rel="stylesheet">
-	<link href="<c:url value="/resources/css/prettyPhoto.css" />" rel="stylesheet">
-	<link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
-	<link href="<c:url value="/resources/css/responsive.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/css/font-awesome.min.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/css/animate.min.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/css/prettyPhoto.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/css/responsive.css" />" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -26,6 +26,10 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+
+
+
+
 </head><!--/head-->
 
 <body>
@@ -37,23 +41,23 @@
                 <div class="row">
                     <div class="col-sm-10 col-xs-4">
                       <c:if test="${not empty error}">
-    				 		<div class="alert alert-danger fade in">
-    							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-   									<h4><strong> Alert!!!  </strong>  ${error}</h4>
-					  		</div>
-					  	</c:if>
-					  	 <c:if test="${not empty success}">
-					  	<div class="alert alert-success fade in">
-    							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-   									<h4><strong> Alert!!!  </strong>  ${success}</h4>
-					  		</div>
-					  		</c:if>
+                            <div class="alert alert-danger fade in">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <h4><strong> Alert!!!  </strong>  ${error}</h4>
+                            </div>
+                        </c:if>
+                         <c:if test="${not empty success}">
+                        <div class="alert alert-success fade in">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <h4><strong> Alert!!!  </strong>  ${success}</h4>
+                            </div>
+                            </c:if>
                      </div>
                     <div class="col-sm-2 col-xs-8">
                        <div class="social">
-                            <ul class="social-share">
-                                <div class="top-number"><p><i class="glyphicon glyphicon-user"></i>  <b>Login</b></p></div>
-                            </ul>
+                            
+                            <div class="top-number"><p><a href="${contextPath}/userfacility/logout" ><i class="glyphicon glyphicon-user"></i>  <b>${loggedinUser}   SignOut</b></a></p></div>
+                            
                        </div>
                     </div>
                 </div>
@@ -131,8 +135,16 @@
                     <div class="col-sm-5">
                         <div class="form-group">
                             <label>Subject *</label>
-                            <input type="text" name="subject" class="form-control" required="required">
-                        </div>
+                                                                    
+                             <select  id="subject"  title="Please select the Subject ..." class="form-control" name="subject" style="height:35px;border-radius: 4px;">
+                               <option> Register Coaching Class </option>
+                               <option> Register Institute/School </option>
+                               <option> Information </option>
+                               <option> Suggestions </option>
+                               <option> Application Access Problem</option>
+                               <option> Other </option>
+                            </select> 
+                       </div>
                         <div class="form-group">
                             <label>Message *</label>
                             <textarea name="message" id="message" required="required" class="form-control" rows="8"></textarea>
@@ -237,6 +249,7 @@
     <script src="<c:url value="/resources/js/jquery.isotope.min.js" />"></script>
     <script src="<c:url value="/resources/js/main.js" />"></script>
     <script src="<c:url value="/resources/js/wow.min.js" />"></script>
+    <script src="<c:url value="/resources/js/bootstrap-select.min.js" />"></script>
     
 
 </body>

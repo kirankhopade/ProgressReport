@@ -56,9 +56,20 @@ public class PageController {
 		}
 	}
 	
-	@RequestMapping(value="/getForgotPasswordPage", method=RequestMethod.GET)
-	public ModelAndView getForgotPasswordPage(HttpSession session, Model model){
+	@RequestMapping(value="/getFergotPasswordPage", method=RequestMethod.GET)
+	public ModelAndView getFergotPasswordPage(HttpSession session, Model model){
+		model.addAttribute("heading", "Reset Your Password");
 		model.addAttribute("customerID", "Enter Customer ID");
+		ModelAndView modelview = new ModelAndView("reset-credentials");
+		
+		return modelview;
+
+	}
+	
+	@RequestMapping(value="/getFergotCustomerID", method=RequestMethod.GET)
+	public ModelAndView getForgotPasswordPage(HttpSession session, Model model){
+		model.addAttribute("heading", "Retrieve Your Student/Customer ID");
+		model.addAttribute("emailid", "Enter Registered Email ID");
 		ModelAndView modelview = new ModelAndView("reset-credentials");
 		
 		return modelview;

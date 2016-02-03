@@ -85,7 +85,12 @@
                     <div class="col-sm-2 col-xs-8">
                         <div class="social"> 
 <!--                                 <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Login</button> -->
-									<div  class="top-number" data-toggle="modal" data-target="#myModal"><p><a href="#"><i class="glyphicon glyphicon-user" ></i><b> Login</b></a></p>
+ 									<c:if test="${not empty loggedinUser}">
+											<div class="top-number"><p><a href="${contextPath}/userfacility/logout" ><i class="glyphicon glyphicon-user"></i>  <b>${loggedinUser}   SignOut</b></a></p></div>
+									</c:if>
+									<c:if test="${ empty loggedinUser}">
+											<div  class="top-number" data-toggle="modal" data-target="#myModal"><p><a href="#"><i class="glyphicon glyphicon-user" ></i><b> Login</b></a></p></div>
+									</c:if>
 									</div>
 								</div>
 																				<!-- Modal -->
@@ -110,7 +115,7 @@
 			                                                    <div class="row">
 			                                                        <div class="col-sm-12">
 			                                                          <div class="form-group">
-			                                                            <input type="text" class="form-control" id="recipient-name"  name="student_id" placeholder="Student ID" required="required">
+			                                                            <input type="text" class="form-control" id="recipient-name"  name="student_id" placeholder="Student ID / Customer ID" required="required">
 			                                                          </div>
 			                                                        </div>
 			                                                    </div>
@@ -133,17 +138,17 @@
                                                                 <div class="row">
                                                                     <div class="col-sm-4">
                                                                         <label class="radio-inline">
-                                                                         <input type="radio" name="optradio" value="studentsignin" required>Student Sign In
+                                                                         <input type="radio" name="optradio" value="parent" required>Student Sign In
                                                                         </label>
                                                                     </div>
                                                                     <div class="col-sm-4">
                                                                         <label class="radio-inline">
-                                                                        <input type="radio" name="optradio" value="parentsignin">Parent Sign In
+                                                                        <input type="radio" name="optradio" value="parent">Parent Sign In
                                                                         </label>
                                                                     </div>
                                                                     <div class="col-sm-4">
                                                                         <label class="radio-inline">
-                                                                        <input type="radio" name="optradio" value="facultysignin">Faculty Sign In
+                                                                        <input type="radio" name="optradio" value="faculty">Faculty Sign In
                                                                         </label>
                                                                     </div>
                                                                 </div>
@@ -165,13 +170,13 @@
 			                                                      	</div>
 			                                                        <div class="col-sm-4">
 			                                                        	  <div class="form-group">
-			                                                            		<button   type="submit" class="btn btn-primary">Forgot Student ID ??</button> 
+			                                                            		<a href="${contextPath}/getFergotCustomerID" class="btn btn-primary" role="button" style="color:white">Forgot Customer ID ??</a> 
 			                                                          	  </div>
 			                                                         </div>
 			                                                         <div class="col-sm-4"> 
 			                                                             <div class="form-group"> 
 			                                                       			
-			                                                           		 <a href="${contextPath}/getForgotPasswordPage" class="btn btn-primary" role="button">Forgot Password ??</a>
+			                                                           		 <a href="${contextPath}/getFergotPasswordPage" class="btn btn-primary" role="button" style="color:white">Forgot Password ??</a>
 			                                                           		
 			                                                          	 </div> 
 			                                                         </div> 

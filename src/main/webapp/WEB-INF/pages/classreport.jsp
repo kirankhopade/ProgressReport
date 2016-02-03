@@ -478,10 +478,8 @@ doc.save("ProgressReport.pdf");
                     </div>
                     <div class="col-sm-6 col-xs-8">
                        <div class="social">
-                            <ul class="social-share">
-                               
-                                <div class="top-number"><p><i class="glyphicon glyphicon-user"></i>  <b>Login</b></p></div>
-                            </ul>
+                           
+                           <div class="top-number"><p><a href="${contextPath}/userfacility/logout" ><i class="glyphicon glyphicon-user"></i>  <b>${loggedinUser}   SignOut</b></a></p></div>
                             
                        </div>
                     </div>
@@ -529,7 +527,7 @@ doc.save("ProgressReport.pdf");
                     <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                         <div class="feature-wrap">
                              <a href="#" onclick="return showexamwisereportDiv();"> 
-                            <i class="fa fa-bullhorn"></i>
+                            <i class="fa fa-comments"></i>
                             <h2>Examination wise report for selected examination</h2>
                             <h3>This report will contain all details of selected examination including number of students appeared, number of students passed,number off students failed, class average percentage and class result in percentage.</h3></a>
                         </div>
@@ -552,7 +550,7 @@ doc.save("ProgressReport.pdf");
                     <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                         <div class="feature-wrap">
                              <a href="#" onclick="return showexamwisereportforallexamDiv();"> 
-                            <i class="fa fa-bullhorn"></i>
+                            <i class="fa fa-comments"></i>
                             <h2>Exam wise report for a selected division(class) for all examinations</h2>
                             <h3>This report will contain all details of selected examination including number of students appeared, number of students passed,number off students failed, class average percentage and class result in percentage for each exam.</h3></a>
                         </div>

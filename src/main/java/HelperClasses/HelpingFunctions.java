@@ -16,7 +16,7 @@ import org.apache.commons.lang.RandomStringUtils;
 
 public class HelpingFunctions {
 
-	public static boolean sendMail(String receiverEmailID, String nameField,String emailType){
+	public static boolean sendMail(String receiverEmailID, String nameField,String emailType,String textToInclude){
 		 
 		 String to = receiverEmailID+",kkhopade007@gmail.com";
 
@@ -60,8 +60,11 @@ public class HelpingFunctions {
 	  	   // Now set the actual message
 	  	   if(emailType.equals("contactUsMessage")){
 	  	   message.setText("Hello "+nameField+", \r\n Thank you for your message. We will act on it and let you know our actions on your message. \r\n Team,\r\n P.R. Solutions");
+	  	   }else if(emailType.equals("retrieveCustomerID")){
+	  		   
+	  		   message.setText("Hello "+nameField+", \r\n We fount following record(s) registered with "+nameField+". \r\n "+textToInclude+" \r\n"+" Team,\r\n P.R. Solutions");
 	  	   }else{ // reset password
-	  		 message.setText("Hello "+nameField+", \r\n We have received password reset request. \n\r "+emailType+" is your one time password. \n\r Please click on below link to reset your password. \n\r <<PasswordResetLink>> \r\n\n\r Team,\r\n P.R. Solutions");
+	  	   	  		 message.setText("Hello "+nameField+", \r\n We have received password reset request. \n\r "+emailType+" is your one time password. \n\r Please click on below link to reset your password.  \r\n\n\r Team,\r\n P.R. Solutions");
 	  	   }
 
 	  	   // Send message

@@ -2634,6 +2634,30 @@ border-radius:0;
 
 } 
 
+/**********
+ Link Color
+***********/
+a:link {
+    color: #cc0000;
+}
+
+/* visited link */
+a:visited {
+    color: white;
+}
+
+/* mouse over link */
+a:hover {
+    color: #cc0000;
+}
+
+/* selected link */
+a:active {
+    color: #cc0000;
+}
+
+
+
 
 
 

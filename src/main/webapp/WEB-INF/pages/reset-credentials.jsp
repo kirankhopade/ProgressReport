@@ -109,7 +109,7 @@ function confirmPassword() {
 
     <section id="contact-info">
         <div class="center">        
-                <h2>Reset your Passwod</h2>
+                <h2>${heading}</h2>
                 
             </div>
                   <div class="container wow fadeInDown">
@@ -127,7 +127,8 @@ function confirmPassword() {
                                 <div class="col-sm-2 col-xs-2">
                                     <label>CustomerID *</label>
                                 </div>
-                                
+                                <div class="col-sm-5 col-xs-5">
+                                </div>
                                 <div class="col-sm-3 col-xs-3">
                                      <input type="text" name="customerid" class="form-control" required="required">
                                 </div>
@@ -166,6 +167,12 @@ function confirmPassword() {
                                 </div>
                             </div>
                             </div>
+
+                            <div class="row" style ="margin-top: 25px; ">
+                                                               
+                            </div>
+                             
+
                             <div class="row"> 
                                  <div class="form-group">
                                         <div class="col-sm-3 col-xs-3">
@@ -199,7 +206,38 @@ function confirmPassword() {
                 </form> 
                 </c:if>
 
-
+		<c:if test="${not empty emailid}">
+                <form  method="post" action="${contextPath}/userfacility/retrieveCustomerId">
+                    
+                        <div class="form-group">
+                            <div class="row"> 
+                                <div class="col-sm-3 col-xs-3">
+                                </div>
+                                <div class="col-sm-2 col-xs-2">
+                                    <label>Enter Registered Email ID *</label>
+                                </div>
+                                <div class="col-sm-5 col-xs-5">
+                                </div>
+                                <div class="col-sm-3 col-xs-3">
+                                     <input type="email" name="emailid" class="form-control" required="required">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-sm-5 col-xs-5">
+                                </div>
+                                
+                                <div class="col-sm-4 col-xs-4">
+                                    <div class="form-group">
+                                    <button type="submit" name="submit" class="btn btn-primary btn-lg" required="required">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                                          
+                    </div>
+                    
+                </form> 
+                </c:if>
 
             </div><!--/.row-->
         </div>

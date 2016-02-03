@@ -82,7 +82,7 @@
            var total = jsonData[jsonData.length-1].marks
 
         // Set chart options
-        var options = {'title':'Progress Report for '+selectedvalue +'.   Total Obtained Marks : '+obtainedtotal+'/'+total+' ('+(obtainedtotal/total)*100+')%',
+        var options = {'title':'Progress Report for '+selectedvalue +'.   Total Obtained Marks : '+obtainedtotal+'/'+total+' ('+((obtainedtotal/total)*100).toFixed(2)+')%',
                        'width':1500,
                        'height':600,
                      vAxis: {title: 'Marks',titleTextStyle:{color: 'green'}},
@@ -229,10 +229,11 @@ function AddNamespaceHandler(){
                     </div>
                     <div class="col-sm-6 col-xs-8">
                        <div class="social">
-                            <ul class="social-share">
+                        
                                
-                                <div class="top-number"><p><i class="glyphicon glyphicon-user"></i>  <b>Login</b></p></div>
-                            </ul>
+                                 <div class="top-number"><p><a href="${contextPath}/userfacility/logout" ><i class="glyphicon glyphicon-user"></i>  <b>${loggedinUser}   SignOut</b></a></p></div> 
+                               
+    
                             
                        </div>
                     </div>
@@ -280,7 +281,7 @@ function AddNamespaceHandler(){
                     <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                         <div class="feature-wrap">
                              <a href="#" onclick="return showexamwisereportDiv();"> 
-                            <i class="fa fa-bullhorn"></i>
+                            <i class="fa fa-comments"></i>
                             <h2>Exam wise Progress Report</h2>
                             <h3>This report will contain all details of selected examination of current academic year</h3></a>
                         </div>

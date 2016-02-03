@@ -588,10 +588,8 @@ doc.save("ProgressReport.pdf");
                     </div>
                     <div class="col-sm-6 col-xs-8">
                        <div class="social">
-                            <ul class="social-share">
-                               
-                                <div class="top-number"><p><i class="glyphicon glyphicon-user"></i>  <b>Login</b></p></div>
-                            </ul>
+                            
+                            <div class="top-number"><p><a href="${contextPath}/userfacility/logout" ><i class="glyphicon glyphicon-user"></i>  <b>${loggedinUser}   SignOut</b></a></p></div>
                             
                        </div>
                     </div>
@@ -699,28 +697,6 @@ doc.save("ProgressReport.pdf");
                                       <option selected='selected'>school_id_1</option>
                                       </select>
                                  </div>
-<!-- 
-                                <div class="col-md-3 col-sm-3 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
-                                      <label for="sel12">Class : </label>
-                                      <select  class="input-large" id="sel12" >
-                                      <option selected='selected'>V</option>
-                                      <option>VI</option>
-                                      </select>
-                                </div>
-
-                                <div class="col-md-3 col-sm-3 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
-                                      <label for="sel13">Division : </label>
-                                      <select  class="input-large" id="sel13" >
-                                      <option selected='selected'>A</option>
-                                      </select>
-                                </div>
-
-                                <div class="col-md-3 col-sm-3 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
-                                      <label for="sel14">Examination : </label>
-                                      <select  class="input-large" id="sel14" >
-                                      <option selected='selected'>Unit Test 1</option>
-                                      </select>
-                                </div> -->
 
                             </div>
                       </div>

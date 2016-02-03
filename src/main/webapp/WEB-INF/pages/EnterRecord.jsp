@@ -76,10 +76,9 @@
                     </div>
                     <div class="col-sm-6 col-xs-8">
                        <div class="social">
-                            <ul class="social-share">
-                             
-                                <div class="top-number"><p><i class="glyphicon glyphicon-user"></i>  <b>Login</b></p></div>
-                            </ul>
+                            
+                            <div class="top-number"><p><a href="${contextPath}/userfacility/logout" ><i class="glyphicon glyphicon-user"></i>  <b>${loggedinUser}   SignOut</b></a></p></div>
+                            
                           
                        </div>
                     </div>
@@ -106,7 +105,7 @@
                         <li><a href="${contextPath}/studentservices/getStudentProfile">Student Profile</a></li>
                         <li><a href="${contextPath}/studentservices/getProgressReport">Progress Report</a></li>
                         <li><a href="${contextPath}/studentservices/getAttendenceReport">Attendence Report</a></li>
-                        <li><a href="${contextPath}/studentservices/getNotifications">Notifications<span class="badge">10</span></a></li>
+                        <li><a href="${contextPath}/studentservices/getNotifications">Notifications</a></li>
                         <li><a href="${contextPath}/studentservices/getContactUs">Contact Us</a></li>                   
                      
                     </ul>

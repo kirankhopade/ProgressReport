@@ -80,7 +80,7 @@ public class ProgressReportDAO {
 				
 					if(subjectName.equals(subjects.get(j).getSubjectName())){
 						ExamWiseReport object =  new ExamWiseReport();
-						object.setSubjectName(studentProfile.getExaminations().get(i).getExamName()+" ("+subjects.get(j).getObtainedNumbers()+")");
+						object.setSubjectName(studentProfile.getExaminations().get(i).getExamName());
 						object.setMarks(subjects.get(j).getObtainedNumbers());
 						this.subjectWiseReport.add(object);
 					}
@@ -114,7 +114,7 @@ public class ProgressReportDAO {
 					
 					for(int j=0;j<subjects.size();j++){
 						ExamWiseReport object =  new ExamWiseReport();
-						object.setSubjectName(subjects.get(j).getSubjectName()+" ("+subjects.get(j).getObtainedNumbers()+")");
+						object.setSubjectName(subjects.get(j).getSubjectName());
 						object.setMarks(subjects.get(j).getObtainedNumbers());
 						obtainedtotal = obtainedtotal+subjects.get(j).getObtainedNumbers();
 						maxTotal = maxTotal+subjects.get(j).getMaxNumbers();

@@ -43,7 +43,7 @@ public class UserFacilityController {
 		
 		logindata.setStudent_id(customerID);
 		
-		  emailID=loginDAO.retrievEmailID();
+		  emailID=loginDAO.retrieveEmailID();
 		  System.out.println(emailID);
 		 if(emailID!=null)
 		{
@@ -66,7 +66,7 @@ public class UserFacilityController {
 	 				return modelnview;
 	 			}
 			 
-			 	if(HelpingFunctions.sendMail(emailID, customerID,tempraryPassword )){
+			 	if(HelpingFunctions.sendMail(emailID, customerID,tempraryPassword,null )){
 			
 			 			model.addAttribute("success","Password reset link has been sent to "+emailID);
 			 			return modelnview;
@@ -91,10 +91,10 @@ public class UserFacilityController {
 		LoginCredentials logincredential = (LoginCredentials) session.getAttribute("loggedInUser");
 		 System.out.println("from updatePassword"+logincredential.getStudent_id());
 		
-		String newPassword = request.getParameter("newpassword");
-		System.out.println(newPassword);
+		String newPasswordHash = HelpingFunctions.getHash(request.getParameter("newpassword"));
+		System.out.println(newPasswordHash);
 		
-		if(updateDocumentObject.updatePrimaryPassword(logincredential.getStudent_id(), newPassword)){
+		if(updateDocumentObject.updatePrimaryPassword(logincredential.getStudent_id(), newPasswordHash)){
 			model.addAttribute("success", "Password reset successfully. Please Login");
 		}else{
 			model.addAttribute("error", "There is some technical problem to reset new password. Please write us about this to us on Contact Us Page");
@@ -105,6 +105,53 @@ public class UserFacilityController {
 		
 	   
 	}
+	
+	
+	@RequestMapping(value = "/retrieveCustomerId", method = RequestMethod.POST)
+	public ModelAndView retrieveCustomerId(HttpSession session,HttpServletRequest request, Model model){
+		
+		ModelAndView modelnview = new ModelAndView();
+		modelnview.setViewName("index");
+		
+		String emailID = request.getParameter("emailid");
+		
+		LoginDAO logindao = new LoginDAO(null);
+		
+		String customerIDDetais = logindao.retrieveCustomerId(emailID);
+		if(customerIDDetais != null){
+
+			
+			if(HelpingFunctions.sendMail(emailID, emailID,"retrieveCustomerID", customerIDDetais )){
+				
+	 			model.addAttribute("success","We have sent you details on "+emailID);
+	 			return modelnview;
+			} else{
+				model.addAttribute("error", "Some Problem with MailBox");
+				return modelnview;
+			}
+			
+		}
+		else{
+			model.addAttribute("error", "Entered email id is not registered. Please verify email id. You can contact to us through Contact Us.(Select Subject: Application Access Problem)");
+			 return modelnview;
+		}
+	}
+	
+	
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	public ModelAndView terminateSession(HttpSession session, HttpServletRequest request, Model model){
+		//        request.getSession().invalidate();
+		  //      response.sendRedirect(request.getContextPath() + "/LoginPage.html");
+		session.invalidate();
+		//request.
+				model.addAttribute("success", "Logged Out Successfully...");
+				ModelAndView modelnview = new ModelAndView();
+				modelnview.setViewName("index");
+				return modelnview;
+		    }
+
+		
+	
 	 
 	}
 	

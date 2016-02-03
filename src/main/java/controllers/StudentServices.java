@@ -78,26 +78,35 @@ public class StudentServices {
 		
 		/* Validate Entered Student_ID and Password and return status*/
 		if(request.getParameter("optradio")!=null){
-				if(loginDAO.validateCredentials()){
+				if(loginDAO.validateCredentials(request.getParameter("optradio"))){
 					
 				    session.setAttribute("logintype", request.getParameter("optradio"));
 					session.setAttribute("loggedInUser", logindata);
 					model.addAttribute("success", "Login Successful!!!!"); // set success message to display on successful login
-					if(session.getAttribute("logintype").equals("facultysignin"))
-						model.addAttribute("facultysignin", "Faculty Signed In");
-					else
-						model.addAttribute("parentsignin", "Parent/Student Signed In");
-					studentRecord= loginDAO.getStudentRecord(); // get student document from database
 					
 					if(loginDAO.getLoginType().equals("resetPassword")){
+						model.addAttribute("heading", "Reset Your Password");
 						model.addAttribute("resetPassword","Enter New Password");
 						modelnview.setViewName("reset-credentials");
 						return modelnview;
 					}
+					
+					studentRecord= loginDAO.getStudentRecord(); // get student document from database
 					studentprofile = (new StudentProfileDAO(studentRecord)).getStudentProfile(); // parse studentDocument and stores in studentprofile object
+					
+					if(session.getAttribute("logintype").equals("facultysignin")){
+						session.setAttribute("loggedinUser", logindata.getStudent_id());
+						model.addAttribute("facultysignin", "Faculty Signed In");
+					}else{
+						session.setAttribute("loggedinUser", studentprofile.getStudentName().getFirstName());
+						model.addAttribute("loggedinUser", (session.getAttribute("loggedinUser")).toString());
+						model.addAttribute("parentsignin", "Parent/Student Signed In");
+					}
+									
+					
 				}
 				else{
-					model.addAttribute("error", "Login Failed!!!!"); // set login failed message to display on wrong login credentials
+					model.addAttribute("error", loginDAO.getloginErrorMessage()); // set login failed message to display on wrong login credentials
 				}
 					
 					
@@ -121,6 +130,8 @@ public class StudentServices {
 		LoginCredentials logincredential = (LoginCredentials) session.getAttribute("loggedInUser"); //capture login session to verify user has logged in
 		
 		if(logincredential!=null){
+			
+			model.addAttribute("loggedinUser", (session.getAttribute("loggedinUser")).toString());
 			modelnview.addObject("studentprofile",studentprofile); // set StudentProfile on jsp
 				String str = (String)session.getAttribute("updateRequestStatus");
 			if(str!=null){
@@ -151,6 +162,7 @@ public class StudentServices {
 		LoginCredentials logincredential = (LoginCredentials) session.getAttribute("loggedInUser");
 		
 		if(logincredential!=null){
+			model.addAttribute("loggedinUser", (session.getAttribute("loggedinUser")).toString());
 			modelnview.setViewName("services");
 		}
 		else{
@@ -179,7 +191,7 @@ public class StudentServices {
 			 * Business Logic to get Attendance Report Data
 			 */
 				
-	
+			model.addAttribute("loggedinUser", (session.getAttribute("loggedinUser")).toString());
 			if(session.getAttribute("logintype").equals("facultysignin"))
 				model.addAttribute("facultysignin", "Faculty Signed In");
 			else
@@ -211,6 +223,7 @@ public class StudentServices {
 			/*
 			 * Business Logic to get Attendance Report Data
 			 */
+			model.addAttribute("loggedinUser", (session.getAttribute("loggedinUser")).toString());
 			if(session.getAttribute("logintype").equals("facultysignin"))
 				model.addAttribute("facultysignin", "Faculty Signed In");
 			else
@@ -242,6 +255,7 @@ public class StudentServices {
 			/*
 			 * Business Logic to get Attendance Report Data
 			 */
+			model.addAttribute("loggedinUser", (session.getAttribute("loggedinUser")).toString());
 			if(session.getAttribute("logintype").equals("facultysignin"))
 				model.addAttribute("facultysignin", "Faculty Signed In");
 			else
@@ -332,7 +346,7 @@ public class StudentServices {
 		LoginCredentials logincredential = (LoginCredentials) session.getAttribute("loggedInUser");
 		
 		if(logincredential!=null){
-		
+			model.addAttribute("loggedinUser", (session.getAttribute("loggedinUser")).toString());
 			modelnview.addObject("studentprofile",studentprofile);
 				
 			modelnview.setViewName("EnterRecord");
@@ -417,7 +431,7 @@ public class StudentServices {
 	         
 	       // Recipient's email ID needs to be mentioned.
 	        
-	        boolean flag = HelpingFunctions.sendMail(snederEmailID,name,"contactUsMessage");
+	        boolean flag = HelpingFunctions.sendMail(snederEmailID,name,"contactUsMessage",null);
 	        if(flag==true){
 	        	//return "Result";
 	        	model.addAttribute("success", "Your message has been received succesfully.");
