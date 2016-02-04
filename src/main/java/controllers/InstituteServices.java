@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import pojos.InstSelectData;
 import pojos.InstituteReport;
 import pojos.LoginCredentials;
 
@@ -39,6 +40,7 @@ public class InstituteServices {
 		LoginCredentials logincredential = (LoginCredentials) session.getAttribute("loggedInUser");
 		
 		if(logincredential!=null){
+			model.addAttribute("facultysignin", "Faculty Signed In");
 			modelnview.setViewName("classreport");
 		}
 		else{
@@ -58,6 +60,7 @@ public class InstituteServices {
 		LoginCredentials logincredential = (LoginCredentials) session.getAttribute("loggedInUser");
 		
 		if(logincredential!=null){
+			model.addAttribute("facultysignin", "Faculty Signed In");
 			modelnview.setViewName("institutereport");
 		}
 		else{
@@ -150,6 +153,43 @@ public @ResponseBody InstituteReport showInstitutewiseReport(HttpServletRequest 
 	return datatoclient;
 }
 
+	@RequestMapping(value="/getSelectDropDownList", method = RequestMethod.GET)
+	public @ResponseBody InstSelectData getSelectDropDownList(HttpServletRequest request,HttpSession session){
+		InstSelectData selectDataObj = new InstSelectData();
+		ArrayList <String> institute =null;
+		try{
+		if(request.getParameter("type").equals("ForAllExaminations")){
+			//list = new ArrayList<String>();
+			String temp = (new InstituteReportDAO()).getAssociatedInstituteID(((LoginCredentials)session.getAttribute("loggedInUser")).getStudent_id());
+			System.out.println(temp);
+			selectDataObj.setInstitute(temp);
+		}
+		
+		if(request.getParameter("type").equals("ForSelectedExamination")){
+			//list = new ArrayList<String>();
+			String temp = (new InstituteReportDAO()).getAssociatedInstituteID(((LoginCredentials)session.getAttribute("loggedInUser")).getStudent_id());
+			System.out.println(temp);
+			selectDataObj.setInstitute(temp);
+			selectDataObj.getExam().add("Unit Test 1");
+			selectDataObj.getExam().add("Unit Test 2");
+			
+		}
+		
+		if(request.getParameter("type").equals("ForSelectedSubject")){
+			//list = new ArrayList<String>();
+			String temp = (new InstituteReportDAO()).getAssociatedInstituteID(((LoginCredentials)session.getAttribute("loggedInUser")).getStudent_id());
+			System.out.println(temp);
+			selectDataObj.setInstitute(temp);
+			selectDataObj.getSubjects().add("English");
+			selectDataObj.getSubjects().add("Mararthi");
+			selectDataObj.getSubjects().add("Hindi");
+			
+		}
+		
+		}catch(Exception e){ System.out.println(e);}
+		//list.t
+		return selectDataObj;
+	}
 
 
 	

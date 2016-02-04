@@ -64,7 +64,7 @@ public class HelpingFunctions {
 	  		   
 	  		   message.setText("Hello "+nameField+", \r\n We fount following record(s) registered with "+nameField+". \r\n "+textToInclude+" \r\n"+" Team,\r\n P.R. Solutions");
 	  	   }else{ // reset password
-	  	   	  		 message.setText("Hello "+nameField+", \r\n We have received password reset request. \n\r "+emailType+" is your one time password. \n\r Please click on below link to reset your password.  \r\n\n\r Team,\r\n P.R. Solutions");
+	  	   	  		 message.setText("Hello "+nameField+", \r\n We have received password reset request. \n\r "+emailType+" is your one time password.  \r\n\n\r Team,\r\n P.R. Solutions");
 	  	   }
 
 	  	   // Send message

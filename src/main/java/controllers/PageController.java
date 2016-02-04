@@ -42,7 +42,7 @@ public class PageController {
 		LoginCredentials logincredential = (LoginCredentials) session.getAttribute("loggedInUser");
 		if(logincredential!=null){
 		
-		if(session.getAttribute("logintype").equals("facultysignin"))
+		if(session.getAttribute("logintype").equals("faculty"))
 			model.addAttribute("facultysignin", "Faculty Signed In");
 		else
 			model.addAttribute("parentsignin", "Parent/Student Signed In");

@@ -6,12 +6,14 @@ import org.bson.Document;
 
 import pojos.InstExamwiseReport;
 import pojos.InstituteReport;
+import static com.mongodb.client.model.Filters.eq;
 import static java.util.Arrays.asList;
 
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.AggregateIterable;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 public class InstituteReportDAO {
@@ -480,6 +482,15 @@ public class InstituteReportDAO {
 	//	  return null;
 	  }
 	 
+	  public String getAssociatedInstituteID(String customerID){
+		  
+		  try{
+		  MongoCollection<Document> collection = db.getCollection("usercredentials");
+			Document retrievedDocument = collection.find(eq("_id",customerID)).first();
+			return retrievedDocument.getString("associated_inst");
+		  }catch(Exception e){System.out.println(e); return null;}
+			
+	  }
 	 
 	 }
 	 

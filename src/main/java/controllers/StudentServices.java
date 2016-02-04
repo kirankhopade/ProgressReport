@@ -94,7 +94,7 @@ public class StudentServices {
 					studentRecord= loginDAO.getStudentRecord(); // get student document from database
 					studentprofile = (new StudentProfileDAO(studentRecord)).getStudentProfile(); // parse studentDocument and stores in studentprofile object
 					
-					if(session.getAttribute("logintype").equals("facultysignin")){
+					if(session.getAttribute("logintype").equals("faculty")){
 						session.setAttribute("loggedinUser", logindata.getStudent_id());
 						model.addAttribute("facultysignin", "Faculty Signed In");
 					}else{
@@ -192,7 +192,7 @@ public class StudentServices {
 			 */
 				
 			model.addAttribute("loggedinUser", (session.getAttribute("loggedinUser")).toString());
-			if(session.getAttribute("logintype").equals("facultysignin"))
+			if(session.getAttribute("logintype").equals("faculty"))
 				model.addAttribute("facultysignin", "Faculty Signed In");
 			else
 				model.addAttribute("parentsignin", "Parent/Student Signed In");
@@ -224,7 +224,7 @@ public class StudentServices {
 			 * Business Logic to get Attendance Report Data
 			 */
 			model.addAttribute("loggedinUser", (session.getAttribute("loggedinUser")).toString());
-			if(session.getAttribute("logintype").equals("facultysignin"))
+			if(session.getAttribute("logintype").equals("faculty"))
 				model.addAttribute("facultysignin", "Faculty Signed In");
 			else
 				model.addAttribute("parentsignin", "Parent/Student Signed In");
@@ -256,7 +256,7 @@ public class StudentServices {
 			 * Business Logic to get Attendance Report Data
 			 */
 			model.addAttribute("loggedinUser", (session.getAttribute("loggedinUser")).toString());
-			if(session.getAttribute("logintype").equals("facultysignin"))
+			if(session.getAttribute("logintype").equals("faculty"))
 				model.addAttribute("facultysignin", "Faculty Signed In");
 			else
 				model.addAttribute("parentsignin", "Parent/Student Signed In");
