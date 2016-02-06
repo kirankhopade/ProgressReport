@@ -416,7 +416,7 @@
               var exam = document.getElementById(sel2).value;
               var subject = document.getElementById(sel3).value;
             }
-            alert(reporttype+schoolid+exam+subject);
+          //  alert(reporttype+schoolid+exam+subject);
             //alert(x);
 
             madeAjaxCallForGeaphData(reporttype,schoolid,exam,subject);
@@ -433,6 +433,7 @@
             document.getElementById('ForSelectedSubject').style.display = "none";
             document.getElementById('ForSelectedExamAndSubject').style.display = "none";
             document.getElementById('ForAllExaminations').style.display = "block";
+            clearSelect("sel11");
             madeAjaxCallForSelect("${contextPath}/instituteservices/getSelectDropDownList","#sel11","","","ForAllExaminations");
               
         } // EOF showForAllExaminations()
@@ -444,6 +445,8 @@
             document.getElementById('ForSelectedSubject').style.display = "none";
             document.getElementById('ForSelectedExamAndSubject').style.display = "none";            
             document.getElementById('ForSelectedExamination').style.display = "block";
+            clearSelect("sel21");
+            clearSelect("sel22");
             madeAjaxCallForSelect("${contextPath}/instituteservices/getSelectDropDownList","#sel21","#sel22","","ForSelectedExamination");
             
 
@@ -456,6 +459,8 @@
             document.getElementById('ForAllExaminations').style.display = "none";
             document.getElementById('ForSelectedExamAndSubject').style.display = "none";
             document.getElementById('ForSelectedSubject').style.display = "block";
+            clearSelect("sel31");
+            clearSelect("sel32");
             madeAjaxCallForSelect("${contextPath}/instituteservices/getSelectDropDownList","#sel31","#sel32","","ForSelectedSubject");
                 
         } // EOF showForSelectedSubject()
@@ -465,12 +470,33 @@
             document.getElementById('ForSelectedExamination').style.display = "none"
            document.getElementById('ForAllExaminations').style.display = "none";
             document.getElementById('ForSelectedSubject').style.display = "none";
-            document.getElementById('ForSelectedExamAndSubject').style.display = "block";            
+            document.getElementById('ForSelectedExamAndSubject').style.display = "block";         
+          //  alert("at showForSelectedExamAndSubject ");   
+            clearSelect("sel41");
+            clearSelect("sel42");
+            clearSelect("sel43");
             madeAjaxCallForSelect("${contextPath}/instituteservices/getSelectDropDownList","#sel41","#sel42","#sel43","ForSelectedExamAndSubject");
 
 
         }
+
+        // Function to get subject list according to selected examination in Option 4 
+        function selectCorrespondingSubjects(){
+
+           // alert("selectCorrespondingSubjects");
+            var selectedExam = $('#sel42 :selected').text();
+           // alert(selectedExam);
+            clearSelect("sel43");
+          madeAjaxCallForSelect("${contextPath}/instituteservices/getSelectDropDownList",selectedExam,"#sel42","#sel43","selectCorrespondingSubjects");
+        }
         
+        function clearSelect(selectid){
+                selectbox=document.getElementById(selectid);
+                      for(var i=selectbox.options.length-1;i>0;i--)
+                      {
+                        selectbox.remove(i);
+                      }
+              }
 
         // AJAX call function to load graph data
 
@@ -508,11 +534,12 @@
          // AJAX call function to load exam and subject lists ffrom database
 
         function madeAjaxCallForSelect(reqURL,selectid1,selectid2,selectid3,listType){
+          //alert("at ajax");
             $.ajax({
               type: "get",
               url: reqURL,
               cache: false,       
-              data:{type:listType} ,
+              data:{type:listType,selectedExam:selectid1} ,  /* selectExam is to get corresponding subjects list used in Option 4 */
                 success: function(response){
                    // $('#result').html("");
             
@@ -542,7 +569,25 @@
                             for(i=0;i<response.subjects.length;i++){
                               $(selectid2).append("<option>" + response.subjects[i] + "</option>");
                             }
-                      };     
+                      };    
+
+                      if (listType === "ForSelectedExamAndSubject") {
+
+                         $(selectid1).append("<option>" + response.institute + "</option>");
+
+                         for(i=0;i<response.exam.length;i++){
+                              $(selectid2).append("<option>" + response.exam[i] + "</option>");
+                            }
+
+                            
+                      }
+
+                      if (listType === "selectCorrespondingSubjects"){
+                        
+                          for(i=0;i<response.subjects.length;i++){
+                              $(selectid3).append("<option>" + response.subjects[i] + "</option>");
+                            }
+                      }
               
               },
               error: function(){            
@@ -699,9 +744,9 @@ doc.save("ProgressReport.pdf");
                         <div class="form-group">
                             <div class="row">
                                  <div class="col-md-12 col-sm-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
-                                      <label for="sel11">School : </label>
+                                      <label for="sel11">Institute : </label>
                                       <select  class="input-large" id="sel11" >
-                                     <!--  <option selected='selected'>school_id_1</option> -->
+                                        <option value="" disabled selected>Select Institute ID</option>
                                       </select>
                                  </div>
 
@@ -722,17 +767,16 @@ doc.save("ProgressReport.pdf");
                         <div class="form-group">
                             <div class="row">
                                  <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
-                                      <label for="sel21">School : </label>
+                                      <label for="sel21">Institute : </label>
                                       <select  class="input-large" id="sel21" >
-                                     <!--  <option>school_id_1</option> -->
+                                        <option value="" disabled selected>Select Institute ID</option>
                                       </select>
                                  </div>
 
                                 <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel22">Examination </label>
                                       <select  class="input-large" id="sel22" >
-                                      <!-- <option>Unit Test 1</option>
-                                      <option>Unit Test 2</option> -->
+                                        <option value="" disabled selected>Select Examination</option>
                                       </select>
                                 </div>
 
@@ -768,17 +812,17 @@ doc.save("ProgressReport.pdf");
                         <div class="form-group">
                             <div class="row">
                                  <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
-                                      <label for="sel31">School : </label>
+                                      <label for="sel31">Institute : </label>
                                       <select  class="input-large" id="sel31" >
-                                  <!--     <option>school_id_1</option> -->
+                                  <option value="" disabled selected>Select Institute ID</option>
                                       </select>
                                  </div>
 
                                 <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel32">Subject : </label>
                                       <select  class="input-large" id="sel32" >
-                                      <!-- <option>Marathi</option>
-                                      <option>English</option> -->
+                                        <option value="" disabled selected>Select Subject</option>
+                                      
                                       </select>
                                 </div>
 
@@ -805,25 +849,25 @@ doc.save("ProgressReport.pdf");
                         <div class="form-group">
                             <div class="row">
                                  <div class="col-md-4 col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
-                                      <label for="sel41">School : </label>
+                                      <label for="sel41">Institute : </label>
                                       <select  class="input-large" id="sel41" >
-                                      <option>school_id_1</option>
+                                        <option value="" disabled selected>Select Institute ID</option>
                                       </select>
                                  </div>
 
                                 <div class="col-md-4 col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel42">Examination : </label>
-                                      <select  class="input-large" id="sel42" >
-                                      <option>Unit Test 1</option>
-                                      <option>Unit Test 2</option>
+                                      <select  class="input-large" id="sel42"  onchange="selectCorrespondingSubjects()" >
+                                      <!-- <option>Unit Test 1</option>
+                                      <option>Unit Test 2</option> -->
+                                      <option value="" disabled selected>Select Examination</option>
                                       </select>
                                 </div>
 
                                 <div class="col-md-4 col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel43">Subject : </label>
                                       <select  class="input-large" id="sel43" >
-                                      <option>Marathi</option>
-                                      <option>English</option>
+                                         <option value="" disabled selected>Select Subject</option>
                                       </select>
                                 </div>
 
@@ -838,23 +882,7 @@ doc.save("ProgressReport.pdf");
     </section>
 
     
-          <!-- <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
-                <div id="chart_div" class="center wow fadeInDown" ></div>
-          </div> 
- 
-          <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <div id="piechart_div1" class="center wow fadeInDown" ></div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div id="piechart_div2" class="center wow fadeInDown" ></div>
-                </div>
-          </div>
-  </div> -->
-
-
-  <section id="display-grpah">
+      <section id="display-grpah">
         <div class="container" >
                 <!--Div that will hold the pie chart-->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">

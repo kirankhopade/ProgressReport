@@ -29,13 +29,19 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
+
+
 import HelperClasses.HelpingFunctions;
+import daos.InstituteReportDAO;
 import daos.LoginDAO;
 import daos.ProgressReportDAO;
 import daos.StudentProfileDAO;
 import pojos.ExamWiseReport;
+import pojos.InstituteDetails;
 import pojos.LoginCredentials;
 import pojos.StudentProfile;
+
+
 
 
 
@@ -97,6 +103,8 @@ public class StudentServices {
 					if(session.getAttribute("logintype").equals("faculty")){
 						session.setAttribute("loggedinUser", logindata.getStudent_id());
 						model.addAttribute("facultysignin", "Faculty Signed In");
+						InstituteDetails institutedetail = (new InstituteReportDAO()).getInstituteDetails(loginDAO.getAssociated_inst());
+						session.setAttribute("institutedetails", institutedetail);
 					}else{
 						session.setAttribute("loggedinUser", studentprofile.getStudentName().getFirstName());
 						model.addAttribute("loggedinUser", (session.getAttribute("loggedinUser")).toString());

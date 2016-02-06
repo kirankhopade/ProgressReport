@@ -1,6 +1,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import pojos.InstSelectData;
+import pojos.InstituteDetails;
 import pojos.InstituteReport;
 import pojos.LoginCredentials;
 
@@ -155,39 +157,80 @@ public @ResponseBody InstituteReport showInstitutewiseReport(HttpServletRequest 
 
 	@RequestMapping(value="/getSelectDropDownList", method = RequestMethod.GET)
 	public @ResponseBody InstSelectData getSelectDropDownList(HttpServletRequest request,HttpSession session){
+		InstituteDetails institutedetail = (InstituteDetails)session.getAttribute("institutedetails");
 		InstSelectData selectDataObj = new InstSelectData();
-		ArrayList <String> institute =null;
+		//ArrayList <String> instituteSelectDetails =null;
 		try{
 		if(request.getParameter("type").equals("ForAllExaminations")){
 			//list = new ArrayList<String>();
-			String temp = (new InstituteReportDAO()).getAssociatedInstituteID(((LoginCredentials)session.getAttribute("loggedInUser")).getStudent_id());
-			System.out.println(temp);
-			selectDataObj.setInstitute(temp);
+			//String instituteid = (new InstituteReportDAO()).getAssociatedInstituteID(((LoginCredentials)session.getAttribute("loggedInUser")).getStudent_id());
+			
+			//institutedetail = (new InstituteReportDAO()).getInstituteDetails(instituteid);
+			System.out.println("from inst get select drop down"+institutedetail.get_id()+" "+institutedetail.getInstitute_details().getAddress().getFirstLine()+" "+institutedetail.getExam_details().get(0).getExam_name()+" "+institutedetail.getClass_list().get(0).getDivision_details().get(0).getDivision());
+			System.out.println(institutedetail.getClass_list().get(0).getDivision_details().get(0).getAssociated_exams().get(0).getExam_name());
+			selectDataObj.setInstitute(institutedetail.get_id());
 		}
 		
 		if(request.getParameter("type").equals("ForSelectedExamination")){
-			//list = new ArrayList<String>();
-			String temp = (new InstituteReportDAO()).getAssociatedInstituteID(((LoginCredentials)session.getAttribute("loggedInUser")).getStudent_id());
-			System.out.println(temp);
-			selectDataObj.setInstitute(temp);
-			selectDataObj.getExam().add("Unit Test 1");
-			selectDataObj.getExam().add("Unit Test 2");
+			
+			selectDataObj.setInstitute(institutedetail.get_id());
+	
+			for(int i=0;i<institutedetail.getExam_details().size();i++){
+				 if(institutedetail.getExam_details().get(i).getExam_type().equals("common_accross_institute")){
+					  selectDataObj.getExam().add(institutedetail.getExam_details().get(i).getExam_name());
+				 }
+			}
 			
 		}
 		
 		if(request.getParameter("type").equals("ForSelectedSubject")){
-			//list = new ArrayList<String>();
-			String temp = (new InstituteReportDAO()).getAssociatedInstituteID(((LoginCredentials)session.getAttribute("loggedInUser")).getStudent_id());
-			System.out.println(temp);
-			selectDataObj.setInstitute(temp);
-			selectDataObj.getSubjects().add("English");
-			selectDataObj.getSubjects().add("Mararthi");
-			selectDataObj.getSubjects().add("Hindi");
+			selectDataObj.setInstitute(institutedetail.get_id());
 			
+			for(int i=0;i<institutedetail.getExam_details().size();i++){
+				
+				if(institutedetail.getExam_details().get(i).getExam_type().equals("common_accross_institute")){
+				    
+					for(int j=0;j<institutedetail.getExam_details().get(i).getSubject_list().size();j++){
+						if(!selectDataObj.getSubjects().contains(institutedetail.getExam_details().get(i).getSubject_list().get(j).getSubjectName()))
+							selectDataObj.getSubjects().add(institutedetail.getExam_details().get(i).getSubject_list().get(j).getSubjectName());
+					}
+				}
+			}
+			
+		} 
+		
+		if(request.getParameter("type").equals("ForSelectedExamAndSubject")){
+			selectDataObj.setInstitute(institutedetail.get_id());
+			
+			for(int i=0;i<institutedetail.getExam_details().size();i++){
+				
+				if(institutedetail.getExam_details().get(i).getExam_type().equals("common_accross_institute")){
+					  selectDataObj.getExam().add(institutedetail.getExam_details().get(i).getExam_name());
+				 }
+			}
+			
+		} 
+		
+		if(request.getParameter("type").equals("selectCorrespondingSubjects")){
+			
+			String examName = request.getParameter("selectedExam");
+			System.out.println("receicved exam : "+examName);
+				selectDataObj.setInstitute(institutedetail.get_id());
+			
+			for(int i=0;i<institutedetail.getExam_details().size();i++){
+				
+				if(institutedetail.getExam_details().get(i).getExam_type().equals("common_accross_institute") && institutedetail.getExam_details().get(i).getExam_name().equals(examName)){
+				    
+					for(int j=0;j<institutedetail.getExam_details().get(i).getSubject_list().size();j++){
+						if(!selectDataObj.getSubjects().contains(institutedetail.getExam_details().get(i).getSubject_list().get(j).getSubjectName()))
+							selectDataObj.getSubjects().add(institutedetail.getExam_details().get(i).getSubject_list().get(j).getSubjectName());
+					}
+				}
+			}
 		}
 		
 		}catch(Exception e){ System.out.println(e);}
-		//list.t
+		
 		return selectDataObj;
 	}
 

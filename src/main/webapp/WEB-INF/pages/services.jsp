@@ -125,7 +125,7 @@
         // show Select Subjec dropdown list and hide Select Exam dropdown if it is visible
 
    	    function showsubjectwisereportDiv() {
-            alert("at showsubjectwisereport");
+            //alert("at showsubjectwisereport");
             document.getElementById('examwisereport').style.display = "none";
             document.getElementById('subjectwisereport').style.display = "block";
             madeAjaxCallForSelect("${contextPath}/studentservices/getSelectDropDownList","#sel2","subject");

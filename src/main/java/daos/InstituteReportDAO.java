@@ -3,9 +3,13 @@ package daos;
 import java.util.ArrayList;
 
 import org.bson.Document;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.map.ObjectMapper;
 
 import pojos.InstExamwiseReport;
+import pojos.InstituteDetails;
 import pojos.InstituteReport;
+import pojos.StudentProfile;
 import static com.mongodb.client.model.Filters.eq;
 import static java.util.Arrays.asList;
 
@@ -490,6 +494,29 @@ public class InstituteReportDAO {
 			return retrievedDocument.getString("associated_inst");
 		  }catch(Exception e){System.out.println(e); return null;}
 			
+	  }
+	  
+	  public InstituteDetails getInstituteDetails(String instituteid){
+		       InstituteDetails institutedetails=null;
+		  try{
+			  MongoCollection<Document> collection = db.getCollection("institutedetails");
+			  Document retrivedDoc = collection.find(eq("_id",instituteid)).first();
+		         System.out.println(retrivedDoc);
+		         System.out.println(retrivedDoc.get("exam_details"));
+		        
+		         try {
+						ObjectMapper mapper = new ObjectMapper();
+						institutedetails = mapper.readValue(retrivedDoc.toJson(), InstituteDetails.class);
+					} catch (Exception e) {
+							System.out.println("InstituteReportDAO::getInstituteDetails-Conversion Exception  "+e);
+					}
+		         
+		  }catch(Exception e){
+			  System.out.println("InstituteReportDAO::getInstituteDetails"+e);
+		  }
+		  
+		  return institutedetails;
+		 
 	  }
 	 
 	 }

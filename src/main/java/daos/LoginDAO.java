@@ -37,6 +37,7 @@ public class LoginDAO {
 	private MongoDatabase db;
 	private Document retrievedDocument=null;
 	private String loginType="";   // to store login type is normal login or reset password login
+	private String associated_inst ="";  // stores associated inst if login type is faculty
 	private String loginErrorMessage="";
 
 	/*
@@ -68,6 +69,12 @@ public class LoginDAO {
 			this.logindata = logindata;
 		}	
 		
+		public String getAssociated_inst() {
+			return associated_inst;
+		}
+		public void setAssociated_inst(String associated_inst) {
+			this.associated_inst = associated_inst;
+		}
 		public String getloginErrorMessage() {
 			return loginErrorMessage;
 		}
@@ -120,6 +127,7 @@ public class LoginDAO {
 				 if(retrievedDocument.getString("password").equals(HelpingFunctions.getHash(receivedPassword))){
 					  if(loginUserType.equals(retrievedDocument.getString("customedtype"))){
 						  loginType="normalLogin";
+						  associated_inst = retrievedDocument.getString("associated_inst");
 							return true;
 					  }else{
 						  
