@@ -7,14 +7,14 @@ public class ExamDetails {
 	private String exam_name="";
 	private String exam_type="";
 	private String exam_Date = "";
-	private ArrayList<Subject> subject_list = new ArrayList<Subject>();
 	
+	/*
 	public ArrayList<Subject> getSubject_list() {
 		return subject_list;
 	}
 	public void setSubject_list(ArrayList<Subject> subject_list) {
 		this.subject_list = subject_list;
-	}
+	}*/
 	public String getExam_name() {
 		return exam_name;
 	}

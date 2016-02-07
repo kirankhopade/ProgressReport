@@ -9,9 +9,16 @@ public class InstSelectData {
 	private List<String> exam = new ArrayList<String>();
 	private List<String> std_class = new ArrayList<String>();
 	private List<String> subjects = new ArrayList<String>();
+	private List<String> divisions = new ArrayList<String>();
 	
 	public String getInstitute() {
 		return institute;
+	}
+	public List<String> getDivisions() {
+		return divisions;
+	}
+	public void setDivisions(List<String> divisions) {
+		this.divisions = divisions;
 	}
 	public void setInstitute(String institute) {
 		this.institute = institute;

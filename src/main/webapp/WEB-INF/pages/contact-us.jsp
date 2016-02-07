@@ -137,6 +137,7 @@
                             <label>Subject *</label>
                                                                     
                              <select  id="subject"  title="Please select the Subject ..." class="form-control" name="subject" style="height:35px;border-radius: 4px;">
+                                <option value="" disabled selected>Select Subject</option>
                                <option> Register Coaching Class </option>
                                <option> Register Institute/School </option>
                                <option> Information </option>

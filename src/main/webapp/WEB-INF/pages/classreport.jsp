@@ -331,7 +331,7 @@
             document.getElementById('subjectwisereport').style.display = "none";
             document.getElementById('examwisereportforallexam').style.display = "none";
             document.getElementById('examwisereport').style.display = "block";
-         //   madeAjaxCallForSelect("${contextPath}/studentservices/getSelectDropDownList","#sel1","exam");
+            madeAjaxCallForSelect("${contextPath}/instituteservices/getSelectDropDownList","#sel11","#sel12","#sel13","#sel14","class_examwise");
                 // Clear the content of #sel1
           //      selectbox=document.getElementById("sel1");
             //    for(var i=selectbox.options.length-1;i>=0;i--)
@@ -346,7 +346,7 @@
             document.getElementById('examwisereport').style.display = "none";
             document.getElementById('examwisereportforallexam').style.display = "none";
             document.getElementById('subjectwisereport').style.display = "block";
-          //  madeAjaxCallForSelect("${contextPath}/studentservices/getSelectDropDownList","#sel2","subject");
+            madeAjaxCallForSelect("${contextPath}/instituteservices/getSelectDropDownList","#sel21","#sel22","#sel23","#sel24","class_subjectwise");
              // Clear the content of #sel2
                 /*selectbox=document.getElementById("sel2");
                 for(var i=selectbox.options.length-1;i>=0;i--)
@@ -362,7 +362,7 @@
             document.getElementById('subjectwisereport').style.display = "none";
             document.getElementById('examwisereport').style.display = "none";
             document.getElementById('examwisereportforallexam').style.display = "block";
-           // madeAjaxCallForSelect("${contextPath}/studentservices/getSelectDropDownList","#sel1","exam");
+            madeAjaxCallForSelect("${contextPath}/instituteservices/getSelectDropDownList","#sel31","#sel32","#sel33","#sel34","class_examwisereportforallexam");
                 // Clear the content of #sel1
              //   selectbox=document.getElementById("sel1");
                // for(var i=selectbox.options.length-1;i>=0;i--)
@@ -403,23 +403,65 @@
                 });
         }
          
-         /*
+         
          // AJAX call function to load exam and subject lists ffrom database
 
-        function madeAjaxCallForSelect(reqURL,selectid,listType){
+        function madeAjaxCallForSelect(reqURL,selectid1,selectid2,selectid3,selectid4,listType){
+          alert("in select dropdown");
+            alert(listType+selectid1);
             $.ajax({
               type: "get",
               url: reqURL,
               cache: false,       
-              data:{type:listType} ,
+              data:{type:listType,selectedClass:selectid1,selectedDivision:selectid2} ,
                 success: function(response){
                    // $('#result').html("");
             
                    // $('#result').html("First Name:- " + response);
-                                                            
-                    for(i=0; i<response.length; i++){
-                        $(selectid).append("<option>" + response[i] + "</option>");
-                    }        
+                          if(listType === "class_examwise"){
+
+                             $(selectid1).append("<option>" + response.institute + "</option>");
+
+                             for(i=0;i<response.std_class.length;i++){
+                              $(selectid2).append("<option>" + response.std_class[i] + "</option>");
+                            }
+                          }  
+
+                          if(listType === "class_subjectwise" || listType === "class_examwisereportforallexam"){
+                            $(selectid1).append("<option>" + response.institute + "</option>");
+
+                            for(i=0;i<response.std_class.length;i++){
+                              $(selectid2).append("<option>" + response.std_class[i] + "</option>");
+                            }
+
+                          } 
+
+
+
+
+
+
+                          if(listType === "getDivision"){
+
+                              for(i=0;i<response.divisions.length;i++){
+                                  $(selectid4).append("<option>" + response.divisions[i] + "</option>");
+                                }
+                          }
+
+                          if(listType === "getExamination"){
+
+                              for(i=0;i<response.exam.length;i++){
+                                  $(selectid4).append("<option>" + response.exam[i] + "</option>");
+                                }
+                          }
+
+                          if(listType === "getSubject"){
+
+                              for(i=0;i<response.subjects.length;i++){
+                                  $(selectid4).append("<option>" + response.subjects[i] + "</option>");
+                                }
+                          }
+                        
               
               },
               error: function(){            
@@ -427,7 +469,7 @@
               }
             });
           } // EOF madeAjaxCallForSelect()
-        */
+        
 
 
 
@@ -440,10 +482,48 @@ doc.addImage( imgUri2, 'PNG', 0, 130, 210, 0);
 doc.addPage();
 doc.addImage( imgUri3, 'PNG', 0, 0, 210, 0);
 doc.save("ProgressReport.pdf");
-
-
-
 }
+
+function clearSelect(selectid){
+                selectbox=document.getElementById(selectid);
+                      for(var i=selectbox.options.length-1;i>0;i--)
+                      {
+                        selectbox.remove(i);
+                      }
+              }
+
+function selectCorrespondingItem(itemType,selectid,clearSelectid,getfirstselect){
+
+            alert("selectCorrespondingItem");
+            if(itemType ==="getDivision"){
+                var selectedClass = $(selectid+' :selected').text();  // to get selected class
+                alert(selectedClass);
+                clearSelect('sel13');
+                clearSelect('sel23');  // clear division selectbox
+                madeAjaxCallForSelect("${contextPath}/instituteservices/getSelectDropDownList",selectedClass,"","",clearSelectid,"getDivision"); 
+            }
+
+            if(itemType ==="getExamination"){
+                var selectedClass = $(getfirstselect+' :selected').text()  // to get selected class
+                var selectedDivision = $(selectid+' :selected').text(); // to get selected division
+                alert("selected division "+selectedDivision);
+                clearSelect('sel14');  // clear examination selectbox
+                madeAjaxCallForSelect("${contextPath}/instituteservices/getSelectDropDownList",selectedClass,selectedDivision,"",clearSelectid,"getExamination"); 
+            }
+            
+            if(itemType ==="getSubject"){
+
+              var selectedClass = $(getfirstselect+' :selected').text()  // to get selected class
+                var selectedDivision = $(selectid+' :selected').text(); // to get selected division
+                clearSelect('sel24');
+                madeAjaxCallForSelect("${contextPath}/instituteservices/getSelectDropDownList",selectedClass,selectedDivision,"",clearSelectid,"getSubject");
+            }
+           // alert(selectedExam);
+            
+          
+        }
+
+         
     </script>
 
     <style type="text/css">
@@ -575,29 +655,29 @@ doc.save("ProgressReport.pdf");
                                  <div class="col-md-3 col-sm-3 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel11">School : </label>
                                       <select  class="input-large" id="sel11" >
-                                      <option selected='selected'>school_id_1</option>
+                                      <option value="" disabled selected>Select Institute ID</option>
                                       </select>
                                  </div>
 
                                 <div class="col-md-3 col-sm-3 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel12">Class : </label>
-                                      <select  class="input-large" id="sel12" >
-                                      <option selected='selected'>V</option>
-                                      <option>VI</option>
+                                      <select  class="input-large" id="sel12" onChange="selectCorrespondingItem('getDivision','#sel12','#sel13')">
+                                      <option value ="" disabled selected>Select Class</option>
+                                   <!--    <option>VI</option> -->
                                       </select>
                                 </div>
 
                                 <div class="col-md-3 col-sm-3 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel13">Division : </label>
-                                      <select  class="input-large" id="sel13" >
-                                      <option selected='selected'>A</option>
+                                      <select  class="input-large" id="sel13" onChange="selectCorrespondingItem('getExamination','#sel13','#sel14','#sel12')" >
+                                       <option value="" disabled selected>Select Division</option> 
                                       </select>
                                 </div>
 
                                 <div class="col-md-3 col-sm-3 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel14">Examination : </label>
                                       <select  class="input-large" id="sel14" >
-                                      <option selected='selected'>Unit Test 1</option>
+                                      <option value="" disabled selected>Select Examination</option>
                                       </select>
                                 </div>
 
@@ -619,30 +699,28 @@ doc.save("ProgressReport.pdf");
                                  <div class="col-md-3 col-sm-3 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel21">School : </label>
                                       <select  class="input-large" id="sel21" >
-                                      <option>school_id_1</option>
+                                      <option value="" disabled selected>Select Institute ID</option>
                                       </select>
                                  </div>
 
                                 <div class="col-md-3 col-sm-3 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel22">Class : </label>
-                                      <select  class="input-large" id="sel22" >
-                                      <option>V</option>
-                                      <option>VI</option>
+                                      <select  class="input-large" id="sel22" onChange="selectCorrespondingItem('getDivision','#sel22','#sel23')" >
+                                      <option value ="" disabled selected>Select Class</option>
                                       </select>
                                 </div>
 
                                 <div class="col-md-3 col-sm-3 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel23">Division : </label>
-                                      <select  class="input-large" id="sel23" >
-                                      <option>A</option>
+                                      <select  class="input-large" id="sel23"  onChange="selectCorrespondingItem('getSubject','#sel23','#sel24','#sel22')">
+                                      <option value ="" disabled selected>Select Division</option>
                                       </select>
                                 </div>
 
                                 <div class="col-md-3 col-sm-3 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel24">Subject : </label>
                                       <select  class="input-large" id="sel24" >
-                                      <option>Marathi</option>
-                                      <option>English</option>
+                                      <option value ="" disabled selected>Select Subject</option>
                                        </select>
 
                                 </div>
@@ -665,22 +743,21 @@ doc.save("ProgressReport.pdf");
                                  <div class="col-md-4 col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel31">School : </label>
                                       <select  class="input-large" id="sel31" >
-                                      <option>school_id_1</option>
+                                         <option value="" disabled selected>Select Institute ID</option>
                                       </select>
                                  </div>
 
                                 <div class="col-md-4 col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel32">Class : </label>
-                                      <select  class="input-large" id="sel32" >
-                                      <option>V</option>
-                                      <option>VI</option>
+                                      <select  class="input-large" id="sel32" onChange="selectCorrespondingItem('getDivision','#sel32','#sel33')">
+                                         <option value="" disabled selected>Select Class</option>
                                       </select>
                                 </div>
 
                                 <div class="col-md-4 col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel33">Division : </label>
                                       <select  class="input-large" id="sel33" >
-                                      <option>A</option>
+                                         <option value="" disabled selected>Select Division</option>
                                       </select>
                                 </div>
 
@@ -696,22 +773,7 @@ doc.save("ProgressReport.pdf");
        
     </section>
 
-<!--     
-          <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
-                <div id="chart_div" class="center wow fadeInDown" ></div>
-          </div> 
- 
-          <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <div id="piechart_div1" class="center wow fadeInDown" ></div>
-                    </div>
-                    <div class="col-xs-6">
-                        <div id="piechart_div2" class="center wow fadeInDown" ></div>
-                    </div>
-                </div>
-          </div>
- -->
+
   <section id="display-grpah">
         <div class="container" >
                 <!--Div that will hold the pie chart-->

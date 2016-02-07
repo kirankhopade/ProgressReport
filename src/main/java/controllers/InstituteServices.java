@@ -186,7 +186,7 @@ public @ResponseBody InstituteReport showInstitutewiseReport(HttpServletRequest 
 		if(request.getParameter("type").equals("ForSelectedSubject")){
 			selectDataObj.setInstitute(institutedetail.get_id());
 			
-			for(int i=0;i<institutedetail.getExam_details().size();i++){
+			/*for(int i=0;i<institutedetail.getExam_details().size();i++){
 				
 				if(institutedetail.getExam_details().get(i).getExam_type().equals("common_accross_institute")){
 				    
@@ -195,6 +195,25 @@ public @ResponseBody InstituteReport showInstitutewiseReport(HttpServletRequest 
 							selectDataObj.getSubjects().add(institutedetail.getExam_details().get(i).getSubject_list().get(j).getSubjectName());
 					}
 				}
+			}*/
+			
+			for(int i=0;i<institutedetail.getClass_list().size();i++){
+				
+				for(int j=0;j<institutedetail.getClass_list().get(i).getDivision_details().size();j++){
+					
+					for(int k=0;k<institutedetail.getClass_list().get(i).getDivision_details().get(j).getAssociated_exams().size();k++){
+						// if(institutedetail.getClass_list().get(i).getDivision_details().get(j).getAssociated_exams().get(k).getExam_name().equals(examName)){
+							 
+							 for(int l=0;l<institutedetail.getClass_list().get(i).getDivision_details().get(j).getAssociated_exams().get(k).getSubject_list().size();l++){
+								 
+								 if(!selectDataObj.getSubjects().contains(institutedetail.getClass_list().get(i).getDivision_details().get(j).getAssociated_exams().get(k).getSubject_list().get(l).getSubjectName())){
+									 selectDataObj.getSubjects().add(institutedetail.getClass_list().get(i).getDivision_details().get(j).getAssociated_exams().get(k).getSubject_list().get(l).getSubjectName());
+								 }
+							 }
+						 //}
+					}
+				}
+				
 			}
 			
 		} 
@@ -211,7 +230,7 @@ public @ResponseBody InstituteReport showInstitutewiseReport(HttpServletRequest 
 			
 		} 
 		
-		if(request.getParameter("type").equals("selectCorrespondingSubjects")){
+		/*if(request.getParameter("type").equals("selectCorrespondingSubjects")){
 			
 			String examName = request.getParameter("selectedExam");
 			System.out.println("receicved exam : "+examName);
@@ -222,12 +241,138 @@ public @ResponseBody InstituteReport showInstitutewiseReport(HttpServletRequest 
 				if(institutedetail.getExam_details().get(i).getExam_type().equals("common_accross_institute") && institutedetail.getExam_details().get(i).getExam_name().equals(examName)){
 				    
 					for(int j=0;j<institutedetail.getExam_details().get(i).getSubject_list().size();j++){
+						       
 						if(!selectDataObj.getSubjects().contains(institutedetail.getExam_details().get(i).getSubject_list().get(j).getSubjectName()))
 							selectDataObj.getSubjects().add(institutedetail.getExam_details().get(i).getSubject_list().get(j).getSubjectName());
 					}
 				}
 			}
+		}*/
+		
+				if(request.getParameter("type").equals("selectCorrespondingSubjects")){
+							
+							String examName = request.getParameter("selectedExam");
+							System.out.println("receicved exam : "+examName);
+								selectDataObj.setInstitute(institutedetail.get_id());
+								for(int i=0;i<institutedetail.getClass_list().size();i++){
+									
+									for(int j=0;j<institutedetail.getClass_list().get(i).getDivision_details().size();j++){
+										
+										for(int k=0;k<institutedetail.getClass_list().get(i).getDivision_details().get(j).getAssociated_exams().size();k++){
+											 if(institutedetail.getClass_list().get(i).getDivision_details().get(j).getAssociated_exams().get(k).getExam_name().equals(examName)){
+												 
+												 for(int l=0;l<institutedetail.getClass_list().get(i).getDivision_details().get(j).getAssociated_exams().get(k).getSubject_list().size();l++){
+													 
+													 if(!selectDataObj.getSubjects().contains(institutedetail.getClass_list().get(i).getDivision_details().get(j).getAssociated_exams().get(k).getSubject_list().get(l).getSubjectName())){
+														 selectDataObj.getSubjects().add(institutedetail.getClass_list().get(i).getDivision_details().get(j).getAssociated_exams().get(k).getSubject_list().get(l).getSubjectName());
+													 }
+												 }
+											 }
+										}
+									}
+									
+								}
+				}
+		
+		if(request.getParameter("type").equals("class_examwise") || request.getParameter("type").equals("class_subjectwise") || request.getParameter("type").equals("class_examwisereportforallexam")){
+			selectDataObj.setInstitute(institutedetail.get_id());
+			for(int i=0;i<institutedetail.getClass_list().size();i++){
+				selectDataObj.getStd_class().add(institutedetail.getClass_list().get(i).getClass_name());
+			}
 		}
+		
+		
+		
+		
+		
+		
+		
+		if(request.getParameter("type").equals("getDivision")){
+			String selectedClass = request.getParameter("selectedClass");
+			System.out.println("Selected Class : "+selectedClass);
+			
+			for(int i=0;i<institutedetail.getClass_list().size();i++){
+				if(institutedetail.getClass_list().get(i).getClass_name().equals(selectedClass)){
+					for(int j=0;j<institutedetail.getClass_list().get(i).getDivision_details().size();j++){
+						selectDataObj.getDivisions().add(institutedetail.getClass_list().get(i).getDivision_details().get(j).getDivision());
+					}
+					//break;
+				}
+				
+			}
+		}
+		
+		if(request.getParameter("type").equals("getExamination")){
+			String selectedDivision = request.getParameter("selectedDivision");
+			String selectedClass = request.getParameter("selectedClass");
+			System.out.println("Selected Division + "+selectedDivision);
+			
+			for(int i=0;i<institutedetail.getClass_list().size();i++){
+				if(institutedetail.getClass_list().get(i).getClass_name().equals(selectedClass)){
+					for(int j=0;j<institutedetail.getClass_list().get(i).getDivision_details().size();j++){
+						
+						if(institutedetail.getClass_list().get(i).getDivision_details().get(j).getDivision().equals(selectedDivision)){
+							
+							for(int k=0;k<institutedetail.getClass_list().get(i).getDivision_details().get(j).getAssociated_exams().size();k++){
+								selectDataObj.getExam().add(institutedetail.getClass_list().get(i).getDivision_details().get(j).getAssociated_exams().get(k).getExam_name());
+							}
+						}
+						//selectDataObj.getDivisions().add(institutedetail.getClass_list().get(i).getDivision_details().get(j).getDivision());
+					}
+					//break;
+				}
+				
+			}
+			
+		}
+		
+		if(request.getParameter("type").equals("getSubject")){
+			String selectedDivision = request.getParameter("selectedDivision");
+			String selectedClass = request.getParameter("selectedClass");
+			System.out.println("Selected Division + "+selectedDivision);
+			
+			for(int i=0;i<institutedetail.getClass_list().size();i++){
+				if(institutedetail.getClass_list().get(i).getClass_name().equals(selectedClass)){
+					for(int j=0;j<institutedetail.getClass_list().get(i).getDivision_details().size();j++){
+						
+						if(institutedetail.getClass_list().get(i).getDivision_details().get(j).getDivision().equals(selectedDivision)){
+							/* First select associated exams for selected class-division*/
+							for(int k=0;k<institutedetail.getClass_list().get(i).getDivision_details().get(j).getAssociated_exams().size();k++){
+								
+								for(int l=0;l<institutedetail.getClass_list().get(i).getDivision_details().get(j).getAssociated_exams().get(k).getSubject_list().size();l++){
+									
+									if(!selectDataObj.getSubjects().contains(institutedetail.getClass_list().get(i).getDivision_details().get(j).getAssociated_exams().get(k).getSubject_list().get(l).getSubjectName()))
+										selectDataObj.getSubjects().add(institutedetail.getClass_list().get(i).getDivision_details().get(j).getAssociated_exams().get(k).getSubject_list().get(l).getSubjectName());
+								}
+								//selectDataObj.getExam().add(institutedetail.getClass_list().get(i).getDivision_details().get(j).getAssociated_exams().get(k).getExam_name());
+							}
+							/*  prepare subject list of above selected exams*/
+							
+							/*for(int l =0;l<institutedetail.getExam_details().size();l++){
+								for(int m =0;m<selectDataObj.getExam().size();m++){
+									
+									 if(institutedetail.getExam_details().get(l).getExam_name().equals(selectDataObj.getExam().get(m))){
+										 for(int n=0;n<institutedetail.getExam_details().get(l).getSubject_list().size();n++){
+											 
+											  if(!selectDataObj.getSubjects().contains(institutedetail.getExam_details().get(l).getSubject_list().get(n).getSubjectName())){
+												  selectDataObj.getSubjects().add(institutedetail.getExam_details().get(l).getSubject_list().get(n).getSubjectName());
+											  }
+										 }
+									 }
+								}
+							}*/
+							
+						}
+						//selectDataObj.getDivisions().add(institutedetail.getClass_list().get(i).getDivision_details().get(j).getDivision());
+					}
+					//break;
+				}
+				
+			}
+			
+		}
+		
+		
 		
 		}catch(Exception e){ System.out.println(e);}
 		
