@@ -134,7 +134,7 @@
             columnData.addColumn('number', 'Average Marks');
             columnData.addColumn({type: 'number', role: 'annotation'});
                        
-            for(var i=1;i<jsonData.recordList.length;i++){
+            for(var i=0;i<jsonData.recordList.length;i++){
                columnData.addRow([jsonData.recordList[i].subject , Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100), Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100)]);
             
               }
@@ -144,7 +144,7 @@
            pieData1.addColumn('number', 'result');
           
 
-          for(var i=1;i<jsonData.recordList.length;i++){
+          for(var i=0;i<jsonData.recordList.length;i++){
                  pieData1.addRow([jsonData.recordList[i].subject+' '+((jsonData.recordList[i].studentspassed/jsonData.recordList[i].studentsappeared)*100).toFixed(2)+'%' ,jsonData.recordList[i].studentspassed]);
               
                 }
@@ -156,7 +156,7 @@
            pieData2.addColumn('number', 'result');
         
 
-          for(var i=1;i<jsonData.recordList.length;i++){
+          for(var i=0;i<jsonData.recordList.length;i++){
                  pieData2.addRow([jsonData.recordList[i].subject+' '+((jsonData.recordList[i].studentfailed/jsonData.recordList[i].studentsappeared)*100).toFixed(2)+'%',jsonData.recordList[i].studentfailed]);
               
                 }
@@ -226,7 +226,7 @@
             columnData.addColumn('number', 'Class Average Percentage(%)');
             columnData.addColumn({type: 'number', role: 'annotation'});
                        
-            for(var i=1;i<jsonData.recordList.length;i++){
+            for(var i=0;i<jsonData.recordList.length;i++){
                columnData.addRow([jsonData.recordList[i].examname , Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100), Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100)]);
             
               }
@@ -235,7 +235,7 @@
            pieData1.addColumn('string', 'Examination Name');
            pieData1.addColumn('number', 'result');
            
-          for(var i=1;i<jsonData.recordList.length;i++){
+          for(var i=0;i<jsonData.recordList.length;i++){
                  pieData1.addRow([jsonData.recordList[i].examname+' '+((jsonData.recordList[i].studentspassed/jsonData.recordList[i].studentsappeared)*100).toFixed(2)+'%' , Math.round((jsonData.recordList[i].studentspassed/jsonData.recordList[i].studentsappeared)*100)]);
               
                 }
@@ -246,7 +246,7 @@
            pieData2.addColumn('string', 'Subject');
            pieData2.addColumn('number', 'Examination Name');
            
-          for(var i=1;i<jsonData.recordList.length;i++){
+          for(var i=0;i<jsonData.recordList.length;i++){
                  pieData2.addRow([jsonData.recordList[i].examname+' '+((jsonData.recordList[i].studentfailed/jsonData.recordList[i].studentsappeared)*100).toFixed(2)+'%' , Math.round((jsonData.recordList[i].studentfailed/jsonData.recordList[i].studentsappeared)*100)]);
               
                 }

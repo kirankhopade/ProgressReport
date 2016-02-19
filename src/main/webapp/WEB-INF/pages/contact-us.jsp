@@ -85,14 +85,14 @@
                          -->
                          <c:if test="${not empty parentsignin}">
                             <li ><a href="${contextPath}/studentservices/getStudentProfile">Student Profile</a></li>
-                            <li><a href="${contextPath}/studentservices/getProgressReport">Progress Report</a></li>
+                            <li><a href="${contextPath}/studentservices/getProgressReport">Progress Reports</a></li>
                         </c:if>
                          <c:if test="${not empty facultysignin}">
                             <li><a href="${contextPath}/instituteservices/getClassWiseReportPage">Class Reports</a></li>
                             <li><a href="${contextPath}/instituteservices/getInstitutewiseReportPage">School Reports</a></li>
                          </c:if>
                         
-                        <li><a href="${contextPath}/studentservices/getAttendenceReport">Attendence Report</a></li>
+                        <li><a href="${contextPath}/studentservices/getAttendenceReport">Attendence Reports</a></li>
                         <li><a href="${contextPath}/studentservices/getNotifications">Notifications</a></li>
                         <li class="active"><a href="${contextPath}/studentservices/getContactUs">Contact Us</a></li>                     
                     </ul>

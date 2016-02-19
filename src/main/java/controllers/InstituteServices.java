@@ -143,7 +143,7 @@ public @ResponseBody InstituteReport showInstitutewiseReport(HttpServletRequest 
 		datatoclient = (new InstituteReportDAO()).getForSelectedSubjectAndExamination(schoolid, subject, examname);
 	}
 	//return null;
-	System.out.println(datatoclient.getSubject());
+	/*System.out.println(datatoclient.getSubject());
 	System.out.println(datatoclient.getRecordList().get(1).getStd_class());
 	System.out.println(datatoclient.getRecordList().get(1).getDivision());
 	System.out.println(datatoclient.getRecordList().get(1).getTotalobtained());
@@ -151,7 +151,7 @@ public @ResponseBody InstituteReport showInstitutewiseReport(HttpServletRequest 
 	System.out.println(datatoclient.getRecordList().get(1).getStudentsappeared());
 	System.out.println(datatoclient.getRecordList().get(1).getStudentspassed());
 	System.out.println(datatoclient.getRecordList().get(1).getStudentfailed());
-	System.out.println(datatoclient.getRecordList().size());
+	System.out.println(datatoclient.getRecordList().size());*/
 	return datatoclient;
 }
 

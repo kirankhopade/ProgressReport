@@ -103,8 +103,8 @@
                     <ul class="nav navbar-nav">
                         <li><a href="${contextPath}/getIndex">Home</a></li>
                         <li><a href="${contextPath}/studentservices/getStudentProfile">Student Profile</a></li>
-                        <li><a href="${contextPath}/studentservices/getProgressReport">Progress Report</a></li>
-                        <li><a href="${contextPath}/studentservices/getAttendenceReport">Attendence Report</a></li>
+                        <li><a href="${contextPath}/studentservices/getProgressReport">Progress Reports</a></li>
+                        <li><a href="${contextPath}/studentservices/getAttendenceReport">Attendence Reports</a></li>
                         <li><a href="${contextPath}/studentservices/getNotifications">Notifications</a></li>
                         <li><a href="${contextPath}/studentservices/getContactUs">Contact Us</a></li>                   
                      

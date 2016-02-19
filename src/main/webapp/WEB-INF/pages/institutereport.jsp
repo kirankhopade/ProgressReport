@@ -510,7 +510,7 @@
                            // $('#result').html("");
                    
                           //  $('#result').html("First Name:- " + response[0].subjectName);
-                            
+                            //alert(response);
                             if(reporttype==="ForAllExaminations")
                               google.setOnLoadCallback(drawChartForAllExaminations(response));
 
