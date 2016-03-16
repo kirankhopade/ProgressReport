@@ -96,15 +96,49 @@
         chart.draw(data, options);
       }
 
+      /*  Function to draw a graph for all examinations */
+      
+
+      function drawChartForAllExaminations(jsonData) {
+        //    alert("From DRAW CHARTS"+jsonData[2].examName);
+                //alert('in function');
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Examination');
+            data.addColumn('number', 'Percentage');
+            data.addColumn({type: 'number', role: 'annotation'});
+            
+            for(var i=0;i<jsonData.length;i++){
+               data.addRow([jsonData[i].subjectName , jsonData[i].marks,jsonData[i].marks]);
+              }
+           
+           //var obtainedtotal=jsonData[jsonData.length-2].marks;
+          // var total = jsonData[jsonData.length-1].marks
+
+        // Set chart options
+        var options = {'title':'Report for all examinations of current academic year...',
+                       'width':1500,
+                       'height':600,
+                     vAxis: {title: 'Percentage',titleTextStyle:{color: 'green'}},
+                       hAxis: {title: 'Examination',titleTextStyle:{color: 'green'}}
+                     };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+         google.visualization.events.addListener(chart, 'ready', AddNamespaceHandler); 
+
+        chart.draw(data, options);
+      }
+
         // Get Data to draw a graph
 
         function getGraph(datatype,selectid){
-
-            var value = document.getElementById(selectid).value;
-         //   alert(datatype);
-            //alert(x);
-
-            madeAjaxCallForGeaphData(datatype,value);
+            if(selectid==='none'){
+                  madeAjaxCallForGeaphData(datatype,'none');
+            }else{
+               var value = document.getElementById(selectid).value;
+                madeAjaxCallForGeaphData(datatype,value);
+            }
+           
 
         }
 
@@ -112,6 +146,7 @@
 
         function showexamwisereportDiv() {
             document.getElementById('subjectwisereport').style.display = "none";
+            document.getElementById('allexamination').style.display = "none";            
             document.getElementById('examwisereport').style.display = "block";
             madeAjaxCallForSelect("${contextPath}/studentservices/getSelectDropDownList","#sel1","exam");
                 // Clear the content of #sel1
@@ -127,6 +162,7 @@
    	    function showsubjectwisereportDiv() {
             //alert("at showsubjectwisereport");
             document.getElementById('examwisereport').style.display = "none";
+            document.getElementById('allexamination').style.display = "none"; 
             document.getElementById('subjectwisereport').style.display = "block";
             madeAjaxCallForSelect("${contextPath}/studentservices/getSelectDropDownList","#sel2","subject");
              // Clear the content of #sel2
@@ -137,6 +173,16 @@
                 }
 
         } // EOF showsubjectwisereportDiv()
+
+        function showallexamreportDiv(){
+         // $('#mymodal').modal('show');
+         // madeAjaxCallForGeaphData("academicYear","none");
+            document.getElementById('examwisereport').style.display = "none";
+            document.getElementById('subjectwisereport').style.display = "none";
+            document.getElementById('allexamination').style.display = "block"; 
+            
+
+        }
 
         // AJAX call function to load graph data
 
@@ -150,13 +196,16 @@
                            // $('#result').html("");
                    
                           //  $('#result').html("First Name:- " + response[0].subjectName);
-                            
+                           // alert(response);
                             if(listtype==="exam")
                               google.setOnLoadCallback(drawChartForExam(response,selectedvalue));
 
                             if(listtype==="subject")
                               google.setOnLoadCallback(drawChartForSubject(response,selectedvalue));
-     
+
+                            if(listtype==="academicYear")
+                              google.setOnLoadCallback(drawChartForAllExaminations(response));
+      
                     
                     },
                     error: function(){                      
@@ -221,11 +270,11 @@ function AddNamespaceHandler(){
 
    
     <header id="header">
-         <div class="top-bar">
+         <!-- <div class="top-bar">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6 col-xs-4">
-                      <!--   <div class="top-number"><p><i class="fa fa-phone-square"></i>  +0123 456 70 90</p></div> -->
+                     
                     </div>
                     <div class="col-sm-6 col-xs-8">
                        <div class="social">
@@ -239,7 +288,7 @@ function AddNamespaceHandler(){
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     
 
         <nav class="navbar navbar-inverse" role="banner">
@@ -251,7 +300,7 @@ function AddNamespaceHandler(){
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html"><img src="<c:url value="/resources/images/logo.png" />" alt="logo"></a>
+                <!--     <a class="navbar-brand" href="index.html"><img src="<c:url value="/resources/images/logo.png" />" alt="logo"></a>  -->
                 </div>
                 
                 <div class="collapse navbar-collapse navbar-right">
@@ -261,7 +310,10 @@ function AddNamespaceHandler(){
                         <li   class="active"><a href="${contextPath}/studentservices/getProgressReport">Progress Reports</a></li>
                         <li><a href="${contextPath}/studentservices/getAttendenceReport">Attendence Reports</a></li>
                         <li><a href="${contextPath}/studentservices/getNotifications">Notifications</a></li>
-                        <li><a href="${contextPath}/studentservices/getContactUs">Contact Us</a></li>                   
+                        <li><a href="${contextPath}/studentservices/getContactUs">Contact Us</a></li>   
+                        <li>
+                                    <a href="${contextPath}/userfacility/logout" ><i class="glyphicon glyphicon-user"></i>  <b>${loggedinUser}   Log Out</b></a>
+                        </li>                
                     </ul>
                 </div>
             </div><!--/.container-->
@@ -271,17 +323,17 @@ function AddNamespaceHandler(){
 
     <section id="feature" class="transparent-bg">
         <div class="container">
-           <div class="center wow fadeInDown">
+          <!--  <div class="center wow fadeInDown">
                 <h2>Progress Reports</h2>
                 <p class="lead">We provide different analysis reports. Please select desired on and get your report on screen. <br> </p>
-            </div>
+            </div> -->
 
             <div class="row">
                 <div class="features">
                     <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                         <div class="feature-wrap">
                              <a href="#" onclick="return showexamwisereportDiv();"> 
-                            <i class="fa fa-comments"></i>
+                            <i class="fa fa-chevron-right"></i>
                             <h2>Exam wise Progress Report</h2>
                             <h3>This report will contain all details of selected examination of current academic year</h3></a>
                         </div>
@@ -290,11 +342,32 @@ function AddNamespaceHandler(){
                     <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                         <div class="feature-wrap">
                             <a href="#" onClick="showsubjectwisereportDiv();" >
-                            <i class="fa fa-comments" ></i>
+                            <i class="fa fa-chevron-right" ></i>
                             <h2>Subject wise Progress Report </h2>
                             <h3>This report will contain details of particular subject for the current academic year</h3></a>
                         </div>
                     </div>
+                </div><!--/.services-->
+            </div><!--/.row--> 
+            <div class="row">
+                <div class="features">
+                    <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                        <div class="feature-wrap">
+                             <a href="#" onclick="return showallexamreportDiv();"> 
+                            <i class="fa fa-chevron-right"></i>
+                            <h2>Progress Report For All Examinations</h2>
+                            <h3>This report will contain all details of all examination of current academic year</h3></a>
+                        </div>
+                    </div><!--/.col-md-4-->
+
+                    <!-- <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
+                        <div class="feature-wrap">
+                            <a href="#" onClick="showsubjectwisereportDiv();" >
+                            <i class="fa fa-comments" ></i>
+                            <h2>Subject wise Progress Report </h2>
+                            <h3>This report will contain details of particular subject for the current academic year</h3></a>
+                        </div>
+                    </div> -->
                 </div><!--/.services-->
             </div><!--/.row--> 
 
@@ -309,11 +382,8 @@ function AddNamespaceHandler(){
                 <form>
                         <div class="form-group">
                           <label for="sel1">Select Examination:</label>
-                          <select  class="input-large" id="sel1" >
-                           <!--  <option>Examination 1</option>
-                            <option>Examination 2</option>
-                            <option>Examination 3</option>
-                            <option>Examination 4</option> -->
+                          <select  class="input-large" id="sel1" style="height:35px;border-radius: 4px;">
+                           
                           </select>
                       </div>
                       
@@ -326,23 +396,30 @@ function AddNamespaceHandler(){
 
            <div id="subjectwisereport" class="center wow fadeInDown" style="display:none;">
 
-             <p><h3>Please Select the examination from the following drop down list.</h3></p>
+             <p><h3>Please Select the Subject from the following drop down list.</h3></p>
                  <form>
                         <div class="form-group">
-                          <label for="sel1">Select Subject:</label>
-                          <select  class="input-large" id="sel2" >
-                            <!-- <option>Marathi</option>
-                            <option>Hindi </option>
-                            <option>English</option>
-                            <option>Geography</option>
-                            <option>History</option>
-                            <option>Mathematics</option> -->
-                          </select>
+                          <label for="sel2">Select Subject:</label>
+                          <select  class="input-large" id="sel2" style="height:35px;border-radius: 4px;"> </select>
                       </div>
                       
                            <button type="button" name="submit" class="btn btn-primary btn-lg"  data-toggle="modal" data-target="#myModal" onClick="getGraph('subject','sel2');">Get Me Report
                            </button>
                 </form>
+              </div>
+              <div id="allexamination" class="center wow fadeInDown" style="display:none;">
+
+             <p><h3>Please Click on the following button.</h3></p>
+                 <form>
+                        <!-- <div class="form-group">
+                          <label for="sel2">Select Subject:</label>
+                          <select  class="input-large" id="sel2" > </select>
+                      </div> -->
+                      
+                           <button type="button" name="submit" class="btn btn-primary btn-lg"  data-toggle="modal" data-target="#myModal" onClick="getGraph('academicYear','none');">Get Me Report
+                           </button>
+                </form>
+              </div>
        
     </section>
 
@@ -360,7 +437,7 @@ function AddNamespaceHandler(){
                       <div id="chart_div" class="center wow fadeInDown"></div>
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-danger" onClick="return xepOnline.Formatter.Format('chart_div', {render:'download', srctype:'svg'})">Save as PDF</button>
+                      <button type="button" class="btn btn-danger" onClick="return xepOnline.Formatter.Format('chart_div', {render:'download', srctype:'svg'})"><i class="glyphicon glyphicon-download-alt"></i>  Save as PDF</button>
                     </div>                                                          
                   </div>
                 </div>
@@ -369,7 +446,7 @@ function AddNamespaceHandler(){
     </section>
 
 
-
+<!-- 
     <section id="bottom">
         <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
             <div class="row">
@@ -386,7 +463,7 @@ function AddNamespaceHandler(){
                             <li><a href="#">Contact us</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -401,7 +478,7 @@ function AddNamespaceHandler(){
                             <li><a href="#">Billing system</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -416,7 +493,7 @@ function AddNamespaceHandler(){
                             <li><a href="#">Article Writing</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -431,23 +508,24 @@ function AddNamespaceHandler(){
                             <li><a href="#">Laboris</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
             </div>
         </div>
-    </section><!--/#bottom-->
+    </section> -->
 
     <footer id="footer" class="midnight-blue">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
-                    &copy; 2013 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">ShapeBootstrap</a>. All Rights Reserved.
+                    &copy; 2016 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">Get Me Progress Report</a>. All Rights Reserved.
                 </div>
                 <div class="col-sm-6">
                     <ul class="pull-right">
-                        <li><a href="#">Home</a></li>
+                       <!--  <li><a href="#">Home</a></li> -->
                         <li><a href="#">About Us</a></li>
                         <li><a href="#">Faq</a></li>
                         <li><a href="#">Contact Us</a></li>
+                        <li><i class="fa fa-phone-square"></i>  +91 8297411200</li>
                     </ul>
                 </div>
             </div>

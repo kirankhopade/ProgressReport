@@ -140,10 +140,9 @@ public class UserFacilityController {
 	
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public ModelAndView terminateSession(HttpSession session, HttpServletRequest request, Model model){
-		//        request.getSession().invalidate();
-		  //      response.sendRedirect(request.getContextPath() + "/LoginPage.html");
+	
 		session.invalidate();
-		//request.
+		
 				model.addAttribute("success", "Logged Out Successfully...");
 				ModelAndView modelnview = new ModelAndView();
 				modelnview.setViewName("index");

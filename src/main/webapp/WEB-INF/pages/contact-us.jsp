@@ -33,14 +33,49 @@
 </head><!--/head-->
 
 <body>
+   <!-- Modal For Success Message -->
+     <div class="modal fade  bs-example-modal-lg" id="SuccessMessage" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-success">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Message...!!!</h4>
+                        </div>
+                        <div class="modal-body">
+                                <h4><i class="glyphicon glyphicon-ok" >  </i> ${success}</h4>
+                        </div>
+                        <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+    </div>
+
+        <!-- Modal For Error Message -->
+     <div class="modal fade bs-example-modal-lg" id="ErrorMessage" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header modal-header-danger">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Message...!!!</h4>
+                        </div>
+                        <div class="modal-body">
+                                <h4><i class="glyphicon glyphicon-warning-sign">  </i> ${error}</h4>
+                        </div>
+                        <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+        </div>
 
     
     <header id="header">
-         <div class="top-bar">
+         <!-- <div class="top-bar">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-10 col-xs-4">
-                      <c:if test="${not empty error}">
+                    <div class="col-sm-10 col-xs-4"> -->
+                      <!-- <c:if test="${not empty error}">
                             <div class="alert alert-danger fade in">
                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                     <h4><strong> Alert!!!  </strong>  ${error}</h4>
@@ -51,8 +86,8 @@
                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                     <h4><strong> Alert!!!  </strong>  ${success}</h4>
                             </div>
-                            </c:if>
-                     </div>
+                            </c:if> -->
+              <!--        </div>
                     <div class="col-sm-2 col-xs-8">
                        <div class="social">
                             
@@ -63,7 +98,7 @@
                 </div>
             </div>
         </div>
-    
+     -->
 
         <nav class="navbar navbar-inverse" role="banner">
             <div class="container">
@@ -74,7 +109,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                  <a class="navbar-brand" href="index.html"><img src="<c:url value="/resources/images/logo.png" />" alt="logo"></a>
+                <!--   <a class="navbar-brand" href="index.html"><img src="<c:url value="/resources/images/logo.png" />" alt="logo"></a> --> 
                 </div>
                 
                 <div class="collapse navbar-collapse navbar-right">
@@ -86,15 +121,24 @@
                          <c:if test="${not empty parentsignin}">
                             <li ><a href="${contextPath}/studentservices/getStudentProfile">Student Profile</a></li>
                             <li><a href="${contextPath}/studentservices/getProgressReport">Progress Reports</a></li>
+                            <li><a href="${contextPath}/studentservices/getAttendenceReport">Attendence Reports</a></li>
+                            <li><a href="${contextPath}/studentservices/getNotifications">Notifications</a></li>
                         </c:if>
                          <c:if test="${not empty facultysignin}">
                             <li><a href="${contextPath}/instituteservices/getClassWiseReportPage">Class Reports</a></li>
                             <li><a href="${contextPath}/instituteservices/getInstitutewiseReportPage">School Reports</a></li>
+                            <li><a href="${contextPath}/studentservices/getAttendenceReport">Attendence Reports</a></li>
+                            <li><a href="${contextPath}/studentservices/getNotifications">Notifications</a></li>
                          </c:if>
                         
-                        <li><a href="${contextPath}/studentservices/getAttendenceReport">Attendence Reports</a></li>
-                        <li><a href="${contextPath}/studentservices/getNotifications">Notifications</a></li>
-                        <li class="active"><a href="${contextPath}/studentservices/getContactUs">Contact Us</a></li>                     
+                        
+                        <li class="active"><a href="${contextPath}/studentservices/getContactUs">Contact Us</a></li>
+
+                        <c:if test="${(not empty facultysignin)||(not empty parentsignin)}">
+                            <li>
+                                    <a href="${contextPath}/userfacility/logout" ><i class="glyphicon glyphicon-user"></i>  <b>${loggedinUser}   Log Out</b></a>
+                            </li>                     
+                        </c:if>    
                     </ul>
                 </div>
             </div><!--/.container-->
@@ -143,6 +187,7 @@
                                <option> Information </option>
                                <option> Suggestions </option>
                                <option> Application Access Problem</option>
+                               <option> Incorrect Data</option>
                                <option> Other </option>
                             </select> 
                        </div>
@@ -159,7 +204,7 @@
         </div>
          
     </section>  <!--/gmap_area -->
-
+<!-- 
     <section id="bottom">
         <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
             <div class="row">
@@ -176,7 +221,7 @@
                             <li><a href="#">Contact us</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -191,7 +236,7 @@
                             <li><a href="#">Billing system</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -206,7 +251,7 @@
                             <li><a href="#">Article Writing</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -221,23 +266,24 @@
                             <li><a href="#">Laboris</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
             </div>
         </div>
-    </section><!--/#bottom-->
+    </section> -->
 
     <footer id="footer" class="midnight-blue">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
-                    &copy; 2013 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">ShapeBootstrap</a>. All Rights Reserved.
+                    &copy; 2016 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">Get Me Progress Report</a>. All Rights Reserved.
                 </div>
                 <div class="col-sm-6">
                     <ul class="pull-right">
-                        <li><a href="#">Home</a></li>
+                        <!-- <li><a href="#">Home</a></li> -->
                         <li><a href="#">About Us</a></li>
                         <li><a href="#">Faq</a></li>
                         <li><a href="#">Contact Us</a></li>
+                        <li><i class="fa fa-phone-square"></i>  +91 8297411200</li>
                     </ul>
                 </div>
             </div>
@@ -252,6 +298,20 @@
     <script src="<c:url value="/resources/js/wow.min.js" />"></script>
     <script src="<c:url value="/resources/js/bootstrap-select.min.js" />"></script>
     
+                          <c:if test="${not empty error}">
+                                                          
+                                    <script>
+                                        $("#ErrorMessage").modal('show');
+                                    </script>
+                           
+                          </c:if>
+                         
+                          <c:if test="${not empty success}">
+                         
+                                    <script>
+                                         $("#SuccessMessage").modal('show');
+                                    </script>
+                          </c:if>
 
 </body>
 </html>

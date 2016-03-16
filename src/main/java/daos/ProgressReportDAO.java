@@ -51,7 +51,7 @@ public class ProgressReportDAO {
 		for(int i=0;i<studentProfile.getExaminations().size();i++){
 			
 			ExamWiseReport object =  new ExamWiseReport();
-			object.setSubjectName(studentProfile.getExaminations().get(i).getExamName()+" ("+studentProfile.getExaminations().get(i).getPercentage()+")");
+			object.setSubjectName(studentProfile.getExaminations().get(i).getExamName());
 			object.setMarks(studentProfile.getExaminations().get(i).getPercentage());
 			this.academicYearWiseReport.add(object);
 		}

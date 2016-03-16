@@ -47,13 +47,13 @@ public class LoginDAO {
 	
 			this.logindata=logindata;
 			try{
-				mongoClient = new MongoClient("localhost", 27017);
-				db = mongoClient.getDatabase("progressreport");
+				/*mongoClient = new MongoClient("localhost", 27017);
+				db = mongoClient.getDatabase("progressreport");*/
 				
-				/*String textUri = "mongodb://admin:admin@ds039125.mongolab.com:39125/progressreport";
+				String textUri = "mongodb://admin:admin@ds011379.mlab.com:11379/progressreport";
 	 			MongoClientURI uri = new MongoClientURI(textUri);
 	 			MongoClient m = new MongoClient(uri);			
-	 			db = m.getDatabase(uri.getDatabase());*/
+	 			db = m.getDatabase(uri.getDatabase());
 		
 			}catch(Exception e){
 				e.printStackTrace();

@@ -49,10 +49,14 @@
             columnData.addColumn('number', 'Average Marks');
             columnData.addColumn({type: 'number', role: 'annotation'});
                        
-            for(var i=0;i<jsonData.recordList.length;i++){
+            /*for(var i=0;i<jsonData.recordList.length;i++){
                columnData.addRow([jsonData.recordList[i].examname , Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100) , Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100)]);
             
+              }*/
+              for(var i=0;i<jsonData.recordList.length;i++){
+                columnData.addRow([jsonData.recordList[i].examname ,jsonData.recordList[i].avarage,jsonData.recordList[i].avarage]);
               }
+          
           
            var pieData1 = new google.visualization.DataTable();
            pieData1.addColumn('string', 'Examination Name');
@@ -134,11 +138,17 @@
             columnData.addColumn('number', 'Average Marks');
             columnData.addColumn({type: 'number', role: 'annotation'});
                        
-            for(var i=0;i<jsonData.recordList.length;i++){
-               columnData.addRow([jsonData.recordList[i].subject , Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100), Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100)]);
+           /* for(var i=0;i<jsonData.recordList.length;i++){
+               columnData.addRow([jsonData.recordList[i].subject , Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100), Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100).toString()]);
             
+              }*/
+
+              for(var i=0;i<jsonData.recordList.length;i++){
+                columnData.addRow([jsonData.recordList[i].subject ,jsonData.recordList[i].avarage,jsonData.recordList[i].avarage]);
               }
           
+
+
            var pieData1 = new google.visualization.DataTable();
            pieData1.addColumn('string', 'Subject');
            pieData1.addColumn('number', 'result');
@@ -226,11 +236,16 @@
             columnData.addColumn('number', 'Class Average Percentage(%)');
             columnData.addColumn({type: 'number', role: 'annotation'});
                        
-            for(var i=0;i<jsonData.recordList.length;i++){
+            /*for(var i=0;i<jsonData.recordList.length;i++){
                columnData.addRow([jsonData.recordList[i].examname , Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100), Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100)]);
             
               }
-          
+          */
+
+          for(var i=0;i<jsonData.recordList.length;i++){
+                columnData.addRow([jsonData.recordList[i].examname ,jsonData.recordList[i].avarage,jsonData.recordList[i].avarage]);
+              }
+              
            var pieData1 = new google.visualization.DataTable();
            pieData1.addColumn('string', 'Examination Name');
            pieData1.addColumn('number', 'result');
@@ -240,6 +255,8 @@
               
                 }
 
+    
+    
 
 
            var pieData2 = new google.visualization.DataTable();
@@ -331,13 +348,11 @@
             document.getElementById('subjectwisereport').style.display = "none";
             document.getElementById('examwisereportforallexam').style.display = "none";
             document.getElementById('examwisereport').style.display = "block";
+            clearSelect("sel11");
+            clearSelect("sel12");
+            clearSelect("sel13");
             madeAjaxCallForSelect("${contextPath}/instituteservices/getSelectDropDownList","#sel11","#sel12","#sel13","#sel14","class_examwise");
-                // Clear the content of #sel1
-          //      selectbox=document.getElementById("sel1");
-            //    for(var i=selectbox.options.length-1;i>=0;i--)
-              //  {
-                //    selectbox.remove(i);
-              //  }
+                
         } // EOF showexamwisereportDiv()
 
         // show Select Subjec dropdown list and hide Select Exam dropdown if it is visible
@@ -346,13 +361,11 @@
             document.getElementById('examwisereport').style.display = "none";
             document.getElementById('examwisereportforallexam').style.display = "none";
             document.getElementById('subjectwisereport').style.display = "block";
+            clearSelect("sel21");
+            clearSelect("sel22");
+            clearSelect("sel23");
             madeAjaxCallForSelect("${contextPath}/instituteservices/getSelectDropDownList","#sel21","#sel22","#sel23","#sel24","class_subjectwise");
-             // Clear the content of #sel2
-                /*selectbox=document.getElementById("sel2");
-                for(var i=selectbox.options.length-1;i>=0;i--)
-                {
-                    selectbox.remove(i);
-                }*/
+             
 
         } // EOF showsubjectwisereportDiv()
 
@@ -362,13 +375,11 @@
             document.getElementById('subjectwisereport').style.display = "none";
             document.getElementById('examwisereport').style.display = "none";
             document.getElementById('examwisereportforallexam').style.display = "block";
+            clearSelect("sel31");
+            clearSelect("sel32");
+            clearSelect("sel33");
             madeAjaxCallForSelect("${contextPath}/instituteservices/getSelectDropDownList","#sel31","#sel32","#sel33","#sel34","class_examwisereportforallexam");
-                // Clear the content of #sel1
-             //   selectbox=document.getElementById("sel1");
-               // for(var i=selectbox.options.length-1;i>=0;i--)
-               // {
-                 //   selectbox.remove(i);
-               // }
+                
         } // EOF examwisereportforallexam()
         
 
@@ -407,8 +418,8 @@
          // AJAX call function to load exam and subject lists ffrom database
 
         function madeAjaxCallForSelect(reqURL,selectid1,selectid2,selectid3,selectid4,listType){
-          alert("in select dropdown");
-            alert(listType+selectid1);
+         // alert("in select dropdown");
+          //  alert(listType+selectid1);
             $.ajax({
               type: "get",
               url: reqURL,
@@ -470,7 +481,13 @@
             });
           } // EOF madeAjaxCallForSelect()
         
-
+ function clearSelect(selectid){
+                selectbox=document.getElementById(selectid);
+                      for(var i=selectbox.options.length-1;i>0;i--)
+                      {
+                        selectbox.remove(i);
+                      }
+              }
 
 
 function generatePDF(){
@@ -481,7 +498,7 @@ doc.addImage( imgUri1, 'PNG', 0, 0, 210, 0); // img1 and img2 on first page
 doc.addImage( imgUri2, 'PNG', 0, 130, 210, 0); 
 doc.addPage();
 doc.addImage( imgUri3, 'PNG', 0, 0, 210, 0);
-doc.save("ProgressReport.pdf");
+doc.save("ClassProgressReport.pdf");
 }
 
 function clearSelect(selectid){
@@ -494,10 +511,10 @@ function clearSelect(selectid){
 
 function selectCorrespondingItem(itemType,selectid,clearSelectid,getfirstselect){
 
-            alert("selectCorrespondingItem");
+           // alert("selectCorrespondingItem");
             if(itemType ==="getDivision"){
                 var selectedClass = $(selectid+' :selected').text();  // to get selected class
-                alert(selectedClass);
+              //  alert(selectedClass);
                 clearSelect('sel13');
                 clearSelect('sel23');  // clear division selectbox
                 madeAjaxCallForSelect("${contextPath}/instituteservices/getSelectDropDownList",selectedClass,"","",clearSelectid,"getDivision"); 
@@ -506,7 +523,7 @@ function selectCorrespondingItem(itemType,selectid,clearSelectid,getfirstselect)
             if(itemType ==="getExamination"){
                 var selectedClass = $(getfirstselect+' :selected').text()  // to get selected class
                 var selectedDivision = $(selectid+' :selected').text(); // to get selected division
-                alert("selected division "+selectedDivision);
+               // alert("selected division "+selectedDivision);
                 clearSelect('sel14');  // clear examination selectbox
                 madeAjaxCallForSelect("${contextPath}/instituteservices/getSelectDropDownList",selectedClass,selectedDivision,"",clearSelectid,"getExamination"); 
             }
@@ -550,11 +567,11 @@ function selectCorrespondingItem(itemType,selectid,clearSelectid,getfirstselect)
 
    
     <header id="header">
-         <div class="top-bar">
+         <!-- <div class="top-bar">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6 col-xs-4">
-                      <!--   <div class="top-number"><p><i class="fa fa-phone-square"></i>  +0123 456 70 90</p></div> -->
+                     
                     </div>
                     <div class="col-sm-6 col-xs-8">
                        <div class="social">
@@ -565,7 +582,7 @@ function selectCorrespondingItem(itemType,selectid,clearSelectid,getfirstselect)
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     
 
         <nav class="navbar navbar-inverse" role="banner">
@@ -577,7 +594,7 @@ function selectCorrespondingItem(itemType,selectid,clearSelectid,getfirstselect)
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html"><img src="<c:url value="/resources/images/logo.png" />" alt="logo"></a>
+                   <!-- <a class="navbar-brand" href="index.html"><img src="<c:url value="/resources/images/logo.png" />" alt="logo"></a> --> 
                 </div>
                 
                 <div class="collapse navbar-collapse navbar-right">
@@ -587,7 +604,10 @@ function selectCorrespondingItem(itemType,selectid,clearSelectid,getfirstselect)
                          <li><a href="${contextPath}/instituteservices/getInstitutewiseReportPage">School Reports</a></li>
                          <li><a href="${contextPath}/studentservices/getAttendenceReport">Attendence Reports</a></li>
                         <li><a href="${contextPath}/studentservices/getNotifications">Notifications</a></li>
-                        <li><a href="${contextPath}/studentservices/getContactUs">Contact Us</a></li>                   
+                        <li><a href="${contextPath}/studentservices/getContactUs">Contact Us</a></li>  
+                        <li>
+                                    <a href="${contextPath}/userfacility/logout" ><i class="glyphicon glyphicon-user"></i>  <b>${loggedinUser}   Log Out</b></a>
+                                </li>                 
                     </ul>
                 </div>
             </div><!--/.container-->
@@ -607,18 +627,18 @@ function selectCorrespondingItem(itemType,selectid,clearSelectid,getfirstselect)
                     <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                         <div class="feature-wrap">
                              <a href="#" onclick="return showexamwisereportDiv();"> 
-                            <i class="fa fa-comments"></i>
-                            <h2>Examination wise report for selected examination</h2>
-                            <h3>This report will contain all details of selected examination including number of students appeared, number of students passed,number off students failed, class average percentage and class result in percentage.</h3></a>
+                            <i class="fa fa-chevron-right"></i>
+                            <h2>Progress Report For Selected Examination</h2>
+                            <h3>Progress Report is generated for the selected examination among all examinations conducted in the current academic year for respective class.The report shows class's obtained average numbers per subject. It also shows the passing and failing percentage per subject.</h3></a>
                         </div>
                     </div><!--/.col-md-4-->
 
                     <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                         <div class="feature-wrap">
                             <a href="#" onClick="showsubjectwisereportDiv();" >
-                            <i class="fa fa-comments" ></i>
-                            <h2>Subject report for all examinations </h2>
-                            <h3>This report will contain details of particular subject including number of students appeared, number of students passed, number of students failed, subject average and class result in percentage for each examination.</h3></a>
+                            <i class="fa fa-chevron-right" ></i>
+                            <h2>Progress Report For Selected Subject</h2>
+                            <h3>Progress Report is generated for the selected subject accross all examinations conducted in the current academic year for respective class. The report shows subject's average obtained numbers in each examination. It also shows the passing and failing percentage of the selected subject accross all examination conducted in the current academic year.</h3></a>
                         </div>
                     </div>
                 </div><!--/.services-->
@@ -630,9 +650,9 @@ function selectCorrespondingItem(itemType,selectid,clearSelectid,getfirstselect)
                     <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                         <div class="feature-wrap">
                              <a href="#" onclick="return showexamwisereportforallexamDiv();"> 
-                            <i class="fa fa-comments"></i>
-                            <h2>Exam wise report for a selected division(class) for all examinations</h2>
-                            <h3>This report will contain all details of selected examination including number of students appeared, number of students passed,number off students failed, class average percentage and class result in percentage for each exam.</h3></a>
+                            <i class="fa fa-chevron-right"></i>
+                            <h2>Progress Report For All Examinations</h2>
+                            <h3>Progress Report is generated for all the examinations conducted in the current academic year for respective class. The report shows class's average percentage in each examination. It also shows the examination wise passing and failing percentage.</h3></a>
                         </div>
                     </div>
                 </div><!--/.services-->
@@ -654,14 +674,14 @@ function selectCorrespondingItem(itemType,selectid,clearSelectid,getfirstselect)
                             <div class="row">
                                  <div class="col-md-3 col-sm-3 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel11">School : </label>
-                                      <select  class="input-large" id="sel11" >
+                                      <select  class="input-large" id="sel11" style="height:35px;border-radius: 4px;">
                                       <option value="" disabled selected>Select Institute ID</option>
                                       </select>
                                  </div>
 
                                 <div class="col-md-3 col-sm-3 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel12">Class : </label>
-                                      <select  class="input-large" id="sel12" onChange="selectCorrespondingItem('getDivision','#sel12','#sel13')">
+                                      <select  class="input-large" id="sel12" style="height:35px;border-radius: 4px;" onChange="selectCorrespondingItem('getDivision','#sel12','#sel13')">
                                       <option value ="" disabled selected>Select Class</option>
                                    <!--    <option>VI</option> -->
                                       </select>
@@ -669,14 +689,14 @@ function selectCorrespondingItem(itemType,selectid,clearSelectid,getfirstselect)
 
                                 <div class="col-md-3 col-sm-3 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel13">Division : </label>
-                                      <select  class="input-large" id="sel13" onChange="selectCorrespondingItem('getExamination','#sel13','#sel14','#sel12')" >
+                                      <select  class="input-large" id="sel13" onChange="selectCorrespondingItem('getExamination','#sel13','#sel14','#sel12')" style="height:35px;border-radius: 4px;">
                                        <option value="" disabled selected>Select Division</option> 
                                       </select>
                                 </div>
 
                                 <div class="col-md-3 col-sm-3 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel14">Examination : </label>
-                                      <select  class="input-large" id="sel14" >
+                                      <select  class="input-large" id="sel14" style="height:35px;border-radius: 4px;">
                                       <option value="" disabled selected>Select Examination</option>
                                       </select>
                                 </div>
@@ -698,28 +718,28 @@ function selectCorrespondingItem(itemType,selectid,clearSelectid,getfirstselect)
                             <div class="row">
                                  <div class="col-md-3 col-sm-3 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel21">School : </label>
-                                      <select  class="input-large" id="sel21" >
+                                      <select  class="input-large" id="sel21" style="height:35px;border-radius: 4px;" >
                                       <option value="" disabled selected>Select Institute ID</option>
                                       </select>
                                  </div>
 
                                 <div class="col-md-3 col-sm-3 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel22">Class : </label>
-                                      <select  class="input-large" id="sel22" onChange="selectCorrespondingItem('getDivision','#sel22','#sel23')" >
+                                      <select  class="input-large" id="sel22" onChange="selectCorrespondingItem('getDivision','#sel22','#sel23')" style="height:35px;border-radius: 4px;">
                                       <option value ="" disabled selected>Select Class</option>
                                       </select>
                                 </div>
 
                                 <div class="col-md-3 col-sm-3 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel23">Division : </label>
-                                      <select  class="input-large" id="sel23"  onChange="selectCorrespondingItem('getSubject','#sel23','#sel24','#sel22')">
+                                      <select  class="input-large" id="sel23"  onChange="selectCorrespondingItem('getSubject','#sel23','#sel24','#sel22')" style="height:35px;border-radius: 4px;">
                                       <option value ="" disabled selected>Select Division</option>
                                       </select>
                                 </div>
 
                                 <div class="col-md-3 col-sm-3 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel24">Subject : </label>
-                                      <select  class="input-large" id="sel24" >
+                                      <select  class="input-large" id="sel24" style="height:35px;border-radius: 4px;" >
                                       <option value ="" disabled selected>Select Subject</option>
                                        </select>
 
@@ -742,21 +762,21 @@ function selectCorrespondingItem(itemType,selectid,clearSelectid,getfirstselect)
                             <div class="row">
                                  <div class="col-md-4 col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel31">School : </label>
-                                      <select  class="input-large" id="sel31" >
+                                      <select  class="input-large" id="sel31" style="height:35px;border-radius: 4px;">
                                          <option value="" disabled selected>Select Institute ID</option>
                                       </select>
                                  </div>
 
                                 <div class="col-md-4 col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel32">Class : </label>
-                                      <select  class="input-large" id="sel32" onChange="selectCorrespondingItem('getDivision','#sel32','#sel33')">
+                                      <select  class="input-large" id="sel32" style="height:35px;border-radius: 4px;" onChange="selectCorrespondingItem('getDivision','#sel32','#sel33')">
                                          <option value="" disabled selected>Select Class</option>
                                       </select>
                                 </div>
 
                                 <div class="col-md-4 col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel33">Division : </label>
-                                      <select  class="input-large" id="sel33" >
+                                      <select  class="input-large" id="sel33"   style="height:35px;border-radius: 4px;">
                                          <option value="" disabled selected>Select Division</option>
                                       </select>
                                 </div>
@@ -806,7 +826,7 @@ function selectCorrespondingItem(itemType,selectid,clearSelectid,getfirstselect)
                        </div>
                       </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-danger" onClick="generatePDF()">Save as PDF</button>
+                      <button type="button" class="btn btn-danger" onClick="generatePDF()"><i class="glyphicon glyphicon-download-alt"></i>  Save as PDF</button>
                     </div>                                                          
                   </div>
                 </div>
@@ -814,7 +834,7 @@ function selectCorrespondingItem(itemType,selectid,clearSelectid,getfirstselect)
           </div>
     </section>
 
-    <section id="bottom">
+    <!-- <section id="bottom">
         <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
             <div class="row">
                 <div class="col-md-3 col-sm-6">
@@ -830,7 +850,7 @@ function selectCorrespondingItem(itemType,selectid,clearSelectid,getfirstselect)
                             <li><a href="#">Contact us</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -845,7 +865,7 @@ function selectCorrespondingItem(itemType,selectid,clearSelectid,getfirstselect)
                             <li><a href="#">Billing system</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -860,7 +880,7 @@ function selectCorrespondingItem(itemType,selectid,clearSelectid,getfirstselect)
                             <li><a href="#">Article Writing</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -875,23 +895,24 @@ function selectCorrespondingItem(itemType,selectid,clearSelectid,getfirstselect)
                             <li><a href="#">Laboris</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
             </div>
         </div>
-    </section><!--/#bottom-->
+    </section> -->
 
     <footer id="footer" class="midnight-blue">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
-                    &copy; 2013 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">ShapeBootstrap</a>. All Rights Reserved.
+                    &copy; 2016 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">Get Me Progress Report</a>. All Rights Reserved.
                 </div>
                 <div class="col-sm-6">
                     <ul class="pull-right">
-                        <li><a href="#">Home</a></li>
+                       <!--  <li><a href="#">Home</a></li> -->
                         <li><a href="#">About Us</a></li>
                         <li><a href="#">Faq</a></li>
                         <li><a href="#">Contact Us</a></li>
+                        <li><i class="fa fa-phone-square"></i>  +91 8297411200</li>
                     </ul>
                 </div>
             </div>

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import pojos.Notifications;
+
 import org.bson.Document;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,15 +33,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
+
 import HelperClasses.HelpingFunctions;
 import daos.InstituteReportDAO;
 import daos.LoginDAO;
+import daos.NotificationsDAO;
 import daos.ProgressReportDAO;
 import daos.StudentProfileDAO;
 import pojos.ExamWiseReport;
 import pojos.InstituteDetails;
 import pojos.LoginCredentials;
 import pojos.StudentProfile;
+
 
 
 
@@ -88,7 +93,7 @@ public class StudentServices {
 					
 				    session.setAttribute("logintype", request.getParameter("optradio"));
 					session.setAttribute("loggedInUser", logindata);
-					model.addAttribute("success", "Login Successful!!!!"); // set success message to display on successful login
+					model.addAttribute("success", "Logged In Successfully...!!!!"); // set success message to display on successful login
 					
 					if(loginDAO.getLoginType().equals("resetPassword")){
 						model.addAttribute("heading", "Reset Your Password");
@@ -97,8 +102,6 @@ public class StudentServices {
 						return modelnview;
 					}
 					
-					studentRecord= loginDAO.getStudentRecord(); // get student document from database
-					studentprofile = (new StudentProfileDAO(studentRecord)).getStudentProfile(); // parse studentDocument and stores in studentprofile object
 					
 					if(session.getAttribute("logintype").equals("faculty")){
 						session.setAttribute("loggedinUser", logindata.getStudent_id());
@@ -106,6 +109,9 @@ public class StudentServices {
 						InstituteDetails institutedetail = (new InstituteReportDAO()).getInstituteDetails(loginDAO.getAssociated_inst());
 						session.setAttribute("institutedetails", institutedetail);
 					}else{
+						studentRecord= loginDAO.getStudentRecord(); // get student document from database
+						studentprofile = (new StudentProfileDAO(studentRecord)).getStudentProfile(); // parse studentDocument and stores in studentprofile object
+						
 						session.setAttribute("loggedinUser", studentprofile.getStudentName().getFirstName());
 						model.addAttribute("loggedinUser", (session.getAttribute("loggedinUser")).toString());
 						model.addAttribute("parentsignin", "Parent/Student Signed In");
@@ -231,8 +237,26 @@ public class StudentServices {
 			/*
 			 * Business Logic to get Attendance Report Data
 			 */
+			
+			NotificationsDAO notificationObject = new NotificationsDAO();
+			ArrayList <Notifications> notification_list = new ArrayList<Notifications>();
+			
+			if(session.getAttribute("logintype").equals("faculty")){
+				/* in case of institute administrator login */
+				 notification_list = notificationObject.getNotifications_institute(((InstituteDetails)session.getAttribute("institutedetails")).get_id(),"institute_administration");
+			}else{
+				/*  in case of student/parent login */ 
+				System.out.println("logged in notifications");
+				//String institute_id = logincredential.
+				//notification_list = notificationObject.getNotifications_parentsAndStudents(((StudentProfile)session.getAttribute("studentprofile")).get_id(), ((StudentProfile)session.getAttribute("studentprofile")).getStd_class(), ((StudentProfile)session.getAttribute("studentprofile")).getDivision(),"institute_specific");
+				notification_list = notificationObject.getNotifications_parentsAndStudents(studentprofile.getSchoolDetails().getSchoolID(), studentprofile.getStd_class(), studentprofile.getDivision(), "institute_specific");
+			}
+			
+			
+			model.addAttribute("notifications", notification_list);
+			
 			model.addAttribute("loggedinUser", (session.getAttribute("loggedinUser")).toString());
-			if(session.getAttribute("logintype").equals("faculty"))
+			if(session.getAttribute("logintype").equals("faculty"))    /* used to show menu items on notification page based on user type*/
 				model.addAttribute("facultysignin", "Faculty Signed In");
 			else
 				model.addAttribute("parentsignin", "Parent/Student Signed In");
@@ -274,8 +298,9 @@ public class StudentServices {
 			
 		}
 		else{
-			model.addAttribute("error", "Please, Login to get this feature...");
-			modelnview.setViewName("index");
+			//model.addAttribute("error", "Please, Login to get this feature...");
+		//	modelnview.setViewName("index");
+			modelnview.setViewName("contact-us");
 			
 		}
 		return modelnview;

@@ -100,13 +100,13 @@ public class InstituteServices {
 	if((request.getParameter("type").trim()).equals("subjectwise"))
 		datatoclient = (new InstituteReportDAO()).getSubjectwiseReport(schoolid, classname, division, examname);
 		
-				System.out.println(datatoclient.getRecordList().get(1).getSubject());
+		/*	System.out.println(datatoclient.getRecordList().get(1).getSubject());
 				System.out.println(datatoclient.getRecordList().get(1).getTotalobtained());
 				System.out.println(datatoclient.getRecordList().get(1).getTotaloutoff());
 				System.out.println(datatoclient.getRecordList().get(1).getStudentsappeared());
 				System.out.println(datatoclient.getRecordList().get(1).getStudentspassed());
 				System.out.println(datatoclient.getRecordList().get(1).getStudentfailed());
-				System.out.println(datatoclient.getRecordList().size());
+				System.out.println(datatoclient.getRecordList().size());*/
 				//System.out.println
 		return datatoclient;
 	}

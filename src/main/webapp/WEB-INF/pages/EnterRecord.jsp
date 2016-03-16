@@ -30,36 +30,7 @@
     <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
 
     <script type="text/javascript">
-/*
-      $(function() {
 
-              var $form = $('form');
-
-              var startItems = convertSerializedArrayToHash($form.serializeArray()); 
-
-              $('form').submit( {
-                var currentItems = convertSerializedArrayToHash($form.serializeArray());
-                var itemsToSubmit = hashDiff( startItems, currentItems);
-
-                $.post($form.attr('action'), itemsToSubmit;
-              });
-        });
-
-                function hashDiff(h1, h2) {
-                  var d = {};
-                  for (k in h2) {
-                    if (h1[k] !== h2[k]) d[k] = h2[k];
-                  }
-                  return d;
-                }
-
-            function convertSerializedArrayToHash(a) { 
-                  var r = {}; 
-                  for (var i = 0;i<a.length;i++) { 
-                    r[a[i].name] = a[i].value;
-                  }
-                  return r;
-            }*/
 
     </script>
 </head><!--/head-->
@@ -68,7 +39,7 @@
 
     
 <header id="header">
-         <div class="top-bar">
+         <!-- <div class="top-bar">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6 col-xs-4">
@@ -84,7 +55,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     
 
         <nav class="navbar navbar-inverse" role="banner">
@@ -96,7 +67,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                     <a class="navbar-brand" href="index.html"><img src="<c:url value="/resources/images/logo.png" />" alt="logo"></a>
+                  <!--    <a class="navbar-brand" href="index.html"><img src="<c:url value="/resources/images/logo.png" />" alt="logo"></a>   -->
                 </div>
                 
                 <div class="collapse navbar-collapse navbar-right">
@@ -106,7 +77,10 @@
                         <li><a href="${contextPath}/studentservices/getProgressReport">Progress Reports</a></li>
                         <li><a href="${contextPath}/studentservices/getAttendenceReport">Attendence Reports</a></li>
                         <li><a href="${contextPath}/studentservices/getNotifications">Notifications</a></li>
-                        <li><a href="${contextPath}/studentservices/getContactUs">Contact Us</a></li>                   
+                        <li><a href="${contextPath}/studentservices/getContactUs">Contact Us</a></li>   
+                        <li>
+                                    <a href="${contextPath}/userfacility/logout" ><i class="glyphicon glyphicon-user"></i>  <b>${loggedinUser}   Log Out</b></a>
+                        </li>                
                      
                     </ul>
                 </div>
@@ -278,7 +252,7 @@
 
 
 
-
+<!-- 
     <section id="bottom">
         <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
             <div class="row">
@@ -295,7 +269,7 @@
                             <li><a href="#">Contact us</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -310,7 +284,7 @@
                             <li><a href="#">Billing system</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -325,7 +299,7 @@
                             <li><a href="#">Article Writing</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -340,23 +314,24 @@
                             <li><a href="#">Laboris</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
             </div>
         </div>
-    </section><!--/#bottom-->
+    </section> -->
 
     <footer id="footer" class="midnight-blue">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
-                    &copy; 2013 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">ShapeBootstrap</a>. All Rights Reserved.
+                    &copy; 2016 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">Get Me Progress Report</a>. All Rights Reserved.
                 </div>
                 <div class="col-sm-6">
                     <ul class="pull-right">
-                        <li><a href="#">Home</a></li>
+                        <!-- <li><a href="#">Home</a></li> -->
                         <li><a href="#">About Us</a></li>
                         <li><a href="#">Faq</a></li>
                         <li><a href="#">Contact Us</a></li>
+                        <li><i class="fa fa-phone-square"></i>  +91 8297411200</li>
                     </ul>
                 </div>
             </div>

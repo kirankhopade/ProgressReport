@@ -39,21 +39,7 @@
     padding: 0;
 }
 
-/*body {
-    background-color: #F2F2F2;
-}
 
-.container {
-    margin: 0 auto;
-    width: 920px;
-    padding: 50px 20px;
-    background-color: #fff;
-}
-
-h3 {
-    text-align: center;
-}
-*/
 #calendar {
     margin-top: 40px;
 }
@@ -184,7 +170,7 @@ $("#calendar").hide({});
 
 
         var value = document.getElementById(selectid).value;
-                alert(value);
+               // alert(value);
                 $("#calendar    ").show({});
        // document.getElementById('#calendar').style.display = "none";
        } 
@@ -200,11 +186,11 @@ $("#calendar").hide({});
 
     
     <header id="header">
-         <div class="top-bar">
+         <!-- <div class="top-bar">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6 col-xs-4">
-                      <!--   <div class="top-number"><p><i class="fa fa-phone-square"></i>  +0123 456 70 90</p></div> -->
+                     
                     </div>
                     <div class="col-sm-6 col-xs-8">
                        <div class="social">
@@ -216,7 +202,7 @@ $("#calendar").hide({});
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     
 
         <nav class="navbar navbar-inverse" role="banner">
@@ -228,7 +214,7 @@ $("#calendar").hide({});
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                     <a class="navbar-brand" href="index.html"><img src="<c:url value="/resources/images/logo.png" />" alt="logo"></a>
+                    <!--  <a class="navbar-brand" href="index.html"><img src="<c:url value="/resources/images/logo.png" />" alt="logo"></a> -->
                 </div>
                 
                 <div class="collapse navbar-collapse navbar-right">
@@ -248,7 +234,10 @@ $("#calendar").hide({});
                         
                         <li  class="active"><a href="${contextPath}/studentservices/getAttendenceReport">Attendence Reports</a></li>
                         <li><a href="${contextPath}/studentservices/getNotifications">Notifications</a></li>
-                        <li><a href="${contextPath}/studentservices/getContactUs">Contact Us</a></li>                   
+                        <li><a href="${contextPath}/studentservices/getContactUs">Contact Us</a></li> 
+                        <li>
+                                    <a href="${contextPath}/userfacility/logout" ><i class="glyphicon glyphicon-user"></i>  <b>${loggedinUser}   Log Out</b></a>
+                        </li>                  
                      
                     </ul>
                 </div>
@@ -259,10 +248,10 @@ $("#calendar").hide({});
 
     <section id="feature" class="transparent-bg">
         <div class="container">
-           <div class="center wow fadeInDown">
+           <!-- <div class="center wow fadeInDown">
                 <h2>Attendence Report</h2>
                 <p class="lead">We provide different analysis reports. Please select desired on end get your report on screen. <br> </p>
-            </div>
+            </div> -->
 
             <div class="row">
                 <div class="features">
@@ -344,7 +333,7 @@ $("#calendar").hide({});
 
     </section>
 
-    <section id="bottom">
+   <!--  <section id="bottom">
         <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
             <div class="row">
                 <div class="col-md-3 col-sm-6">
@@ -360,7 +349,7 @@ $("#calendar").hide({});
                             <li><a href="#">Contact us</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -375,7 +364,7 @@ $("#calendar").hide({});
                             <li><a href="#">Billing system</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -390,7 +379,7 @@ $("#calendar").hide({});
                             <li><a href="#">Article Writing</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -405,23 +394,24 @@ $("#calendar").hide({});
                             <li><a href="#">Laboris</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
             </div>
         </div>
-    </section><!--/#bottom-->
+    </section> -->
 
     <footer id="footer" class="midnight-blue">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
-                    &copy; 2013 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">ShapeBootstrap</a>. All Rights Reserved.
+                    &copy; 2016 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">Get Me Progress Report</a>. All Rights Reserved.
                 </div>
                 <div class="col-sm-6">
                     <ul class="pull-right">
-                        <li><a href="#">Home</a></li>
+                    <!--     <li><a href="#">Home</a></li> -->
                         <li><a href="#">About Us</a></li>
                         <li><a href="#">Faq</a></li>
                         <li><a href="#">Contact Us</a></li>
+                        <li><i class="fa fa-phone-square"></i>  +91 8297411200</li>
                     </ul>
                 </div>
             </div>

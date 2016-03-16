@@ -33,11 +33,11 @@
 <body>
 
     <header id="header">
-         <div class="top-bar">
+         <!-- <div class="top-bar">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6 col-xs-4">
-                      <!--   <div class="top-number"><p><i class="fa fa-phone-square"></i>  +0123 456 70 90</p></div> -->
+                     
                     </div>
                     <div class="col-sm-6 col-xs-8">
                        <div class="social">
@@ -49,7 +49,7 @@
                 </div>
             </div>
         </div>
-    
+     -->
 
         <nav class="navbar navbar-inverse" role="banner">
             <div class="container">
@@ -60,7 +60,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                       <a class="navbar-brand" href="index.html"><img src="<c:url value="/resources/images/logo.png" />" alt="logo"></a>
+                     <!--   <a class="navbar-brand" href="index.html"><img src="<c:url value="/resources/images/logo.png" />" alt="logo"></a> -->
                 </div>
                 
                 <div class="collapse navbar-collapse navbar-right">
@@ -80,7 +80,10 @@
                         
                         <li><a href="${contextPath}/studentservices/getAttendenceReport">Attendence Reports</a></li>
                         <li  class="active"><a href="${contextPath}/studentservices/getNotifications">Notifications</a></li>
-                        <li><a href="${contextPath}/studentservices/getContactUs">Contact Us</a></li>   
+                        <li><a href="${contextPath}/studentservices/getContactUs">Contact Us</a></li> 
+                        <li>
+                                    <a href="${contextPath}/userfacility/logout" ><i class="glyphicon glyphicon-user"></i>  <b>${loggedinUser}   Log Out</b></a>
+                        </li>  
                     </ul>
                 </div>
             </div><!--/.container-->
@@ -89,19 +92,20 @@
     </header><!--/header-->
 
     <section id="blog" class="container wow fadeInDown  ">
-        <div class="center">
+        <!-- <div class="center">
             <h2>Notifications</h2>
             <p class="lead">Here, you will receive notifications from the School Authority or Portal Management Team </p>
-        </div>
+        </div> -->
 
         <div class="blog">
             <div class="row">
+                <c:forEach items="${notifications}" var="notification">
                  <div class="col-md-12 ">
                     <div class="blog-item">
                         <div class="row">
                             <div class="col-xs-12 col-sm-2 text-center ">
                                 <div class="entry-meta">
-                                    <span id="publish_date">07  NOV</span>
+                                    <span id="publish_date">${notification.date}</span>
                                     <!-- <span><i class="fa fa-user"></i> <a href="#">John Doe</a></span>
                                     <span><i class="fa fa-comment"></i> <a href="blog-item.html#comments">2 Comments</a></span>
                                     <span><i class="fa fa-heart"></i><a href="#">56 Likes</a></span> -->
@@ -110,25 +114,26 @@
                                 
                             <div class="col-xs-12 col-sm-10 blog-content ">
                                 <!-- <a href="#"><img class="img-responsive img-blog" src="images/blog/blog1.jpg" width="100%" alt="" /></a> -->
-                                <h2><a href="#">We are coming in next academic year...</a></h2>
-                                <h3>Hi All, We are pleased to inform you that we are preparing to get into action in next academic year. We will try our best by serve you and stand to your expectations. If you have any suggestions, feel free to reach us. Your suggestions are always welcome.</h3>
+                                <h2><a href="#">${notification.subject}</a></h2>
+                                <h3>${notification.message}</h3>
                                <!--  <a class="btn btn-primary readmore" href="blog-item.html">Read More <i class="fa fa-angle-right"></i></a> -->
                             </div>
                         </div>    
                     </div><!--/.blog-item-->
                 </div><!--/.col-md-8-->
+                </c:forEach>
 
              		<!-- </aside>  --> 
                 <div class="center">
                     <div class="col-sm-12 blog-content ">
                         <ul class="pagination pagination-lg">
-                            <li><a href="#"><i class="fa fa-long-arrow-left"></i>Previous Page</a></li>
-                            <li class="active"><a href="#">1</a></li>
+                            <li><a href="#"><i class="fa fa-long-arrow-left" ></i>Previous Page</a></li>
+                            <li><a href="#">1</a></li>
                             <li><a href="#">2</a></li>
                             <li><a href="#">3</a></li>
                             <li><a href="#">4</a></li>
                             <li><a href="#">5</a></li>
-                            <li><a href="#">Next Page<i class="fa fa-long-arrow-right"></i></a></li>
+                            <li><a href="#">Next Page<i class="fa fa-long-arrow-right" ></i></a></li>
                         </ul><!--/.pagination-->
                     </div>        
                 </div>
@@ -136,7 +141,7 @@
         </div>
     </section><!--/#blog-->
 
-       <section id="bottom">
+      <!--  <section id="bottom">
         <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
             <div class="row">
                 <div class="col-md-3 col-sm-6">
@@ -152,7 +157,7 @@
                             <li><a href="#">Contact us</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -167,7 +172,7 @@
                             <li><a href="#">Billing system</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -182,7 +187,7 @@
                             <li><a href="#">Article Writing</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -197,23 +202,24 @@
                             <li><a href="#">Laboris</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
             </div>
         </div>
-    </section><!--/#bottom-->
+    </section> -->
 
     <footer id="footer" class="midnight-blue">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
-                    &copy; 2013 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">ShapeBootstrap</a>. All Rights Reserved.
+                    &copy; 2016 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">Get Me Progress Report</a>. All Rights Reserved.
                 </div>
                 <div class="col-sm-6">
                     <ul class="pull-right">
-                        <li><a href="#">Home</a></li>
+                        <!-- <li><a href="#">Home</a></li> -->
                         <li><a href="#">About Us</a></li>
                         <li><a href="#">Faq</a></li>
                         <li><a href="#">Contact Us</a></li>
+                        <li><i class="fa fa-phone-square"></i>  +91 8297411200</li>
                     </ul>
                 </div>
             </div>

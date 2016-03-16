@@ -50,11 +50,15 @@
             columnData.addColumn('number', 'Average Marks');
             columnData.addColumn({type: 'number', role: 'annotation'});
                        
-            for(var i=0;i<jsonData.recordList.length;i++){
+            /*for(var i=0;i<jsonData.recordList.length;i++){
                columnData.addRow([jsonData.recordList[i].std_class+'-'+jsonData.recordList[i].division , Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100),Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100)]);
             
-              }
+              }*/
           
+            for(var i=0;i<jsonData.recordList.length;i++){
+                columnData.addRow([jsonData.recordList[i].std_class ,jsonData.recordList[i].avarage,jsonData.recordList[i].avarage]);
+              }
+
            var pieData1 = new google.visualization.DataTable();
            pieData1.addColumn('string', 'Class');
            pieData1.addColumn('number', 'Passing Result');
@@ -137,19 +141,26 @@
             columnData.addColumn('number', 'Average Marks');
             columnData.addColumn({type: 'number', role: 'annotation'});
                        
-            for(var i=1;i<jsonData.recordList.length;i++){
+            /*for(var i=1;i<jsonData.recordList.length;i++){
                columnData.addRow([jsonData.recordList[i].examname , Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100), Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100)]);
             
+              }*/
+
+               for(var i=0;i<jsonData.recordList.length;i++){
+                columnData.addRow([jsonData.recordList[i].examname ,jsonData.recordList[i].avarage,jsonData.recordList[i].avarage]);
               }
           
            var pieData1 = new google.visualization.DataTable();
            pieData1.addColumn('string', 'Examination');
            pieData1.addColumn('number', 'Passing Result');
 
-          for(var i=1;i<jsonData.recordList.length;i++){
+         for(var i=1;i<jsonData.recordList.length;i++){
                  pieData1.addRow([jsonData.recordList[i].examname+' '+((jsonData.recordList[i].studentspassed/jsonData.recordList[i].studentsappeared)*100).toFixed(2)+'%' ,jsonData.recordList[i].studentspassed]);
               
                 }
+
+
+
 
 
 
@@ -228,11 +239,17 @@
             columnData.addColumn('number', 'Subject Average');
             columnData.addColumn({type: 'number', role: 'annotation'});
                        
-            for(var i=0;i<jsonData.recordList.length;i++){
+          /*  for(var i=0;i<jsonData.recordList.length;i++){
                columnData.addRow([jsonData.recordList[i].examname , Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100),Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100)]);
             
               }
-          
+          */
+
+          for(var i=0;i<jsonData.recordList.length;i++){
+                columnData.addRow([jsonData.recordList[i].examname ,jsonData.recordList[i].avarage,jsonData.recordList[i].avarage]);
+              }
+
+
            var pieData1 = new google.visualization.DataTable();
            pieData1.addColumn('string', 'Examination');
            pieData1.addColumn('number', 'Passing Result');
@@ -314,10 +331,15 @@
             columnData.addColumn('number', 'Average Marks');
             columnData.addColumn({type: 'number', role: 'annotation'});
                        
-            for(var i=0;i<jsonData.recordList.length;i++){
+           /* for(var i=0;i<jsonData.recordList.length;i++){
                columnData.addRow([jsonData.recordList[i].std_class+'-'+jsonData.recordList[i].division , Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100),Math.round((jsonData.recordList[i].totalobtained/jsonData.recordList[i].totaloutoff)*100)]);
             
+              }*/
+
+              for(var i=0;i<jsonData.recordList.length;i++){
+                columnData.addRow([jsonData.recordList[i].std_class ,jsonData.recordList[i].avarage,jsonData.recordList[i].avarage]);
               }
+
           
            var pieData1 = new google.visualization.DataTable();
            pieData1.addColumn('string', 'Class');
@@ -632,11 +654,11 @@ doc.save("ProgressReport.pdf");
 
    
     <header id="header">
-         <div class="top-bar">
+         <!-- <div class="top-bar">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6 col-xs-4">
-                      <!--   <div class="top-number"><p><i class="fa fa-phone-square"></i>  +0123 456 70 90</p></div> -->
+                     
                     </div>
                     <div class="col-sm-6 col-xs-8">
                        <div class="social">
@@ -647,7 +669,7 @@ doc.save("ProgressReport.pdf");
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     
 
         <nav class="navbar navbar-inverse" role="banner">
@@ -659,7 +681,7 @@ doc.save("ProgressReport.pdf");
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html"><img src="<c:url value="/resources/images/logo.png" />" alt="logo"></a>
+                  <!--   <a class="navbar-brand" href="index.html"><img src="<c:url value="/resources/images/logo.png" />" alt="logo"></a>  -->
                 </div>
                 
                 <div class="collapse navbar-collapse navbar-right">
@@ -669,7 +691,10 @@ doc.save("ProgressReport.pdf");
                          <li class="active"><a href="${contextPath}/instituteservices/getInstitutewiseReportPage">School Reports</a></li> 
                          <li><a href="${contextPath}/studentservices/getAttendenceReport">Attendence Reports</a></li>
                         <li><a href="${contextPath}/studentservices/getNotifications">Notifications</a></li>
-                        <li><a href="${contextPath}/studentservices/getContactUs">Contact Us</a></li>                   
+                        <li><a href="${contextPath}/studentservices/getContactUs">Contact Us</a></li>  
+                        <li>
+                                    <a href="${contextPath}/userfacility/logout" ><i class="glyphicon glyphicon-user"></i>  <b>${loggedinUser}   Log Out</b></a>
+                         </li>                 
                     </ul>
                 </div>
             </div><!--/.container-->
@@ -679,28 +704,28 @@ doc.save("ProgressReport.pdf");
 
     <section id="feature" class="transparent-bg">
         <div class="container">
-           <!-- <div class="center wow fadeInDown">
+            <!-- <div class="center wow fadeInDown">
                 <h2>Class Reports</h2>
                 <p class="lead">We provide different analysis reports for a Class. Please select desired class and get your report on screen. <br> </p>
-            </div> -->
+            </div>  -->
 
             <div class="row">
                 <div class="features">
                     <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                         <div class="feature-wrap">
                              <a href="#" onclick="return showForAllExaminations();"> 
-                            <i class="fa fa-bullhorn"></i>
-                            <h2>Report for all examinations across entire Institute</h2>
-                            <h3>This report will contain all details of all examination which includes number of students appeared, number of students passed,number off students failed, class average percentage and class result in percentage.</h3></a>
+                            <i class="fa fa-chevron-right"></i>
+                            <h2>Report For All Examinations</h2>
+                            <h3>Progress Report is generated for all the examinations conducted in the current academic year. The report shows institute's average percentage for each examination. It also shows the examination wise passing and failing percentage accross the institute.</h3></a>
                         </div>
                     </div><!--/.col-md-4-->
 
                     <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                         <div class="feature-wrap">
                             <a href="#" onClick="showForSelectedExamination();" >
-                            <i class="fa fa-comments" ></i>
-                            <h2>Report for selected examination across entire institute  </h2>
-                            <h3>This report will contain details of particular examination whivh includes number of students appeared, number of students passed, number of students failed, subject average and class result in percentage for each class.</h3></a>
+                            <i class="fa fa-chevron-right" ></i>
+                            <h2>Report For Selected Examination</h2>
+                            <h3>Progress Report is generated accross all the classes from the institute. The reportshows each class's average percentage obtainedin a selected examination. It also shows passing and failing percentage of each class for the selected examination.</h3></a>
                         </div>
                     </div>
                 </div><!--/.services-->
@@ -712,18 +737,18 @@ doc.save("ProgressReport.pdf");
                     <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                         <div class="feature-wrap">
                              <a href="#" onclick="return showForSelectedSubject();"> 
-                            <i class="fa fa-bullhorn"></i>
-                            <h2>Report for selected subject across entire institute </h2>
-                            <h3>This report will contain all details of selected subject for each examination which includes number of students appeared, number of students passed,number off students failed, class average and class result in percentage.</h3></a>
+                            <i class="fa fa-chevron-right"></i>
+                            <h2>Report For Selected Subject</h2>
+                            <h3>Progress report is generated accross all the examinations conductedin current academic year. The report shows average obtained marks in a selected subject in each examination. It also shows passing and failing percentage of each examination for the selected subject.</h3></a>
                         </div>
                     </div>
 
                     <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                         <div class="feature-wrap">
                              <a href="#" onclick="return showForSelectedExamAndSubject();"> 
-                            <i class="fa fa-bullhorn"></i>
-                            <h2>Report for selected subject and examination across entire institute</h2>
-                            <h3>This report will contain all details of selected subject and examination which includes number of students appeared, number of students passed,number off students failed, class average and class result in percentage for each class.</h3></a>
+                            <i class="fa fa-chevron-right"></i>
+                            <h2>Report For Selected Subject and Examination</h2>
+                            <h3>Progress report is generated accross all classes for selected subject and examination. The report shows average marks of selected subject in selected examination for each class in the institute. It also shows passing and failing percentage of selected subject in selected examination for each class in the institute.</h3></a>
                         </div>
                     </div>
                 </div><!--/.services-->
@@ -745,7 +770,7 @@ doc.save("ProgressReport.pdf");
                             <div class="row">
                                  <div class="col-md-12 col-sm-12 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel11">Institute : </label>
-                                      <select  class="input-large" id="sel11" >
+                                      <select  class="input-large" id="sel11" style="height:35px;border-radius: 4px;" >
                                         <option value="" disabled selected>Select Institute ID</option>
                                       </select>
                                  </div>
@@ -768,14 +793,14 @@ doc.save("ProgressReport.pdf");
                             <div class="row">
                                  <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel21">Institute : </label>
-                                      <select  class="input-large" id="sel21" >
+                                      <select  class="input-large" id="sel21" style="height:35px;border-radius: 4px;" >
                                         <option value="" disabled selected>Select Institute ID</option>
                                       </select>
                                  </div>
 
                                 <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel22">Examination </label>
-                                      <select  class="input-large" id="sel22" >
+                                      <select  class="input-large" id="sel22" style="height:35px;border-radius: 4px;">
                                         <option value="" disabled selected>Select Examination</option>
                                       </select>
                                 </div>
@@ -813,14 +838,14 @@ doc.save("ProgressReport.pdf");
                             <div class="row">
                                  <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel31">Institute : </label>
-                                      <select  class="input-large" id="sel31" >
+                                      <select  class="input-large" id="sel31" style="height:35px;border-radius: 4px;" >
                                   <option value="" disabled selected>Select Institute ID</option>
                                       </select>
                                  </div>
 
                                 <div class="col-md-6 col-sm-6 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel32">Subject : </label>
-                                      <select  class="input-large" id="sel32" >
+                                      <select  class="input-large" id="sel32" style="height:35px;border-radius: 4px;">
                                         <option value="" disabled selected>Select Subject</option>
                                       
                                       </select>
@@ -850,14 +875,14 @@ doc.save("ProgressReport.pdf");
                             <div class="row">
                                  <div class="col-md-4 col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel41">Institute : </label>
-                                      <select  class="input-large" id="sel41" >
+                                      <select  class="input-large" id="sel41" style="height:35px;border-radius: 4px;" >
                                         <option value="" disabled selected>Select Institute ID</option>
                                       </select>
                                  </div>
 
                                 <div class="col-md-4 col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel42">Examination : </label>
-                                      <select  class="input-large" id="sel42"  onchange="selectCorrespondingSubjects()" >
+                                      <select  class="input-large" id="sel42"  onchange="selectCorrespondingSubjects()" style="height:35px;border-radius: 4px;">
                                       <!-- <option>Unit Test 1</option>
                                       <option>Unit Test 2</option> -->
                                       <option value="" disabled selected>Select Examination</option>
@@ -866,7 +891,7 @@ doc.save("ProgressReport.pdf");
 
                                 <div class="col-md-4 col-sm-4 wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
                                       <label for="sel43">Subject : </label>
-                                      <select  class="input-large" id="sel43" >
+                                      <select  class="input-large" id="sel43" style="height:35px;border-radius: 4px;">
                                          <option value="" disabled selected>Select Subject</option>
                                       </select>
                                 </div>
@@ -914,7 +939,13 @@ doc.save("ProgressReport.pdf");
                        </div>
                       </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-danger" onClick="generatePDF()">Save as PDF</button>
+
+
+                      
+                      <div class="footerMessage">
+                           <a href="${contextPath}/studentservices/getContactUs"><i class="glyphicon glyphicon-pushpin"></i><h4>For incorrect data, please write us.</h4> Click here, and Select Subject- Incorrect Data</a>
+                      </div>
+                      <button type="button" class="btn btn-danger" onClick="generatePDF()"><i class="glyphicon glyphicon-download-alt"></i>  Save as PDF</button>
                     </div>                                                          
                   </div>
                 </div>
@@ -922,7 +953,7 @@ doc.save("ProgressReport.pdf");
           </div>
     </section>
 
-    <section id="bottom">
+   <!--  <section id="bottom">
         <div class="container wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="600ms">
             <div class="row">
                 <div class="col-md-3 col-sm-6">
@@ -938,7 +969,7 @@ doc.save("ProgressReport.pdf");
                             <li><a href="#">Contact us</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -953,7 +984,7 @@ doc.save("ProgressReport.pdf");
                             <li><a href="#">Billing system</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -968,7 +999,7 @@ doc.save("ProgressReport.pdf");
                             <li><a href="#">Article Writing</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
 
                 <div class="col-md-3 col-sm-6">
                     <div class="widget">
@@ -983,23 +1014,24 @@ doc.save("ProgressReport.pdf");
                             <li><a href="#">Laboris</a></li>
                         </ul>
                     </div>    
-                </div><!--/.col-md-3-->
+                </div>
             </div>
         </div>
-    </section><!--/#bottom-->
+    </section> -->
 
     <footer id="footer" class="midnight-blue">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
-                    &copy; 2013 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">ShapeBootstrap</a>. All Rights Reserved.
+                    &copy; 2016 <a target="_blank" href="http://shapebootstrap.net/" title="Free Twitter Bootstrap WordPress Themes and HTML templates">Get Me Progress Report</a>. All Rights Reserved.
                 </div>
                 <div class="col-sm-6">
                     <ul class="pull-right">
-                        <li><a href="#">Home</a></li>
+                        <!-- <li><a href="#">Home</a></li> -->
                         <li><a href="#">About Us</a></li>
                         <li><a href="#">Faq</a></li>
                         <li><a href="#">Contact Us</a></li>
+                        <li><i class="fa fa-phone-square"></i>  +91 8297411200</li>
                     </ul>
                 </div>
             </div>
@@ -1016,7 +1048,18 @@ doc.save("ProgressReport.pdf");
     <script src="<c:url value="/resources/js/sprintf.js" />"></script>
     <script src="<c:url value="/resources/js/base64.js" />"></script>
     <script src="<c:url value="/resources/js/jspdf.debug.js" />"></script>
-  
+  <style>
+
+  .footerMessage{
+     overflow: hidden;
+    white-space: nowrap;
+    float:left;
+    font-style:italic;   
+   text-align: left;   
+  width: 100%;
+  }
+        
+  </style>
 
 </body>
 </html>

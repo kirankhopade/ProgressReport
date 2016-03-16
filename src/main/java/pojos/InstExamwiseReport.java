@@ -11,7 +11,16 @@ public class InstExamwiseReport {
 	private float totaloutoff=0;
 	private String std_class=null;
 	private String division=null;
+	private float avarage =0;
 	
+	
+	
+	public float getAvarage() {
+		return avarage;
+	}
+	public void setAvarage(float avarage) {
+		this.avarage = avarage;
+	}
 	public String getStd_class() {
 		return std_class;
 	}

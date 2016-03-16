@@ -33,13 +33,13 @@ public class InstituteReportDAO {
 	 	 try{
 	 		 
 	 		 
-	 			mongoClient = new MongoClient("localhost", 27017);
-	 		 db = mongoClient.getDatabase("progressreport");	
+	 			/*mongoClient = new MongoClient("localhost", 27017);
+	 		 db = mongoClient.getDatabase("progressreport");*/	
 	 		 
-	 			/*String textUri = "mongodb://admin:admin@ds039125.mongolab.com:39125/progressreport";
+	 			String textUri = "mongodb://admin:admin@ds011379.mlab.com:11379/progressreport";
 	 			MongoClientURI uri = new MongoClientURI(textUri);
 	 			MongoClient m = new MongoClient(uri);	 	
-	 			db = m.getDatabase(uri.getDatabase());*/
+	 			db = m.getDatabase(uri.getDatabase());
 	 			
 	 			
 	 			
@@ -105,6 +105,7 @@ public class InstituteReportDAO {
 	    	    	tempObject.setStudentsappeared(document.getInteger("StudentsAppeared"));
 	    	    	tempObject.setStudentspassed(document.getInteger("passed"));
 	    	    	tempObject.setStudentfailed(document.getInteger("failed"));
+	    	    	tempObject.setAvarage(tempObject.getTotalobtained()/tempObject.getStudentsappeared());
 	    	    	
 	    	    	recordList.add(tempObject);
 	    	   // 	System.out.println("test"+tempObject.getSubject());
@@ -173,6 +174,8 @@ public class InstituteReportDAO {
 	    	    	tempObject.setStudentsappeared(document.getInteger("StudentsAppeared"));
 	    	    	tempObject.setStudentspassed(document.getInteger("passed"));
 	    	    	tempObject.setStudentfailed(document.getInteger("failed"));
+	    	    	tempObject.setAvarage(tempObject.getTotalobtained()/tempObject.getStudentsappeared());
+	    	    	
 	    	    	recordList.add(tempObject);
 	    	    	
 	    	        System.out.println(document.toJson());
@@ -211,7 +214,7 @@ public class InstituteReportDAO {
 	      
 	      AggregateIterable<Document> iterable = db.getCollection("studenprofile").aggregate(asList(
 	    			new Document("$unwind","$examinations"),
-					new Document("$match", new Document("schoolDetails.schoolID" , "school_id_1").append("std_class" , "V").append("division","A")),
+					new Document("$match", new Document("schoolDetails.schoolID" , schoolid).append("std_class" , classname).append("division",division)),
 					new Document("$group",new Document("_id",new Document("SchoolID","$schoolDetails.schoolID").append("Class", "$std_class").append("Division", "$division").append("Exam","$examinations.examName")).append("totalObtained", new Document("$sum","$examinations.totalObtained")).append("totalOutoff", new Document("$sum","$examinations.outOff")).append("StudentsAppeared", new Document("$sum", 1)).append("passed", new Document("$sum",new Document("$cond", eq))).append("failed", new Document("$sum",new Document("$cond",gt))))));
 	      
 	      
@@ -227,6 +230,7 @@ public class InstituteReportDAO {
 	    	    	tempObject.setStudentsappeared(document.getInteger("StudentsAppeared"));
 	    	    	tempObject.setStudentspassed(document.getInteger("passed"));
 	    	    	tempObject.setStudentfailed(document.getInteger("failed"));
+	    	    	tempObject.setAvarage((tempObject.getTotalobtained()/tempObject.getTotaloutoff())*100);
 	    	    	recordList.add(tempObject);
 	    	    	
 	    	        System.out.println(document.toJson());
@@ -287,6 +291,7 @@ public class InstituteReportDAO {
 		    	    	tempObject.setStudentsappeared(document.getInteger("StudentsAppeared"));
 		    	    	tempObject.setStudentspassed(document.getInteger("passed"));
 		    	    	tempObject.setStudentfailed(document.getInteger("failed"));
+		    	    	tempObject.setAvarage((tempObject.getTotalobtained()/tempObject.getTotaloutoff())*100);
 		    	    	recordList.add(tempObject);
 		    	    	
 		    	        System.out.println(document.toJson());
@@ -349,6 +354,7 @@ public class InstituteReportDAO {
 		    	    	tempObject.setStudentsappeared(document.getInteger("StudentsAppeared"));
 		    	    	tempObject.setStudentspassed(document.getInteger("passed"));
 		    	    	tempObject.setStudentfailed(document.getInteger("failed"));
+		    	    	tempObject.setAvarage((tempObject.getTotalobtained()/tempObject.getTotaloutoff())*100);
 		    	    	recordList.add(tempObject);
 		    	    	
 		    	        System.out.println(document.toJson());
@@ -409,6 +415,7 @@ public class InstituteReportDAO {
 		    	    	tempObject.setStudentsappeared(document.getInteger("StudentsAppeared"));
 		    	    	tempObject.setStudentspassed(document.getInteger("passed"));
 		    	    	tempObject.setStudentfailed(document.getInteger("failed"));
+		    	    	tempObject.setAvarage((tempObject.getTotalobtained()/tempObject.getTotaloutoff())*100);
 		    	    	recordList.add(tempObject);
 		    	    	
 		    	        System.out.println(document.toJson());
@@ -473,6 +480,7 @@ public class InstituteReportDAO {
 	    	    	tempObject.setStudentsappeared(document.getInteger("StudentsAppeared"));
 	    	    	tempObject.setStudentspassed(document.getInteger("passed"));
 	    	    	tempObject.setStudentfailed(document.getInteger("failed"));
+	    	    	tempObject.setAvarage((tempObject.getTotalobtained()/tempObject.getTotaloutoff())*100);
 	    	    	recordList.add(tempObject);
 	    	    	
 	    	        System.out.println(document.toJson());

@@ -115,7 +115,7 @@ a:focus {
 }
 
 body > section {
-  padding: 70px 0;
+  padding: 50px 0;
 }
 
 .center {
@@ -173,6 +173,14 @@ body > section {
 /*************************
 *******Header******
 **************************/
+
+/* #header{
+	position:fixed;
+	height: 25px;
+  padding-bottom: 30px;
+  top:0;
+   width:100%;
+} */
 
 #header .search{
   display: inline-block;
@@ -1519,6 +1527,7 @@ ul.social_icons li  a i{
 }
 
 .footer {
+	position: absolute;
   background: none repeat scroll 0 0 #2E2E2E;
   border-top: 5px solid #C52D2F;
   height: 84px;
@@ -2504,8 +2513,11 @@ shortcodes page css
 }
 
 #footer {
+	position: fixed;
   padding-top: 30px;
   padding-bottom: 30px;
+  bottom:0;
+   width:100%;
   color: #fff;
   background: #2e2e2e;
 }
@@ -2637,27 +2649,76 @@ border-radius:0;
 /**********
  Link Color
 ***********/
-a:link {
+/* a:link {
     color: #cc0000;
-}
+} */
 
 /* visited link */
-a:visited {
+/* a:visited {
     color: white;
-}
+} */
 
 /* mouse over link */
-a:hover {
+/* a:hover {
     color: #cc0000;
-}
+} */
 
 /* selected link */
-a:active {
+/* a:active {
     color: #cc0000;
 }
+ */
 
+/*
+ Screen-Center Alignment of a Modal 
+*/
+.modal {
+  text-align: center;
+}
 
+@media screen and (min-width: 768px) { 
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
 
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+/***************************************************/
 
+/* 
+   Change Success Modal Background Color
+*/
+.modal-header-success {
+      
+     background-color: #d3fabc;
+  	 color:#fff;
+     border-bottom:1px solid #eee;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
 
-
+/* 
+   Change Error Modal Background Color
+*/
+.modal-header-danger{
+	background-color: #ff6868;
+  	 color:#fff;
+     border-bottom:1px solid #eee;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
